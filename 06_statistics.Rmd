@@ -1,0 +1,293 @@
+---
+title: ""
+author: "Binod Jung Bogati"
+date: "10/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(broom)
+library(knitr)
+```
+
+
+After a great discussion started by Jesse Maegan (@kiersi) on Twitter, I decided to post a workthrough of some (fake) experimental treatment data. These data correspond to a new (fake) research drug called AD-x37, a theoretical drug that has been shown to have beneficial outcomes on cognitive decline in mouse models of Alzheimer’s disease. In the current experiment we will be statistically testing whether the drug was effective in reducing cognitive impairment in dementia patients. See the data HERE.
+
+We will be using MMSE (mini-mental status exam) scores to assess the degree of cognitive impairment. In a real clinical trial, many other variables would be recorded, but for the sake of a straightforward but multi-variate example we will stick to just MMSE.
+
+
+```{r}
+library(tidyverse)
+```
+
+
+
+```{r}
+library(readxl)
+
+# read excel file
+raw_df <- read_xlsx("./data/ad_treatment.xlsx")
+
+
+```
+
+
+```{r}
+glimpse(raw_df)
+```
+## Age 
+
+```{r}
+raw_df %>% 
+ summarise(min = min(age), max = max(age))
+```
+## Age distribution
+
+```{r}
+g2 <- ggplot(raw_df, aes(x = age)) +
+  geom_density(fill = "blue")
+g2
+```
+
+```{r}
+# raw_df <- raw_df %>% 
+#   mutate(sex = if_else(sex == 0, "Female", "Male"))
+```
+
+
+```{r}
+# raw_df %>% 
+#   select(drug_treatment , health_status) %>% 
+#   table()
+
+
+raw_df %>% 
+  count(drug_treatment, health_status) 
+```
+## Missing Value
+
+```{r}
+raw_df %>% 
+  summarize(na_count = sum(is.na(mmse)))
+```
+
+```{r}
+table(raw_df$drug_treatment, raw_df$health_status)
+```
+```{r}
+table(raw_df$drug_treatment, raw_df$health_status, raw_df$sex)
+```
+Alternate, way
+
+```{r}
+raw_df %>% 
+  count(drug_treatment, health_status, sex)
+```
+
+
+## Data exploration of dependent variable
+
+Before running our summary statistics we can actually visualize the range, central tendency and quartiles via a geom_boxplot call.
+
+```{r}
+
+ggplot(data = raw_df, # add the data
+       aes(x = drug_treatment, y = mmse, # set x, y coordinates
+           color = drug_treatment)) +    # color by treatment
+  geom_boxplot() +
+  facet_grid(~health_status) + # create panes base on health status
+  coord_flip()
+
+```
+### Summary
+
+```{r}
+raw_df %>% 
+  glimpse()
+```
+
+
+## Factorize
+
+```{r}
+sum_df <- raw_df %>% 
+            mutate(
+              sex = factor(sex, 
+                  labels = c("Male", "Female")),
+              drug_treatment =  factor(drug_treatment, 
+                  levels = c("Placebo", "Low dose", "High Dose")),
+              health_status = factor(health_status, 
+                  levels = c("Healthy", "Alzheimer's"))
+              )
+```
+
+## Calculate
+
+```{r}
+sum_df <- sum_df %>%   
+  group_by(sex, health_status, drug_treatment) %>%  
+  summarize(mmse_mean = mean(mmse),   
+            mmse_se = sd(mmse)/sqrt(n()),
+            n_samples = n()) %>%
+  ungroup() # ungrouping variable is a good habit to prevent errors
+
+
+sum_df
+```
+
+## Save the file to disk
+
+```{r}
+write_csv(sum_df, "adx37_sum_stats.csv")
+
+
+
+```
+
+## Plotting summary statistics
+
+```{r}
+g <- ggplot(data = sum_df, # add the data
+       aes(x = drug_treatment,  #set x, y coordinates
+           y = mmse_mean,
+           group = drug_treatment,  # group by treatment
+           color = drug_treatment)) +    # color by treatment
+  geom_point(size = 3) + # set size of the dots
+  facet_grid(sex~health_status) # create facets by sex and status
+g
+
+```
+
+
+## Statistics
+
+```{r}
+# set up the statistics df
+stats_df <- raw_df %>% # start with data
+   mutate(drug_treatment = factor(drug_treatment, levels = c("Placebo", "Low dose", "High Dose")),
+         sex = factor(sex, labels = c("Male", "Female")),
+         health_status = factor(health_status, levels = c("Healthy", "Alzheimer's")))
+
+glimpse(stats_df)
+```
+
+```{r}
+glimpse(sum_df)
+```
+
+
+### ANOVA
+
+```{r eval=F}
+# pseudocode example of ANOVA call
+
+aov(dependent_variable ~ independent variable, data = data_df)
+```
+
+```{r}
+# this gives main effects AND interactions
+ad_aov <- aov(mmse ~ sex * drug_treatment * health_status, 
+        data = stats_df)
+
+
+ad_aov
+```
+
+
+```{r}
+# this would give ONLY main effects
+ad_aov <- aov(mmse ~ sex + drug_treatment + health_status, data = stats_df)
+
+ad_aov
+```
+
+```{r}
+# look at effects and interactions
+summary(ad_aov)
+
+
+ad_aov
+```
+
+```{r}
+# this extracts ANOVA output into a nice tidy dataframe
+tidy_ad_aov <- tidy(ad_aov)
+
+# which we can save to Excel
+write_csv(tidy_ad_aov, "ad_aov.csv")
+```
+
+
+```{r}
+# pairwise t.tests
+ad_pairwise <- pairwise.t.test(stats_df$mmse,
+                               stats_df$sex:stats_df$drug_treatment:stats_df$health_status, 
+                               p.adj = "none")
+```
+
+```{r}
+# look at the posthoc p.values in a tidy dataframe
+head(tidy(ad_pairwise))
+```
+
+```{r}
+# tidy
+tidy_ad_pairwise <- tidy(ad_pairwise)
+
+# save to excel
+write_csv(tidy_ad_pairwise, "tidy_ad_pairwise.csv")
+```
+
+```{r}
+# call and tidy the tukey posthoc
+tidy(
+                      TukeyHSD(ad_aov, 
+                              which = 'sex:drug_treatment:health_status')
+                      )
+
+
+
+TukeyHSD(ad_aov)
+
+tidy(TukeyHSD(ad_aov, 'male:drug_treatment:health_status'))
+
+??TuckeyHSD
+
+summary(ad_aov)
+
+# save to excel
+write_csv(tidy_ad_tukey, "tukey_ad.csv")
+
+head(tidy_ad_tukey)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

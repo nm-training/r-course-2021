@@ -1,0 +1,620 @@
+
+---
+class: left, top
+
+## Inner Join
+
+--
+
+- Retains all matching rows from both data sets.
+
+.panelset[
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+inner_join(dx, dy, by = "id") #<<
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Join]
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) %>% row_spec(1, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval = F}
+inner_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+inner_join(dx, dy, by = "id") %>% kbl() %>% 
+   row_spec(1, background = "#ffff88")
+```
+
+]
+
+]]
+
+
+
+
+
+---
+class: left, top
+
+## Left Join
+
+--
+
+- Retains all rows from **dx** & join matching rows from **dy**.
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+left_join(dx, dy, by = "id") #<<
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Join]
+
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(1:2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) %>% row_spec(1, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval = F}
+left_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+ left_join(dx, dy, by = "id") %>% 
+  kbl() %>% 
+     row_spec(1:2, background = "#ffff88") %>%
+     column_spec(3, background = c("#fff", "#ffff88"))
+```
+
+]
+
+]]
+
+---
+class: left, top
+
+## Right Join
+
+--
+
+- Retains all rows from **dy** & join matching rows from **dx**.
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+right_join(dx, dy, by = "id") #<<
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Join]
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) %>% row_spec(1:2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval = F}
+right_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+right_join(dx, dy, by = "id") %>% 
+    kbl() %>% 
+     row_spec(1:2, background = "#ffff88") %>%
+     column_spec(2, background = c("#ffff88", "#fff"))
+```
+
+]
+
+]]
+
+---
+class: left, top
+
+## Full Join
+
+--
+
+- Retains all rows from both data sets.
+
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+full_join(dx, dy, by = "id") #<<
+```
+
+]
+]
+
+.panel[.panel-name[Join]
+
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(1:2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) %>% row_spec(1:2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval = F}
+full_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+full_join(dx, dy, by = "id") %>% 
+    kbl() %>% 
+     row_spec(1:3, background = "#ffff88") %>%
+     column_spec(2, background = c("#ffff88", "#ffff88", "#fff")) %>% 
+     column_spec(3, background = c("#fff", "#ffff88", "#ffff88"))
+```
+
+]
+
+]]
+
+---
+class: left, top
+
+## Semi Join
+
+--
+
+- Retains matching rows from both data sets & only columns presents in **dx**
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+semi_join(dx, dy, by = "id") #<<
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Join]
+
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(2, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) %>% 
+  row_spec(1, background = "#b6ff88") %>% 
+  column_spec(2, background="#fff")
+  
+```
+
+]
+
+.column[
+
+```{r eval = F}
+semi_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+semi_join(dx, dy, by = "id") %>% 
+    kbl() %>% 
+    row_spec(1, background = "#ffff88")
+```
+
+]
+
+]]
+
+---
+class: left, top
+
+## Anti Join
+
+--
+
+- Retains only rows not present in **dy** but columns present in **dx**. 
+
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+.column[
+
+```{r eval=F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx)
+```
+
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy)
+```
+
+
+]
+
+.column[
+
+
+```{r eval = F}
+anti_join(dx, dy, by = "id") #<<
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Join]
+
+
+.column[
+
+```{r eval = F}
+dx
+```
+
+```{r echo=FALSE}
+kbl(dx) %>% row_spec(1, background = "#b6ff88")
+```
+
+]
+
+.column[
+
+```{r eval=F}
+dy
+```
+
+```{r echo=FALSE}
+kbl(dy) 
+```
+
+]
+
+.column[
+
+```{r eval = F}
+anti_join(dx, dy, by = "id") #<<
+```
+
+```{r echo=FALSE}
+anti_join(dx, dy, by = "id") %>% 
+    kbl() %>% 
+    row_spec(1, background = "#ffff88")
+```
+
+]
+
+
+]]
+
+
+---
+class: top, left, highlight-last-item
+
+## Joins in a Venn Diagram
+
+.pull-left[
+
+<img src="imgs/joining-function.png">
+
+]
+
+--
+
+.pull-right[
+- Inner Join: .green[Green]
+]
+
+--
+
+.pull-right[
+- Left Join: .yellow[Yellow] + .green[Green]
+]
+
+--
+
+.pull-right[
+- Right Join: .blue[Blue] + .green[Green]
+]
+
+--
+
+.pull-right[
+- Full Join: .yellow[Yellow] + .green[Green] + .blue[Blue] 
+]
+
+--
+
+.pull-right[
+- Semi Join: .green[Green] - .blue[Blue]
+]
+
+--
+
+.pull-right[
+- Anti Join: .yellow[Yellow] - .green[Green]
+]

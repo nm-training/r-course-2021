@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Tidy Data in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Binod Jung Bogati" />
+    <meta name="date" content="2021-05-06" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+layout: false
+background-image: url(imgs/data-analysis-cover.png)
+background-size: contain
+
+---
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+class: middle, center
+
+# Tidy Data with
+
+&lt;img src="imgs/tidyr.png" width="200px"&gt;
+
+---
+class: center, middle
+
+## "Happy families are all alike, 
+## every unhappy family is unhappy in its own way."
+
+### – Leo Tolstoy
+
+---
+class: center, middle
+
+## "Tidy datasets are all alike, 
+## but every messy dataset is messy in its own way."
+
+### – Hadley Wickham
+
+---
+class: top, center
+
+# Introduction to Tidyr
+
+&lt;br&gt;
+&lt;br&gt;
+
+.pull-left[
+
+&lt;img src="imgs/tidyr.png" width="200px"&gt;
+
+]
+
+.pull-right[
+
+## A package that reshapes the layout of tabular data.
+
+]
+
+---
+class: top, left, highlight-last-item
+
+## Tidy Data Principle
+
+--
+
+#### 1. Each .green[variable] has its own .blue[column]
+
+--
+
+#### 2. Each .green[observation] has its own .blue[row]
+
+--
+
+#### 3. Each .green[value] in its own .blue[cell]
+
+--
+
+![](imgs/tidy-data-principle.png)
+---
+class: top, left
+
+## Tidyr 
+
+.panelset[
+.panel[.panel-name[Functions]
+
+
+.pull-left[
+
+Function | Description
+--- | ---
+pivot_wider() | Widen the columns
+pivot_longer() | Lengthen the rows
+
+]
+
+.pull-right[
+
+
+&lt;figure&gt;
+  &lt;img src="imgs/tidy-data.png"  width="400" data-alt="imgs/tidyr-spread-gather.gif"&gt;
+&lt;/figure&gt;
+
+&lt;!-- &lt;img src="imgs/tidyr-spread-gather.gif" width="80%"&gt; --&gt;
+
+]
+
+]
+
+.panel[.panel-name[Longer]
+
+.pull-left[
+
+
+```r
+library(tidyr)
+
+pivot_longer(data,
+  cols = "columns",
+  names_to = "name",
+  values_to = "value"
+)
+```
+]
+
+.pull-right[
+
+Here, 
+- data - name of data frame
+- cols - select columns to lengthen
+- names_to - store column names
+- values_to - store values
+
+]]
+
+
+.panel[.panel-name[Wider]
+.pull-left[
+
+
+```r
+library(tidyr)
+
+pivot_wider(data,
+  names_from = name,
+  values_from = value
+)
+```
+
+]
+
+.pull-right[
+
+Here, 
+- data - name of data frame
+- names_from - widen column names
+- values_from - widen value names
+]]
+
+]
+
+---
+class: top, left
+
+# Creating a Data Frame
+
+.pull-left[
+
+
+```r
+library(tidyr)
+
+# data frame with 4 cols, 3 rows
+
+data &lt;- tibble(
+  id = c(1, 2),
+  x = c("a", "b"),
+  y = c("c", "d"),
+  z = c("e", "f")
+)
+```
+
+]
+
+--
+
+
+.pull-right[
+
+
+```r
+data
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["x"],"name":[2],"type":["chr"],"align":["left"]},{"label":["y"],"name":[3],"type":["chr"],"align":["left"]},{"label":["z"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"a","3":"c","4":"e"},{"1":"2","2":"b","3":"d","4":"f"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+
+---
+class: top, left
+
+## Pivoting - Wide to Long
+
+.pull-left[
+
+
+```r
+library(tidyr)
+
+*long &lt;- pivot_longer(data,
+* cols = 2:4,
+* names_to = "key",
+* values_to = "val"
+)
+```
+
+Here, 
+- cols - select 2nd to 4th columns
+- names_to - store names to "key"
+- values_to - store values to "val"
+
+]
+
+--
+
+.pull-right[
+
+![](imgs/wide-to-long.png)
+
+
+]
+
+
+---
+class: top, left
+
+## Pivoting - Long to Wide
+
+.pull-left[
+
+
+```r
+library(tidyr)
+
+*wide &lt;- pivot_wider(long,
+* names_from = key,
+* values_from = val
+)
+```
+
+Here, 
+- names_from - widen "key" cols
+- values_from - widen "val" cols
+
+]
+
+--
+
+.pull-right[
+
+![](imgs/long-to-wide.png)
+
+]
+
+---
+class: top, left
+
+## Your Turn - 01
+
+<div class="countdown" id="timer_6093e2aa" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+.panelset[
+.panel[.panel-name[Question]
+
+.pull-left[
+
+#### Untidy Data Format
+
+
+```r
+table4a
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["1999"],"name":[2],"type":["int"],"align":["right"]},{"label":["2000"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"745","3":"2666","_rn_":"1"},{"1":"Brazil","2":"37737","3":"80488","_rn_":"2"},{"1":"China","2":"212258","3":"213766","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+
+#### Tidy Data Format
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"745"},{"1":"Afghanistan","2":"2000","3":"2666"},{"1":"Brazil","2":"1999","3":"37737"},{"1":"Brazil","2":"2000","3":"80488"},{"1":"China","2":"1999","3":"212258"},{"1":"China","2":"2000","3":"213766"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+.panel[.panel-name[Answer]
+
+.pull-left[
+
+
+```r
+table_a &lt;- pivot_longer(table4a,
+  cols = 2:3,
+  names_to = "year",
+  values_to = "cases"
+)
+```
+
+Here, 
+- selected column is 2nd to 3rd
+- lengthen variable to "year"
+- lengthen values to "cases"
+
+]
+
+
+.pull-right[
+
+
+```r
+table_a
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"745"},{"1":"Afghanistan","2":"2000","3":"2666"},{"1":"Brazil","2":"1999","3":"37737"},{"1":"Brazil","2":"2000","3":"80488"},{"1":"China","2":"1999","3":"212258"},{"1":"China","2":"2000","3":"213766"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+]
+
+]
+
+---
+class: top, left
+
+## Your Turn - 02
+
+<div class="countdown" id="timer_6093e292" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+.pull-left[
+
+table4b - Reshape data into tidy format 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1999 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2000 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19987071 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 172006362 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1272915272 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+]
+
+-- 
+
+.panel[.panel-name[Answer]
+
+.pull-left[
+
+
+```r
+table_b &lt;- pivot_longer(table4b,
+  cols = 2:3,
+  names_to = "year",
+  values_to = "population"
+)
+```
+
+]
+
+.pull-right[
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["population"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"19987071"},{"1":"Afghanistan","2":"2000","3":"20595360"},{"1":"Brazil","2":"1999","3":"172006362"},{"1":"Brazil","2":"2000","3":"174504898"},{"1":"China","2":"1999","3":"1272915272"},{"1":"China","2":"2000","3":"1280428583"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+]
+
+]
+
+
+
+---
+class: top, left
+
+
+## Your Turn - 03
+
+<div class="countdown" id="timer_6093e2e2" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+.pull-left[
+
+- Let's join **table_a** and **table_b** into **df**.
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[3],"type":["int"],"align":["right"]},{"label":["population"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"745","4":"19987071"},{"1":"Afghanistan","2":"2000","3":"2666","4":"20595360"},{"1":"Brazil","2":"1999","3":"37737","4":"172006362"},{"1":"Brazil","2":"2000","3":"80488","4":"174504898"},{"1":"China","2":"1999","3":"212258","4":"1272915272"},{"1":"China","2":"2000","3":"213766","4":"1280428583"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+.panel[.panel-name[Answer]
+
+.pull-left[
+
+
+```r
+*df &lt;- left_join(table_a, table_b,
+* by = c("country", "year")
+*) 
+```
+
+Here, 
+- left_join - combines two data frame
+- table_a - ***country, year, cases**
+- table_b - **country, year, population**
+]
+
+.pull-right[
+
+```r
+df 
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[3],"type":["int"],"align":["right"]},{"label":["population"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"745","4":"19987071"},{"1":"Afghanistan","2":"2000","3":"2666","4":"20595360"},{"1":"Brazil","2":"1999","3":"37737","4":"172006362"},{"1":"Brazil","2":"2000","3":"80488","4":"174504898"},{"1":"China","2":"1999","3":"212258","4":"1272915272"},{"1":"China","2":"2000","3":"213766","4":"1280428583"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+
+]
+
+]
+
+---
+class: top, left
+
+## Your Turn - 04
+
+<div class="countdown" id="timer_6093e414" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+
+.pull-left[
+
+#### What is the average rate of cases in year 2000?
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[3],"type":["int"],"align":["right"]},{"label":["population"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"1999","3":"745","4":"19987071"},{"1":"Afghanistan","2":"2000","3":"2666","4":"20595360"},{"1":"Brazil","2":"1999","3":"37737","4":"172006362"},{"1":"Brazil","2":"2000","3":"80488","4":"174504898"},{"1":"China","2":"1999","3":"212258","4":"1272915272"},{"1":"China","2":"2000","3":"213766","4":"1280428583"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+
+]
+
+.panel[.panel-name[Step 1]
+
+#### 1. Filter by Value
+
+.pull-left[
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cases &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;background-color: #ffff88 !important;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2666 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20595360 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;background-color: #ffff88 !important;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 80488 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174504898 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;background-color: #ffff88 !important;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 213766 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1280428583 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+
+```r
+df %&gt;% 
+* filter(year == 2000)
+```
+
+]
+
+.panel[.panel-name[Step 2]
+
+
+
+#### 2. Remove a Variable
+
+.pull-left[
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["cases"],"name":[2],"type":["int"],"align":["right"]},{"label":["population"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2666","3":"20595360"},{"1":"Brazil","2":"80488","3":"174504898"},{"1":"China","2":"213766","3":"1280428583"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.pull-right[
+
+
+```r
+df %&gt;%
+  filter(year == 2000) %&gt;%
+* select(-year)
+```
+
+]
+
+
+]
+
+.panel[.panel-name[Step 3]
+
+
+
+#### 3. Mutate - Add New Variable
+
+
+.pull-left[
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cases &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rate &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2666 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20595360 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;background-color: #ffff88 !important;"&gt; 0.0001294 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brazil &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 80488 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 174504898 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;background-color: #ffff88 !important;"&gt; 0.0004612 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; China &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 213766 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1280428583 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;background-color: #ffff88 !important;"&gt; 0.0001669 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+
+```r
+df %&gt;%
+  filter(year == 2000) %&gt;%
+  select(-year) %&gt;% 
+* mutate(rate = cases / population)
+```
+
+]
+
+
+]
+
+.panel[.panel-name[Step 4]
+
+#### 4. Summarize - Average rate of cases in year 2000
+
+.pull-left[
+
+&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; avg &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;font-weight: bold;background-color: #ffff88 !important;"&gt; 0.0002525 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+
+.pull-right[
+
+
+```r
+df %&gt;%
+  filter(year == 2000) %&gt;%
+  select(-year) %&gt;%
+  mutate(rate = cases / population) %&gt;%
+* summarize(avg = mean(rate))
+```
+
+]
+
+]
+
+]
+
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script src="libs/jquery.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function($) {
+
+  // Get the .gif images from the "data-alt".
+	var getGif = function() {
+		var gif = [];
+		$('img').each(function() {
+			var data = $(this).data('alt');
+			gif.push(data);
+		});
+		return gif;
+	}
+
+	var gif = getGif();
+
+	// Preload all the gif images.
+	var image = [];
+
+	$.each(gif, function(index) {
+		image[index]     = new Image();
+		image[index].src = gif[index];
+	});
+
+	// Change the image to .gif when clicked and vice versa.
+	$('figure').on('click', function() {
+
+		var $this   = $(this),
+				$index  = $this.index(),
+				
+				$img    = $this.children('img'),
+				$imgSrc = $img.attr('src'),
+				$imgAlt = $img.attr('data-alt'),
+				$imgExt = $imgAlt.split('.');
+				
+		if($imgExt[1] === 'gif') {
+			$img.attr('src', $img.data('alt')).attr('data-alt', $imgSrc);
+		} else {
+			$img.attr('src', $imgAlt).attr('data-alt', $img.data('alt'));
+		}
+
+		// Add play class to help with the styling.
+		$this.toggleClass('play');
+
+	});
+
+})(jQuery);
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

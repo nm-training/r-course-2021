@@ -1,0 +1,2209 @@
+---
+title: "Day 4"
+subtitle: "Data Visualization with ggplot2"
+author: "Sanjay Hamal"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
+        htmltools.preserve.raw = FALSE)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+class: middle, center
+
+# Write Tidy Codes with
+
+<img src="imgs/ggplot2.png" width="20%">
+
+
+---
+class: top, left
+
+## Table of Content
+
+|Topics |
+|--- |
+|ggplot2 |
+| Layers  |             |
+| Aesthetic mappings | |
+| Geometric objects |
+| Statistical transformations |
+| Position adjustments |
+| Coordinate system |
+| Labeling |
+| Extra graphical representations |
+
+
+---
+class: top, left
+
+### Grammar of Graphics
+
+.pull-left[
+
+A data visualization tool that follow grammar of graphics
+and provides us with different verbs (functions).
+
+<img src="imgs/ggplot2_tidyverse.png" width="60%">
+
+]
+
+.pull-right[
+
+```{r}
+library(ggplot2) #<<
+```
+
+
+
+]
+
+
+
+---
+#####**ggplot2:**
+#####ggplot2 is one of the packages of 'tidyverse' package for data visualization.
+##### Loading the tidyverse package loads all the packages including ggplot2.
+```{r message=F}
+library(tidyverse) #<<
+
+```
+##### If we do not want other packages to be loaded, we can simply load ggplot2 package only.
+```{r message=F}
+
+library(ggplot2) #<<
+```
+---
+
+#####**Creating a ggplot:**
+
+#####ggplot() creates a coordinate system that you can add layers to.
+
+#####What is a layer?
+![](img/layers.png)
+---
+
+.panelset[
+
+.panel[.panel-name[Dataset:]
+
+#####Let's have a look at a table available in R called **"cars"**. It has 2 columns: 
+- ######1.speed
+- ######2.dist
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+
+
+]
+
+
+.panel[.panel-name[Empty layer:]
+
+
+#####The first layer is an empty graph to which we are going to add additional layers using the symbol: '+'.
+
+.pull-left[
+```{r plot-last, fig.show='hide'}
+
+ggplot(cars) #<<
+
+```
+   ]
+
+.pull-right[
+```{r ref.label = 'plot-last', echo = FALSE, fig.height=5}
+
+```
+
+  ]
+]
+
+
+.panel[.panel-name[Added layer:1]
+
+######In the second layer, we are going to add a scatter plot using the symbol '+'.
+.pull-left[
+```{r plot-last2, fig.show='hide',}
+ggplot(cars)+
+  geom_point(aes(x=speed, y=dist)) #<<
+```
+  ]
+.pull-right[
+```{r ref.label='plot-last2', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+]
+
+.panel[.panel-name[Added layer:2]
+
+#####In the third layer, we are going to add a line plot using the symbol '+'.
+.pull-left[
+```{r, plot3, fig.show='hide'}
+ggplot(cars)+
+  geom_point(aes(x=speed, y=dist)) +
+  geom_line(aes(x=speed, y=dist)) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='plot3', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+]
+
+
+]
+
+---
+
+.panelset[
+.panel[.panel-name[Putting your codes together:]
+
+
+#####First syntax is always going to be :
+
+##### **ggplot**(data= **____**).
+
+#####Here, you are going to mention the name of the table/dataset which you are going to use for data visualization.
+]
+
+.panel[.panel-name[Dataset:]
+
+#####cars:
+
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+
+]
+
+.panel[.panel-name[Code:Step1]
+
+```{r, fig.show='hide'}
+ggplot(data= cars) #<<
+
+```
+#####After we have specified the dataset that we are going to use, we add the additional aesthetics.
+  ]
+]
+
+---
+.panelset[
+
+.panel[.panel-name[Aesthetic mapping]
+
+#####Aesthetic mapping:
+
+- #####An aesthetic is a visual property of the objects in your plot. Aesthetics include things like the size, the shape, or the color of your points.
+- #####For a particular layer, the components of 'X' and "Y"-axis are defined in aesthetics. Similarly, the properties such as color of the plot, size and shape of the points are also defined in aesthetics.
+
+
+
+]
+
+.panel[.panel-name[Example:]
+
+```{r echo=FALSE}
+ggplot(cars, aes(speed, dist))+geom_point(size=5, color="blue")
+```
+
+]
+
+]
+---
+
+#####Aesthetic mapping: X and Y axis
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **cars:**
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **mapping= aes(x= ----, y= ----)**
+#####[Note: geom_point() is used for creating scatter plot]
+```{r plot_ggplot2, fig.show='hide'}
+ggplot(data=cars)+
+  geom_point(mapping = aes(x=speed, y=dist)) #<<
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot2', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot2', echo=FALSE, fig.retina=5}
+
+```
+]
+
+
+]
+---
+
+#####Aesthetic: Color
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **cars:**
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **color= "-----"**
+
+#####[Note: geom_point() is used for creating scatter plot]
+```{r plot_ggplot3, fig.show='hide'}
+ggplot(data=cars)+
+  geom_point(mapping = aes(x=speed, y=dist),
+             color="red") #<<
+```
+##### The colors could be simple "red", "blue", "green" and so on or Colors can specified as a hexadecimal RGB triplet, such as "#0066CC". The first two digits are the level of red, the next two green, and the last two blue.
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot3', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot3', echo=FALSE, fig.retina=5}
+
+```
+]
+
+
+]
+---
+
+#####Aesthetic: Size
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **cars:**
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **size= ---**
+
+```{r plot_ggplot4, fig.show='hide'}
+ggplot(data=cars)+
+  geom_point(mapping = aes(x=speed, y=dist), color="Red",
+             size=13) #<<
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot4', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot4', echo=FALSE, fig.retina=5}
+
+```
+]
+
+
+]
+---
+
+#####Aesthetic: Shape
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **cars:**
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **shape= ---**
+##### By default, the shape of point is a cirlce[**shape=21**]. There are altogether 25 shapes we can apply.
+```{r plot_ggplot5, fig.show='hide'}
+ggplot(data=cars)+
+  geom_point(mapping = aes(x=speed, y=dist), color="Blue",size=8,
+             shape=3) #<<
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot5', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot5', echo=FALSE, fig.retina=5}
+
+```
+]
+.panel[.panel-name[Other shapes:]
+![](img/shapes.png)
+
+  ]
+
+
+]
+---
+
+#####Aesthetic: Opacity
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **cars:**
+
+```{r message=FALSE, echo=FALSE}
+
+cars %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **alpha= ---**
+
+```{r plot_ggplot6, fig.show='hide'}
+ggplot(data=cars)+
+  geom_point(mapping = aes(x=speed, y=dist), color="Blue",size=8, shape=3,
+             alpha=0.4) #<<
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot6', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot6', echo=FALSE, fig.retina=5}
+
+```
+]
+
+  
+]
+---
+
+##### So far, we have looked at the following properties in a scatter plot:
+
+--
+
+- #####aes(x, y)
+
+--
+
+- #####color
+
+--
+
+- #####shape
+
+--
+
+- #####size
+
+--
+
+- #####alpha
+
+--
+
+#####You can also convey information about your data by mapping the aesthetics in your plot to the variables in your dataset. 
+---
+class: center, middle
+
+#Perform task A [Task 1 to Task5]
+
+---
+#####Mapping color aesthetic to the variables:
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **typ:**
+
+```{r message=FALSE, echo=FALSE}
+
+typ %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **aes(x=---, y=---, color=---)**
+
+```{r plot_ggplot7, fig.show='hide'}
+ggplot(data=typ)+
+geom_point(mapping = 
+aes(x=Position, y=Rating, color=Types) #<<
+             , size=8) 
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot7', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot7', echo=FALSE, fig.retina=5}
+
+```
+]
+
+  
+]
+---
+
+#####Mapping color and shape aesthetic to the variables:
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **typ:**
+
+```{r message=FALSE, echo=FALSE}
+
+
+typ %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+#####Syntax: **aes(x=---, y=---, color=---, shape=---)**
+
+```{r plot_ggplot8, fig.show='hide'}
+ggplot(data=typ)+
+geom_point(mapping = 
+aes(x=Position, y=Rating, color=Types, shape= Gender) #<<
+             , size=8) 
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot8', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[PLOT]
+
+```{r ref.label='plot_ggplot8', echo=FALSE, fig.retina=5}
+
+```
+]
+
+  
+]
+
+---
+
+#####**Geometric objects**:
+
+--
+
+- #####A geom is the geometrical object that a plot uses to represent data.
+
+--
+
+- ##### geom_point is the geometrical object that plots scatter plot to represent data.
+
+--
+
+#####Geometric objects displayed on the plot:
+
+.font80[
+| Type | Function |
+|:----:|:--------:|
+| Point | `geom_point()` |
+| Line | `geom_line()` |
+| Bar | `geom_bar()`, `geom_col()` |
+| Histogram | `geom_histogram()` |
+| Regression | `geom_smooth()` |
+| Boxplot | `geom_boxplot()` |
+| Text | `geom_text()` |
+| Vert./Horiz. Line | `geom_{vh}line()` |
+| Count | `geom_count()` |
+| Density | `geom_density()` |
+]
+
+---
+#####We can add other geometrics(geoms) i.e. line_plot and regression_line in addition to the scatter plot.
+#####Point to remember: '+' sign should be placed in the same line where the previous layer ends.
+
+.pull_left[
+
+##### **Incorrect way**
+```{r  eval=FALSE}
+ggplot(data = typ)
++geom_point(mapping = aes(x=Position, y=Rating)) #<<
++geom_line(mapping = aes(x=Position, y=Rating))  #<<
+```
+]
+.pull_right[
+##### **Correct way**
+```{r message=FALSE, eval=FALSE}
+ggplot(data = typ)+                   #<<
+  geom_point(mapping = aes(x=Position, y=Rating))+  #<<
+  geom_line(mapping = aes(x=Position, y=Rating))+
+  geom_smooth(mapping=aes(x=Position, y=Rating))
+```
+
+]
+
+---
+#####Combination of plots
+.panelset[
+
+.panel[.panel-name[Dataset:]
+##### **typ:**
+
+```{r message=FALSE, echo=FALSE}
+
+typ %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+.panel[.panel-name[Scatter plot:]
+
+.pull-left[
+##### **geom_point(mapping=aes(x=---, y=---))**
+
+```{r plot_ggplot9x, fig.show='hide'}
+ggplot(data = typ)+                   #<<
+  geom_point(mapping = aes(x=Position, y=Rating))  
+ 
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot9x', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[Adding line plot:]
+
+.pull-left[
+#####**geom_line(mapping=aes(x=---, y=---))**
+
+```{r plot_ggplot9, fig.show='hide'}
+ggplot(data = typ)+                   #<<
+  geom_point(mapping = aes(x=Position, y=Rating))+  #<<
+  geom_line(mapping = aes(x=Position, y=Rating)) 
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot9', echo=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+.panel[.panel-name[Adding regression plot]
+
+
+.pull-left[
+##### **geom_smooth(mapping=aes(x=---, y=---))**
+
+```{r plot_ggplot9y, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data = typ)+                   
+  geom_point(mapping = aes(x=Position, y=Rating))+  
+  geom_line(mapping = aes(x=Position, y=Rating)) + #<<
+  geom_smooth(mapping = aes(x=Position, y=Rating)) #<<
+```
+
+  ]
+.pull-right[
+```{r ref.label='plot_ggplot9y', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+
+]
+
+]
+
+  
+]
+---
+
+#####**Apply aesthetics globally**:
+
+
+.panelset[
+
+.panel[.panel-name[Code:]
+
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+ggplot(data = typ)+                   
+  geom_point(mapping = aes(x=Position, y=Rating))+ #<<  
+  geom_line(mapping = aes(x=Position, y=Rating)) + #<<
+  geom_smooth(mapping = aes(x=Position, y=Rating)) #<<
+```
+
+
+- #####We can see that the same aesthetics are being used in all of the geoms.
+
+
+- #####If we supply those aesthetics to **ggplot()** in the beginning, it is applied globally.
+
+```{r eval=FALSE}
+ggplot(data = typ, mapping = aes(x=Position, y=Rating))+                   #<<
+  geom_point()+  
+  geom_line()+
+  geom_smooth()
+```
+
+]
+
+.panel[.panel-name[Apply aesthetic for each geom:]
+
+.pull-left[
+
+```{r m1, fig.show='hide',message=FALSE, warning=FALSE}
+
+ggplot(data = typ)+                   
+  geom_point(mapping = aes(x=Position, y=Rating))+ #<<  
+  geom_line(mapping = aes(x=Position, y=Rating)) + #<<
+  geom_smooth(mapping = aes(x=Position, y=Rating)) #<<
+```
+
+]
+.pull-right[
+
+```{r, ref.label="m1", echo=FALSE, warning=FALSE, message=FALSE, fig.height=5}
+
+
+```
+
+]
+
+
+  ]
+
+.panel[.panel-name[Apply aesthetics globally:]
+
+
+.pull-left[
+
+```{r m2, fig.show='hide',message=FALSE, warning=FALSE}
+ggplot(data = typ, mapping = aes(x=Position, y=Rating))+                   #<<
+  geom_point()+  
+  geom_line()+
+  geom_smooth()
+```
+
+]
+.pull-right[
+
+```{r, ref.label="m2", echo=FALSE, warning=FALSE, message=FALSE, fig.height=5}
+
+```
+
+]
+
+
+
+]
+
+]
+
+---
+
+.panelset[
+
+
+.panel[.panel-name[Other properties: Code]
+#####In addition to global aesthetics, we can apply individual aesthetics to their own geoms.
+
+```{r message=FALSE, eval=FALSE}
+ggplot(data = typ, mapping = aes(x=Col1, y=Col2))+                   #<<
+  geom_point(color='Red')+  #makes the points red
+  geom_line(size=0.02)+ #reduces the width of line plot
+  geom_smooth(se=F) #removes ribbon around smooth line     
+```
+
+
+
+
+]
+
+.panel[.panel-name[Other properties: Plot]
+
+```{r message=FALSE, fig.retina=5, echo=FALSE}
+ggplot(data = typ, mapping = aes(x=Position, y=Rating))+                   #<<
+  geom_point(color='Red')+  #makes the points red
+  geom_line(size=0.02)+ #reduces the width of line plot
+  geom_smooth(se=F) #removes ribbon around smooth line     
+```
+
+
+
+
+]
+
+
+]
+
+
+
+
+---
+
+#####Properties of  geoms:
+.panelset[
+
+
+.panel[.panel-name[Dataset:]
+##### **mpg:**
+
+```{r message=FALSE, echo=FALSE}
+
+mpg %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Smooth-line(Shape):]
+
+#####Plotting a smooth line: It has it's own mapping. There is no shape of a point in line. Hence it ignores the parameter 'shape' with a warning.
+.pull-left[
+```{r plot_ggplot91, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data=mpg)+
+  geom_smooth(mapping = aes(x=displ, y=hwy), shape=22) #<<
+```
+![](img/warning1.PNG)
+]
+.pull-right[
+```{r ref.label='plot_ggplot91', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+.panel[.panel-name[Smooth-line(Linetype):]
+
+##### -However, you can use aesthetic mappings of geom_smooth to make changes in the type of line.
+##### -Linetype='dashed' gives a dashed line instead of a solid line.
+
+.pull-left[
+```{r plot_ggplot10, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data=mpg)+
+  geom_smooth(mapping = aes(x=displ, y=hwy),
+              linetype= "dashed") #<<
+```
+]
+.pull-right[
+```{r ref.label='plot_ggplot10', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+
+
+]
+
+---
+
+#####Properties of  geoms:
+.panelset[
+
+
+.panel[.panel-name[Dataset:]
+##### **mpg:**
+
+```{r message=FALSE, echo=FALSE}
+
+mpg %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Code1]
+
+#####The line type can also be assigned to a varible in a dataset. 
+.pull-left[
+```{r plot_ggplot11, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data=mpg)+
+  geom_smooth(mapping = aes(x=displ, y=hwy,
+                            linetype= drv, color=drv)) #<<
+```
+]
+.pull-right[
+```{r ref.label='plot_ggplot11', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+]
+.panel[.panel-name[Plot1]
+```{r ref.label='plot_ggplot11', echo=FALSE, message=FALSE, warning=FALSE, fig.retina=5}
+
+```
+
+]
+
+.panel[.panel-name[Code2:]
+
+#####Similarly, we can modify the regression plot by setting method="lm" and remove the ribbon by setting: se=False
+.pull-left[
+```{r plot_ggplot12, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data=mpg)+
+  geom_smooth(mapping = aes(x=displ, y=hwy), linetype= "dashed", method = "lm", se=F) #<<
+```
+]
+.pull-right[
+```{r ref.label='plot_ggplot12', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+.panel[.panel-name[Plot2]
+```{r ref.label='plot_ggplot12', echo=FALSE, message=FALSE, warning=FALSE, fig.retina=5}
+
+```
+]
+
+.panel[.panel-name[Adding points:]
+
+#####Adding a layer of scatter plot on top of that:
+
+
+.pull-left[
+```{r plot_ggplot13, fig.show='hide', message=FALSE, warning=FALSE}
+ggplot(data=mpg)+
+  geom_smooth(mapping = aes(x=displ, y=hwy), linetype= "dashed", method = "lm", se=F)+ 
+  geom_point(mapping= aes(x=displ, y=hwy)) #<<
+```
+]
+.pull-right[
+```{r ref.label='plot_ggplot13', echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+]
+
+
+---
+
+#####Properties of  geoms:
+.panelset[
+
+
+.panel[.panel-name[Dataset:]
+##### **mpg:**
+
+```{r message=FALSE, echo=FALSE}
+
+mpg %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+  
+]
+
+.panel[.panel-name[Override the global option]
+
+```{r plot_ggplot14, eval=FALSE}
+ggplot(data=mpg, aes(x=displ, y=hwy))+
+  geom_smooth(linetype= "dashed", method = "lm", se=F)+ 
+  geom_point(mapping= aes(color=drv))+
+  
+  geom_smooth(data=(mpg %>%filter(drv=="f")), #<<
+              mapping = aes(color=drv),  se=F)
+```
+]
+
+
+.panel[.panel-name[Plot]
+```{r , echo=FALSE, message=FALSE, warning=FALSE, fig.retina=5}
+ggplot(data=mpg, aes(x=displ, y=hwy))+ #<<
+  geom_smooth(linetype= "dashed", method = "lm", se=F)+ 
+  geom_point(mapping= aes(color=drv))+
+  
+  geom_smooth(data=(mpg %>%filter(drv=="r")), #<<
+              mapping = aes(color=drv),method="lm",  se=F)
+```
+
+]
+
+
+
+
+]
+---
+class: center, middle
+# Perform task B: [Task 6 - Task 7]
+---
+#####Statistical transformation:
+.panelset[
+
+
+.panel[.panel-name[Overview:]
+- #####The algorithm used to calculate new values for a graph is called a stat, short for statistical transformation. 
+
+- #####In other graphs such as scatter plot, line plot, smooth-line,  new values are not computed.
+
+- #####In graphs like bar plot, box plots, histograms etc, new values are computed such as counts, proportions, summary etc.
+  
+]
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30, ] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Process]
+![](img/bar1.PNG)
+]
+
+]
+---
+
+#####Statistical transformation:
+.panelset[
+
+
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30, ] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Bar plot: ]
+
+.pull-left[
+```{r ggplot_bar1, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut)) #<<
+
+#Same code can be written as:
+#ggplot(data = diamonds)+geom_bar(mapping = aes(x=cut), stat="count")
+```
+
+- #####The 'count' variable is computed and mapped to Y-axis.
+
+]
+.pull-right[
+```{r ref.label="ggplot_bar1", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+```
+]
+
+]
+.panel[.panel-name[Assigning varibale to 'y' axis]
+
+
+.pull-left[
+```{r ggplot_bar1a, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(y=cut)) #<<
+
+#Same code can be written as:
+#ggplot(data = diamonds)+geom_bar(mapping = aes(y=cut), stat="count")
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar1a", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+```
+]
+
+]
+
+]
+---
+
+#####Statistical transformation:
+.panelset[
+
+
+
+.panel[.panel-name[Dataset]
+##### **data_x**
+
+```{r message=FALSE, echo=FALSE}
+data_x<- data.frame(Categories=c("A", "B", "C", "D"), Numbers= c(50, 70, 20, 10))
+
+data_x %>%knitr::kable(format = "html") %>%  kable_paper() 
+ 
+```
+]
+
+.panel[.panel-name[Bar plot(Custom counts): ]
+#####To display bar graph with count values already present in a dataset rather than the computed one, we can modify the "stat" property.
+
+.pull-left[
+```{r ggplot_bar2, fig.show='hide', message=FALSE}
+ggplot(data = data_x)+
+  geom_bar(mapping = aes(x=Categories, y=Numbers), #<<
+           stat = "identity") #<<
+##The same plot can be created with geom_col. geom_bar() uses stat_count() by default whereas  geom_col () uses stat_identity() by default.
+
+#ggplot(data=data_x)+
+#          geom_col(mapping = aes(x=Categories, y=Numbers)) #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar2", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+]
+
+.panel[.panel-name[Diamond dataset]
+```{r message=FALSE, echo=FALSE}
+diamonds[1:30,] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Proportion]
+
+
+#####Instead of counts, we can also use proportions:
+
+.pull-left[
+```{r ggplot_bar3, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut, y=..prop.., group=1)) #<<
+
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar3", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+
+```
+]
+]
+
+]
+---
+
+#####Statistical transformation:
+.panelset[
+
+.panel[.panel-name[stat_count]
+#####?geom_bar shows the default value for stat is “count,” which means that geom_bar() uses stat_count().
+#####Hence, to display the same geom_bar with count values, we can replace the code with stat_count() too.
+
+]
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30,] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Bar plot(stat_count): ]
+
+.pull-left[
+```{r ggplot_bar4, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  stat_count(mapping = aes(x=cut)) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label="ggplot_bar4", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+  ]
+]
+
+.panel[.panel-name[Other stats]
+
+#####There are over 20 stats that you can use in R such as:
+- #####stat_count
+- #####stat_summary
+- #####stat_density
+- #####stat_bin
+- #####stat_boxplot
+- #####stat_smooth
+- #####stat_quantile
+##### ?stat_summary gives you details about summary stats
+]
+
+]
+---
+
+##### Attributes in bar graph(geom_bar):
+.panelset[
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30,] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Bar graph(fills)]
+
+
+.pull-left[
+```{r ggplot_bar7, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut,
+                         fill=cut)) #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar7", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label="ggplot_bar7", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+]
+
+.panel[.panel-name[Bar graph(color)]
+
+
+.pull-left[
+```{r ggplot_bar8, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut,
+                         color=cut)) #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar8", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label="ggplot_bar8", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+]
+
+]
+---
+
+##### Attributes in bar graph(geom_bar):
+.panelset[
+
+.panel[.panel-name[Positions:]
+
+##### There are few position adjustments in bar graphs: stack, dodge, identity and fill:
+- ##### **stack:** The objects are stacked one on top of the other.
+- ##### **dodge:** The objects are placed adjacent to each other.
+- ##### **identity:** The objects are placed exactly where it falls on the graph.
+- ##### **fill:** works like stacking, but makes each set of stacked bars the same height. This makes it easier to compare proportions across groups.
+
+
+
+
+]
+
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30,] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Position adjustments]
+
+##### By default, the position is "stack" i.e the fills are stacked one on top of other and the thickness is based on their counts.
+
+
+
+.pull-left[
+```{r ggplot_bar9, fig.show='hide', message=FALSE}
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut, fill=clarity)) #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar9", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label="ggplot_bar9", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+]
+]
+---
+
+##### Attributes in bar graph(geom_bar)[Position adjustments]:
+.panelset[
+.panel[.panel-name[Dataset]
+##### **df_bar**
+
+```{r message=FALSE, echo=FALSE}
+df_bar<- data.frame(col1=c("A", "A", "A","A", "B", "B", "B", "B"), col2= c("X", "X", "Y", "Z", "X" ,"X", "X", "Y"))
+df_bar %>%knitr::kable(format = "html") %>%  kable_paper() 
+ 
+```
+]
+
+.panel[.panel-name[1:Stack]
+##### It is the default position in geom_bar.
+
+
+.pull-left[
+```{r ggplot_bar10, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+
+  geom_bar(mapping = aes(x=col1, fill=col2),
+           position = "stack") #<<
+```
+  ]
+.pull-right[
+```{r ref.label="ggplot_bar10", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+  ]
+
+]
+.panel[.panel-name[Plot1]
+```{r ref.label="ggplot_bar10", echo=FALSE, message=FALSE, warning=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+]
+.panel[.panel-name[2:Dodge]
+##### The objects are placed adjacent to each other.
+
+.pull-left[
+```{r ggplot_bar11_a, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+
+  geom_bar(mapping = aes(x=col1, fill=col2),
+           position = "dodge") #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar11_a", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+
+]
+.panel[.panel-name[Plot2]
+```{r ref.label="ggplot_bar11_a", echo=FALSE, message=FALSE, warning=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+]
+
+
+]
+---
+
+##### Attributes in bar graph(geom_bar)[Position adjustments]:
+.panelset[
+.panel[.panel-name[Dataset]
+##### **df_bar**
+
+```{r message=FALSE, echo=FALSE}
+df_bar<- data.frame(col1=c("A", "A", "A","A", "B", "B", "B", "B"), col2= c("X", "X", "Y", "Z", "X" ,"X", "X", "Y"))
+df_bar %>%knitr::kable(format = "html") %>%  kable_paper() 
+ 
+```
+]
+
+.panel[.panel-name[3:Identity]
+
+##### **Position:Identity**
+##### The objects are placed exactly where it falls on the graph. However, it has a disadvantage.
+#####Notice that the fill of "Y" is masked by that of "Z". Hence we need to use opacity(alpha) to notice the actual fill.
+
+
+
+.pull-left[
+```{r ggplot_bar11, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+
+  geom_bar(mapping = aes(x=col1, fill=col2),
+           position = "identity") #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar11", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+
+]
+
+
+.panel[.panel-name[Plot3a]
+```{r ggplot_bar12,message=FALSE,echo=FALSE, fig.retina=5}
+df_bar1<- data.frame(col1=c("A", "A", "B", "B", "B"), col2= c("X", "X", "X" ,"X", "X"))
+ggplot(data = df_bar1)+
+  geom_bar(mapping = aes(x=col1, fill=col2), position = "identity")+scale_fill_manual(values=c("X"="#e43a39", "Y"="#90ee90", "Z"="#92b7fe"))  #<<
+```
+]
+.panel[.panel-name[Plot3b]
+
+```{r ggplot_bar13, message=FALSE, echo=FALSE, fig.retina=5}
+df_bar2<- data.frame(col1=c("A", "A","A", "B", "B", "B", "B"), col2= c("X", "X","Y", "X" ,"X", "X", "Y"))
+ggplot(data = df_bar2)+
+  geom_bar(mapping = aes(x=col1, fill=col2), position = "identity")+ scale_fill_manual(values=c("X"="#e43a39", "Y"="#90ee90", "Z"="#92b7fe")) 
+```
+]
+.panel[.panel-name[Plot3c]
+
+
+```{r ggplot_bar14, message=FALSE, echo=FALSE, fig.retina=5}
+df_bar3<- data.frame(col1=c("A", "A","A","A", "B", "B", "B", "B"), col2= c("X", "X","Y","Z", "X" ,"X", "X", "Y"))
+ggplot(data = df_bar3)+
+  geom_bar(mapping = aes(x=col1, fill=col2), position = "identity")+scale_fill_manual(values=c("X"="#e43a39", "Y"="#90ee90", "Z"="#92b7fe"))  #<<
+```
+]
+.panel[.panel-name[Use alpha]
+
+.pull-left[
+```{r ggplot_bar11_x1, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+
+  geom_bar(mapping = aes(x=col1, fill=col2),
+           position = "identity",
+           alpha= 0.4)  #<<
+ 
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar11_x1", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+]
+---
+
+##### Attributes in bar graph(geom_bar)[Position adjustments]:
+.panelset[
+.panel[.panel-name[Dataset]
+##### **df_bar**
+
+```{r message=FALSE, echo=FALSE}
+df_bar<- data.frame(col1=c("A", "A", "A","A", "B", "B", "B", "B"), col2= c("X", "X", "Y", "Z", "X" ,"X", "X", "Y"))
+df_bar %>%knitr::kable(format = "html") %>%  kable_paper() 
+ 
+```
+]
+
+.panel[.panel-name[4:Fill]
+
+##### **Position:fill**
+##### It works like stacking, but makes each set of stacked bars the same height. This makes it easier to compare proportions across groups:
+
+
+
+
+.pull-left[
+```{r ggplot_bar15, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+
+  geom_bar(mapping = aes(x=col1, fill=col2), position = "fill") #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar15", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+
+
+]
+
+
+.panel[.panel-name[Plot4]
+```{r ref.label="ggplot_bar15", echo=FALSE, message=FALSE, warning=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+  ]
+]
+---
+
+##### Coordinate system:
+.panelset[
+.panel[.panel-name[Dataset]
+##### **df_bar**
+
+```{r message=FALSE, echo=FALSE}
+df_bar<- data.frame(col1=c("A", "A", "A","A", "B", "B", "B", "B"), col2= c("X", "X", "Y", "Z", "X" ,"X", "X", "Y"))
+df_bar %>%knitr::kable(format = "html") %>%  kable_paper() 
+ 
+```
+]
+
+.panel[.panel-name[Coord_flip]
+
+
+.pull-left[
+```{r ggplot_bar16, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  coord_flip() #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar16", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+
+
+]
+
+
+.panel[.panel-name[Plot1]
+```{r ref.label="ggplot_bar16", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5, fig.width=10, fig.retina=5}
+
+```
+  ]
+
+.panel[.panel-name[Coord_polar]
+
+
+##### **coord_polar** : It is always used with goem_bar().
+.pull-left[
+```{r ggplot_bar18, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  coord_polar()  #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar18", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+
+.panel[.panel-name[Plot2]
+```{r ref.label="ggplot_bar18", echo=FALSE, message=FALSE, warning=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+  ]
+]
+---
+class: center, middle
+# Perform task C[Task 8- Task 9]
+---
+
+##### Labeling in ggplot2:
+.panelset[
+
+
+.panel[.panel-name[Labels]
+
+#####**labs()** function is used to add or modify the labels in ggplot2.
+##### We can add labels for:
+- ##### TITLE
+- ##### SUBTITLE
+- ##### CAPTION
+- ##### TAGS
+- ##### X-AXIS
+- ##### Y-AXIS
+- ##### LEGEND
+
+
+]
+
+
+.panel[.panel-name[Title]
+.pull-left[
+```{r ggplot_bar20, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE") #<<
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar20", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+  ]
+  
+.panel[.panel-name[Plot1]
+```{r ref.label="ggplot_bar20", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+.panel[.panel-name[Sub-title]
+.pull-left[
+```{r ggplot_bar21, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE",
+       subtitle = "Subtitle" #<<
+       )
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar21", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+  ]
+.panel[.panel-name[Plot2]
+```{r ref.label="ggplot_bar21", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+.panel[.panel-name[Caption]
+.pull-left[
+```{r ggplot_bar22, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE",
+       subtitle = "Subtitle",
+       caption = "Caption" #<<
+       )
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar22", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+]
+.panel[.panel-name[Plot3]
+```{r ref.label="ggplot_bar22", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+]
+---
+
+##### Labeling in ggplot2:
+.panelset[
+
+
+
+.panel[.panel-name[Tag]
+.pull-left[
+```{r ggplot_bar23, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE",
+       subtitle = "Subtitle",
+       caption = "Caption" ,
+       tag = "Fig:A" #<<
+       
+       )
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar23", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+  ]
+  
+.panel[.panel-name[Plot4]
+```{r ref.label="ggplot_bar23", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+.panel[.panel-name[X,Y]
+.pull-left[
+```{r ggplot_bar24, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE",
+       subtitle = "Subtitle",
+       caption = "Caption" ,
+       tag = "Fig:A" ,
+       x= "Label for X-axis", #<<
+       y= "Lable for Y-axis" #<<
+       )
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar24", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+  ]
+.panel[.panel-name[Plot5]
+```{r ref.label="ggplot_bar24", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+.panel[.panel-name[Index]
+.pull-left[
+```{r ggplot_bar25, fig.show='hide', message=FALSE}
+ggplot(data = df_bar)+geom_bar(mapping = aes(x= col2, fill=col2))+
+  labs(title = "TITLE",
+       subtitle = "Subtitle",
+       caption = "Caption" ,
+       tag = "Fig:A" ,
+       x= "Label for X-axis", 
+       y= "Lable for Y-axis" ,
+       fill= "Legend title" #<<
+       )
+```
+]
+.pull-right[
+```{r ref.label="ggplot_bar25", echo=FALSE, message=FALSE, warning=FALSE, fig.height=5}
+
+```
+]
+
+
+]
+.panel[.panel-name[Plot6]
+```{r ref.label="ggplot_bar25", echo=FALSE, message=FALSE, warning=FALSE, fig.height=6, fig.width=10, fig.retina=5}
+
+```
+
+]
+]
+---
+# Perform Task D [Task 10]
+---
+
+##### Other graphical representations:
+.panelset[
+
+
+
+.panel[.panel-name[Histogram]
+- ##### Histogram is used to visualize the distribution of a variable.
+- ##### Bar chart is used to visualize the distribution of a categorical variable.
+- ##### To visualize the continuous variable, we use histograms.
+]
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30, ] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+##### The continuous variable(x) and the size of the bin is required(binwidth).
+
+```{r, plot_h1, fig.show='hide'}
+ggplot(data = diamonds) +
+ geom_histogram(mapping = aes(x = depth), #<<
+                binwidth = 0.5) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='plot_h1', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='plot_h1', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+
+]
+---
+##### Other graphical representations:
+.panelset[
+
+
+
+.panel[.panel-name[Freqpoly]
+- ##### To overlay multiple histograms in the same plot.
+- ##### It uses lines to display the distribution.
+- ##### We can group the distribution with categorical variables as well.
+]
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30, ] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Code:]
+
+.pull-left[
+##### The continuous variable(x) and the size of the bin is required(binwidth).
+##### Categorical variables can be used to visualize different lines.
+
+```{r, plot_h2, fig.show='hide'}
+ggplot(data = diamonds) +
+ geom_freqpoly(mapping = aes(x = carat, color=cut), #<<
+                binwidth = 0.1) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='plot_h2', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot]
+
+```{r ref.label='plot_h2', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+]
+---
+
+
+##### Other graphical representations:
+.panelset[
+
+
+
+.panel[.panel-name[Boxplot]
+![](img/boxplot.PNG)
+]
+
+.panel[.panel-name[Dataset]
+##### **diamonds**
+
+```{r message=FALSE, echo=FALSE}
+
+diamonds[1:30, ] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Code1:]
+
+.pull-left[
+##### Box plot with 1 variable
+
+```{r, plot_h3, fig.show='hide'}
+ggplot(data = diamonds) +
+ geom_boxplot(mapping = aes(y = depth)) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='plot_h3', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot1]
+
+```{r ref.label='plot_h3', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+
+
+.panel[.panel-name[Code2:]
+
+.pull-left[
+##### Box plot with categorical and continuous variables
+
+```{r, plot_h4, fig.show='hide'}
+
+ggplot(data = diamonds) +
+ geom_boxplot(mapping = 
+                aes(x = cut, y = price)) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='plot_h4', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot2]
+
+```{r ref.label='plot_h4', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+]
+---
+
+##### Other graphical representations:
+.panelset[
+
+
+
+.panel[.panel-name[Facets]
+- ##### Facets are used to create subplots from the whole plot using categorical variables.
+- ##### Facet wrap is used to create subplots from a single categorical variable.
+- ##### Facet grid is used to create subplots on the combination of 2 categorical variables.
+]
+
+.panel[.panel-name[Dataset]
+##### **typ**
+
+
+```{r message=FALSE, echo=FALSE}
+typ= data.frame(Position=1:10, Rating=c(2,3,5,7,9,4,1,2,3,4), Types=c('Type I', 'Type I', 'Type II',"Type I", "Type III", "Type II", "Type III", "Type II", "Type II", "Type III"), Serial_num=c(2,7,10,13,12,3,4,6,7,8), Gender= c('Boy', "Girl", "Girl", 'Girl', "Girl", "Boy", "Boy", "Girl", "Girl", "Girl"))
+typ %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Whole plot:]
+
+.pull-left[
+
+
+```{r, fa1, fig.show='hide'}
+ggplot(data = typ) +
+  geom_point(mapping = aes(Rating, Position, color= Types), size=4)#<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='fa1', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot1]
+
+```{r ref.label='fa1', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+
+
+
+
+
+.panel[.panel-name[Facet_wrap]
+
+.pull-left[
+
+##### facet_wrap(~subplot_variable, nrow or ncol)
+##### nrow or ncol denote the number of rows of columns used for the display of subplots.
+```{r, fa2, fig.show='hide'}
+ggplot(data = typ) +
+  geom_point(mapping = aes(Rating, Position, color=Types), size=4)+
+  facet_wrap(~Types, nrow = 2) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='fa2', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot2]
+
+```{r ref.label='fa2', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+]
+---
+
+##### Other graphical representations:
+.panelset[
+
+
+.panel[.panel-name[Dataset]
+##### **typ**
+
+
+```{r message=FALSE, echo=FALSE}
+
+typ %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Facet grid]
+##### facet_grid(Yaxis_variable~Xaxis_variable)
+
+.pull-left[
+
+```{r, fa3, fig.show='hide'}
+ggplot(data = typ) +
+  geom_point(mapping = aes(Rating, Position, color= Types), size=2)+
+  facet_grid(Types~Gender)#<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='fa3', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot3]
+
+```{r ref.label='fa3', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+
+
+
+
+
+.panel[.panel-name[Facet grid ]
+##### facet_grid(Yaxis_variable~Xaxis_variable)
+
+.pull-left[
+```{r, fa4, fig.show='hide'}
+ggplot(data = typ) +
+  geom_point(mapping = aes(Rating, Position, color=Types), size=2)+
+  facet_grid(Gender~Types) #<<
+
+```
+  ]
+.pull-right[
+```{r ref.label='fa4', echo=FALSE, fig.height=5}
+
+```
+
+  ]
+
+
+]
+
+
+.panel[.panel-name[Plot4]
+
+
+```{r ref.label='fa4', echo=FALSE, fig.height=7, fig.width=10, fig.retina=5}
+
+```
+
+]
+
+]

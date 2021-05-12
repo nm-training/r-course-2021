@@ -1,0 +1,212 @@
+div.my-header {
+    background-color: #F77A00;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffb76b), color-stop(0%,#ffa73d), color-stop(0%,#ffffff), color-stop(10%,#ffffff), color-stop(25%,#F77A00), color-stop(100%,#F77A00));
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 5px;
+    width: 100%;
+    text-align: left;
+}
+
+div.my-footer {
+    background-color: #b93e23;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    height: 5px;
+    width: 100%;
+}
+
+div.my-footer img {
+    max-width: 6%;
+    float: right;
+    margin-bottom: 10px;
+    position: absolute;
+    left: 15px;
+    bottom: 2px;
+}
+
+/*.remark-slide-content:after {
+    content: "Footer text";
+    position: absolute;
+    bottom: 5px;
+    right: 35px;
+    height: 40px;
+    width: 120px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("logo.png");
+}*/
+
+
+.remark-slide-number {
+  display: none;
+}
+
+.pull-right ~ * {
+   clear: none;
+}
+
+.countdown.running {
+    border-color: #f0791f;
+    background-color: #f0791f;
+}
+
+.countdown.running .countdown-digits {
+    color: #ffffff;
+}
+
+.red {
+  color:red;
+  font-weight:bold;
+}
+
+.red-bg {
+  background: #f7cccc;
+}
+
+.yellow{
+  color:#c56f00;
+  font-weight:bold;
+}
+
+.green {
+  color:#57a251;
+  font-weight:bold;
+}
+
+.blue {
+  color:#2376b8;
+  font-weight:bold;
+}
+
+.pink {
+  color:pink;
+  font-weight:bold;
+}
+
+.orange {
+  color: orange;
+  font-weight:bold;
+}
+
+/* Highlight Items */
+
+.highlight-last-item > ul > li, 
+.highlight-last-item > ol > li {
+  opacity: 0.5;
+}
+.highlight-last-item > ul > li:last-of-type,
+.highlight-last-item > ol > li:last-of-type {
+  opacity: 1;
+}
+
+.remark-slide table {
+    margin: 1em 0 0;
+    width: 100%;
+    border-top: 2px solid #d8d8d8;
+    border-bottom: 2px solid #d8d8d8;
+}
+
+/*.remark-slide thead, .remark-slide tfoot, .remark-slide tr:nth-child(even) {
+    background: none;
+}
+*/
+
+.tabbg tr:nth-child(even) {
+    background: #f8f8f8;
+}
+
+
+.remark-slide table tr{
+ line-height: 30px; 
+}
+
+#center {
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.pagedtable-wrapper {
+     border: none;
+}
+
+.pagedtable-header-type {
+    display: none;
+}
+
+.pagedtable table tr {
+ line-height: 40px !important; 
+}
+
+.pagedtable-footer {
+    display: none;
+}
+
+
+.pull-left{clear: left;}
+
+
+.column {
+  float: left;
+  width: 33.33%;
+}
+
+
+.column1, .column2{
+  float:left;
+  width:25%;
+}
+
+.column3{
+  float:left;
+  width:50%;
+}
+
+.col20{
+  float:left;
+  width:20%;
+}
+
+.col15{
+  float:left;
+  width:15%;
+}
+
+.col40{
+  float:left;
+  width:40%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.pull-left70{
+float:left;
+width:70%;
+
+}
+
+.pull-right30{
+float:right;
+width:30%;
+
+}
+
+.pull-left60{
+  float:left;
+width:60%;
+  
+}
+
+.pull-right40{
+  float:right;
+width:40%;
+}
+

@@ -1,0 +1,39 @@
+---
+title: ""
+author: "Binod Jung Bogati"
+institute: "Numeric Mind Pvt. Ltd"
+date: "(updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: ["default", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+---
+
+---
+class: inverse, middle, center
+
+# Contents
+
+---
+class: top, left
+
+##
+
+##
+
+##
+

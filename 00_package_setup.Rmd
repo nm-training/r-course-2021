@@ -1,0 +1,102 @@
+---
+title: "Package and Installation"
+author: "Binod Jung Bogati"
+institute: "Numeric Mind"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:  
+      highlightStyle: github
+      highlightLines: true 
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
+        htmltools.preserve.raw = FALSE)
+library(countdown)
+library(xaringanExtra)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# These are the defaults
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div>
+---
+
+---
+class: top, left
+
+## R Package
+
+.panelset[
+
+.panel[.panel-name[Eco-system]
+
+<img src="imgs/rcran.png" width="60%">
+
+]
+
+.panel[.panel-name[About]
+
+- R packages are a collection of functions, complied code & sample data
+- Comprehensive R Archive Network (CRAN) has now **17513** packages 
+
+<img src="imgs/packages.png" width="60%">
+
+]
+
+.panel[.panel-name[Load]
+
+To install and load package we use following:
+
+```{r eval = F}
+install.packages("tidyverse") #install
+
+library(tidyverse) #load
+```
+
+]
+
+.panel[.panel-name[Ask]
+
+
+- ask about the mean() function
+
+```{r eval=F}
+?mean
+```
+
+- ask about the mtcars data sets
+
+```{r eval=F}
+?cars
+```
+
+
+- ask about the dplyr package
+
+```{r eval=F}
+?tidyverse
+```
+
+]
+
+]
+

@@ -1,0 +1,197 @@
+---
+title: "Import Data in R"
+author: "Binod Jung Bogati"
+institute: "Numeric Mind Pvt. Ltd"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    df_print: paged
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
+        htmltools.preserve.raw = FALSE)
+library(countdown)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+layout: false
+class: top, center
+background-image: url(imgs/data-analysis-cover.png)
+background-size: 75%
+
+# Data Analysis Process
+
+---
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+class: top, left
+
+## Read Data Files in R
+
+
+.panelset[
+.panel[.panel-name[Syntax]
+
+Function | Description
+--- | ---
+readRDS/RDA | Read R Data
+read_csv() | Read CSV Data
+read_excel() | Read Excel Data
+read_sas() | Read SAS Data
+read_sav() | Read SPSS Data
+read_dta() | Read Stata Data
+
+]
+
+.panel[.panel-name[Load]
+
+* We need following packages:
+
+```{r}
+library("readr")
+library("haven")
+library("readxl")
+```
+
+]
+
+.panel[.panel-name[Read I]
+
+```{r}
+### Read R Data
+load("./data/cars.rda")
+ 
+rds_data <- readRDS("./data/cars.rds")
+
+### Read CSV File
+csv_data <- read_csv("./data/cars.csv")
+
+```
+
+]
+
+.panel[.panel-name[Read II]
+
+```{r}
+### Read Excel Data
+excel_data <- read_excel("./data/cars.xlsx")
+
+# Read SAS Data
+sas_data <- read_sas("./data/cars.sas7bdat")
+
+### Read SPSS Data 
+spss_data <- read_sav("./data/cars.sav")
+
+### Read Stata Files
+stata_data <- read_dta("./data/cars.dta")
+```
+
+]]
+
+---
+class: top, left
+
+## Write Data from R
+
+
+.panelset[
+.panel[.panel-name[Syntax]
+
+Function | Description
+--- | ---
+saveRDS/save | Write to RDS/RDA file
+write_csv() | Write to CSV file
+write_xlsx() | Write to Excel File
+write_sas() | Write to SAS File
+write_sav() | Write to SPSS Data
+write_dta() | Write Stata File
+
+]
+
+.panel[.panel-name[Load]
+
+* We need following packages
+
+```{r}
+library(readr)
+library(writexl)
+library(haven)
+```
+
+]
+
+
+.panel[.panel-name[Write I]
+
+* Write Data from R 
+
+
+```{r}
+# write to RDA
+save(cars, file = "./data/cars_data.rda")
+
+# write to RDS
+saveRDS(cars, "./data/cars_data.rds")
+
+# write to CSV
+write_csv(cars, "./data/cars_data.csv")
+```
+
+]
+
+.panel[.panel-name[Write II]
+
+```{r}
+# write to Excel 
+write_xlsx(cars, "./data/cars_data.xlsx")
+
+# write to SAS
+write_sas(cars, "./data/cars_data.sas7bdat")
+
+# write to SPSS
+write_sav(cars, "./data/cars_data.sav")
+
+# write to Stata
+write_dta(cars, "./data/cars_data.dta")
+```
+
+]]
+
+---
+class: top, left
+
+
+## Take Always
+
+Package | Read / Write
+--- | ---
+readr | most flat files (.csv, .tsv, etc.)
+readxl | excel files (.xls, .xlsx)
+haven | SPSS, Stata, and SAS data files
+writexl | write excel files (.xls, .xlsx)
+
+These packages will help you import/export data efficiently.

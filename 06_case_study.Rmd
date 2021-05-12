@@ -1,0 +1,353 @@
+---
+title: "Case Study: Covid 19 Analysis"
+author: "Binod Jung Bogati"
+institute: "Numeric Mind Pvt. Ltd"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: false
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
+        htmltools.preserve.raw = FALSE)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+
+class: middle, center
+
+## Case Study
+
+
+---
+class: top, left
+
+## Covid19 Data
+
+.panelset[
+.panel[.panel-name[About]
+
+- Covid 19 Data Visualization
+- Import / Load
+- Data Manipulate
+- Tidy Data
+- Visualizae
+
+
+]
+
+.panel[.panel-name[Load]
+
+```{r}
+library(tidyverse)
+
+raw_covid19_confirmed <- read_csv("./data/raw_covid19_confirmed.csv", col_types = cols())
+
+raw_covid19_deaths <- read_csv("./data/raw_covid19_deaths.csv", col_types = cols())
+
+raw_covid19_recovered <- read_csv("./data/raw_covid19_recovered.csv", col_types = cols())
+
+
+
+```
+
+]
+
+.panel[.panel-name[Confirmed]
+
+```{r}
+head(raw_covid19_confirmed)
+```
+
+]
+
+
+.panel[.panel-name[Deaths]
+
+```{r}
+
+head(raw_covid19_deaths)
+
+
+```
+
+]
+
+
+.panel[.panel-name[Recovered]
+
+```{r}
+head(raw_covid19_recovered)
+```
+
+]
+
+
+.panel[.panel-name[Glimpse]
+
+```{r}
+glimpse(raw_covid19_confirmed) 
+
+```
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 01
+
+`r countdown(minutes = 0, warn_when = 10, seconds = 120,  top = 0)`
+
+.panelset[
+.panel[.panel-name[Question ]
+
+1. Tidy all three data sets 
+
+2. Merge them into a variable named **covid19_nepal**
+
+3. Convert date variable into date format.
+
+4. Filter out the country by Nepal and remove unused variables.
+
+```{r eval = F}
+# Using following example:
+
+case_name <- pivot_longer(data,
+      cols = start_col:ncol(data),
+      names_to = "names",
+      values_to = "values"
+    ) 
+
+```
+
+]
+
+.panel[.panel-name[Answer - I]
+
+```{r}
+
+confirmed <- pivot_longer(raw_covid19_confirmed,
+      cols = 5:ncol(raw_covid19_confirmed),
+      names_to = "date",
+      values_to = "confirmed"
+    ) 
+
+deaths <- pivot_longer(raw_covid19_deaths,
+      cols = 5:ncol(raw_covid19_deaths),
+      names_to = "date",
+      values_to = "deaths"
+    ) 
+
+recovered <- pivot_longer(raw_covid19_recovered,
+      cols = 5:ncol(raw_covid19_recovered),
+      names_to = "date",
+      values_to = "recovered"
+    ) 
+
+```
+
+]
+
+.panel[.panel-name[Answer - II]
+
+```{r}
+covid19_nepal <- confirmed %>% 
+  left_join(deaths) %>% 
+  left_join(recovered) 
+```
+
+
+]
+
+.panel[.panel-name[Answer - III]
+
+```{r}
+library(lubridate)
+
+covid19_nepal_date <- covid19_nepal %>% 
+  mutate(date = mdy(date)) 
+
+```
+
+
+]
+
+.panel[.panel-name[Answer - IV]
+
+```{r}
+
+covid19_nepal_b <- covid19_nepal_date %>% 
+  janitor::clean_names() %>% 
+  filter(country_region == "Nepal") %>% 
+  select(-province_state, -long, -lat, -country_region)
+
+```
+
+
+]
+
+]
+
+---
+class: top, left
+
+## Your Turn - 02
+
+`r countdown(minutes = 0, warn_when = 10, seconds = 120,  top = 0)`
+
+.panelset[
+.panel[.panel-name[Question ]
+
+1. Make sure data set is tidy
+
+2. Try to visualize using **geom_line()**
+
+]
+
+.panel[.panel-name[Answer - I]
+
+```{r}
+covid19_nepal_c <- covid19_nepal_b %>%   
+  pivot_longer(
+    cols = c("confirmed", "deaths", "recovered"),
+    names_to = "cases",
+    values_to = "count"
+  ) 
+```
+
+
+]
+
+
+.panel[.panel-name[Answer - I]
+
+```{r}
+
+covid19_nepal_c %>% 
+ggplot(aes(x = date, y = count, color = cases)) +
+  geom_line()
+```
+
+
+]
+
+
+]
+
+---
+class: top, left
+
+## Cumulative vs Daily Count
+
+.panelset[
+.panel[.panel-name[About]
+
+```{r eval= F}
+
+daily_count = cumulative_count - previous_cumulative_count 
+
+
+```
+
+]
+
+.panel[.panel-name[Implementation]
+
+```{r}
+
+covid19_nepal_d <- covid19_nepal_c %>% 
+  group_by(cases) %>%
+  mutate(daily_count = count - lag(count, default = 0, order_by = date)) %>% #<<
+  ungroup()
+```
+
+]
+
+]
+
+---
+class: top, left
+
+## Your Turn - 03 
+
+`r countdown(minutes = 0, warn_when = 10, seconds = 120,  top = 0)`
+
+.panelset[
+.panel[.panel-name[Question]
+
+- Visualize with title and subtitle.
+
+]
+
+.panel[.panel-name[Answer]
+
+
+```{r}
+covid19_nepal_d %>% 
+ggplot( aes(x = date, y = daily_count, color = cases)) +
+  geom_line() +
+  labs(title = "Covid19-Nepal Cases") +
+  theme_minimal()
+```
+
+
+]
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

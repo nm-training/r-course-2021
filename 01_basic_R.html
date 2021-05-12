@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Basics of R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Binod Jung Bogati" />
+    <meta name="date" content="2021-05-03" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt;
+---
+
+class: middle, center
+
+# Intro to R Programming
+
+---
+class: top, left,  highlight-last-item
+
+## Things to do
+
+- Install **R, RStudio** (&amp; **RTools4** for Windows users) 
+
+--
+
+- Install **library(rsetup)** Package
+
+---
+layout: false
+
+background-image: url("image/00_IDE-RStudio.png")
+background-size: contain
+
+---
+background-image: url("image/01_editor-rstudio.png")
+background-size: contain
+
+---
+background-image: url("image/02_rconsole-rstudio.png")
+background-size: contain
+
+---
+background-image: url("image/03_environment-rstudio.png")
+background-size: contain
+
+---
+background-image: url("image/04_filesoutput-rstudio.png")
+background-size: contain
+
+---
+background-image: url("image/05_working_time.png")
+background-size: contain
+
+---
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt;
+
+---
+class: top, left
+
+## Your Turn
+
+<div class="countdown" id="timer_609029a1" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+- Copy the File from GitHub
+
+- Open 01_basic_R.Rmd and look around
+
+---
+class: top, left, highlight-last-item
+
+## Reserved words in R
+
+--
+
+Reserved words (or keywords) are a set of words that have special meaning.
+
+--
+
+.panelset[
+.panel[.panel-name[About]
+
+- It cannot be used as an identifier (variable name, function name etc.).
+
+- You can type `?reserved` in R console to see list of reserved words in R.
+
+
+```r
+* ?reserved
+```
+
+]
+
+
+.panel[.panel-name[Examples]
+
+
+| Reserved words |
+| --- |
+| if   else  repeat  |
+| while function for in next break |
+| TRUE  FALSE |
+| NULL Inf NaN |
+| NA NA_integer_ |
+| NA_real_ NA_complex_ NA_character_ |
+
+]
+
+]
+
+---
+class: top, left, highlight-last-item
+
+## Variables &amp; Constants
+
+--
+
+.panelset[
+.panel[.panel-name[Variable]
+
+.pull-left[
+- Variables are used to store data in R. 
+- In variable, we can change data as per our need. 
+
+- Example: 
+
+
+```r
+* a &lt;- 4
+```
+]
+
+.pull-right[
+
+.center[
+&lt;img src="imgs/variable-4.png"&gt;
+]
+
+]
+
+]
+
+.panel[.panel-name[Constant]
+
+.pull-left[
+
+- Constants are those whose value cannot be changed. 
+
+- Example: 
+
+
+
+```r
+*2.5
+```
+
+```
+## [1] 2.5
+```
+
+```r
+*"hello"
+```
+
+```
+## [1] "hello"
+```
+
+]
+
+.pull-right[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;img src="imgs/constant-5-hello.png"&gt;
+]
+
+]
+
+]
+
+
+.panel[.panel-name[Assignment]
+
+.pull-left60[
+
+- We use "&lt;-" (arrow) operator to assign a value 
+
+- A variable can hold different data types.
+
+
+
+```r
+*num &lt;- 123
+*alp &lt;- "abc"
+
+print(num)
+```
+
+```
+## [1] 123
+```
+
+```r
+print(alp)
+```
+
+```
+## [1] "abc"
+```
+]
+
+.pull-right40[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;img src="imgs/left-arrow.png" width="35%"&gt;
+]
+
+]
+
+]
+
+.panel[.panel-name[Comments]
+
+.pull-left60[
+
+- Comments are helper text in R program
+
+- Written using **#** in the statement.
+
+- Makes our code understandable.
+
+
+
+```r
+*# assign value 1 to a
+a &lt;- 1
+
+*# print variable a
+print(a)
+```
+
+```
+## [1] 1
+```
+
+]
+
+.pull-right40[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.center[
+&lt;img src="imgs/hashtag.png" width="30%"&gt;
+]
+
+]
+
+
+
+]
+
+]
+
+
+
+---
+class: top, left
+
+## Your Turn 01
+
+
+<div class="countdown" id="timer_60902600" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+
+- Assign some number to **num1** variable and print out.
+
+- Assign alphabet to **alpha1** variable and print out.
+
+- Don't forget to write some comments.
+
+]
+
+.panel[.panel-name[Answer]
+
+Assign some number to **num1** variable and print out
+
+
+```r
+# assiging 123 to num1
+num1 &lt;- 123
+print(num1)
+```
+
+```
+## [1] 123
+```
+
+Assign alphabet to **alpha1** variable and print out
+
+
+```r
+#assigning apple to alpha1
+alpha1 &lt;- "apple"
+print(alpha1)
+```
+
+```
+## [1] "apple"
+```
+
+
+]
+
+]
+
+
+---
+class: top, left, highlight-last-item
+
+## Naming Convention
+
+.panelset[
+.panel[.panel-name[Rules]
+
+- Variable name must start with a letter (A-Z, a-z)
+
+- Only accepts letters, numbers, dot and underscore
+
+- Case is sensitive (A vs a)
+
+]
+
+.panel[.panel-name[Example 1]
+
+
+- Incorrect
+
+
+```r
+*.my_data &lt;- 500
+*1_my_data &lt;- 345
+```
+
+- Correct
+
+
+```r
+my_data &lt;- 200
+my_1data &lt;- 400
+```
+
+
+]
+
+.panel[.panel-name[Example 2]
+
+Here, mydata and MyData are different
+
+
+```r
+mydata &lt;- 234
+MyData &lt;- 567
+```
+
+
+```r
+print(mydata)
+```
+
+```
+## [1] 234
+```
+
+```r
+print(MyData)
+```
+
+```
+## [1] 567
+```
+]
+
+]
+
+
+---
+class: top, left, highlight-last-item
+
+## Data Types
+
+.panelset[
+.panel[.panel-name[About]
+
+- Help us know what type of data a variable is holding.
+
+- We can use **class()** function to determine data type of variable
+
+]
+
+.panel[.panel-name[Types]
+
+Data Types | Values
+--- | ---
+Logical | TRUE / FALSE
+Numeric | 123 (Integer) , 2.55 (Double)
+Character | "a" , "abc"
+Date | "2021-02-20"
+
+]
+
+
+
+.panel[.panel-name[Examples]
+
+
+
+```r
+class(mydata)
+```
+
+```
+## [1] "numeric"
+```
+
+]
+]
+
+---
+class: top, left
+
+## Your Turn 2
+
+
+- Find the class of the variable you defined in **Your Turn 1** i.e num1 and num2
+
+<div class="countdown" id="timer_609027e9" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+.panelset[
+.panel[.panel-name[Answer]
+
+
+```r
+# datatype in num1 and alpha1
+class(num1)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(alpha1)
+```
+
+```
+## [1] "character"
+```
+
+]
+]
+
+
+---
+class: top, left, tabbg
+
+## Data Structures
+
+--
+
+Data Structure are the R Objects that is used to store some kind of data.
+
+--
+
+.panelset[
+.panel[.panel-name[About]
+
+Type | Description
+--- | ---
+Homogeneous | Store a single data type
+Heterogeneous | Store more than one data type 
+
+]
+
+.panel[.panel-name[Homogeneous]
+
+Type | Visual | Description
+--- | --- | ---
+Vector | &lt;img src="imgs/vectors.png" height="40px"&gt; | A one-dimensional structure having same data type
+Array | &lt;img src="imgs/array.png" height="60px"&gt; | An n-dimensional structure that expands on a vector.
+Matrix | &lt;img src="imgs/matrix.png" height="60px"&gt; | A two-dimensional array.
+
+]
+
+.panel[.panel-name[Heterogeneous]
+
+Type | Visual | Description
+--- | --- | ---
+List | &lt;img src="imgs/list.png" height="60px"&gt; | Similar to vector but can contain items of different types
+Data frame | &lt;img src="imgs/data_frame.png" height="60px"&gt; | Similar to matrix (2D), but each columns can have different data types.
+
+]
+
+]
+
+---
+class: top, left
+
+## Vector
+
+--
+
+.panelset[
+.panel[.panel-name[About]
+
+.pull-left60[
+
+- A one-directional structure having same data type.
+
+- It is created using **c()** function. 
+
+- Comma (,) is used to separate vector elements
+
+]
+
+.pull-right40[
+
+.center[
+&lt;img src="imgs/vectors.png"&gt;
+]
+
+]
+
+
+]
+
+
+.panel[.panel-name[Example]
+
+.pull-left[
+
+
+```r
+# create new vector
+*vec1 &lt;- c(1,2,3)
+*vec2 &lt;- c("ram","shyam",1)
+
+print(vec1)
+```
+
+```
+## [1] 1 2 3
+```
+
+```r
+print(vec2)
+```
+
+```
+## [1] "ram"   "shyam" "1"
+```
+
+]
+
+.pull-right[
+
+
+```r
+# find data types of vector
+
+*class(vec1)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+*class(vec2)
+```
+
+```
+## [1] "character"
+```
+
+]
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn 3
+
+<div class="countdown" id="timer_60902788" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">01</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+- Create a new vector called **vec3**
+
+- Find the data type of **vec3**
+
+]
+
+.panel[.panel-name[Answer]
+
+
+```r
+*vec3 &lt;- c("a", 1, "b", 2)
+
+vec3
+```
+
+```
+## [1] "a" "1" "b" "2"
+```
+
+```r
+*class(vec3)
+```
+
+```
+## [1] "character"
+```
+
+]
+]
+
+---
+class: top, left, tabbg
+
+## Operators
+
+We have 3 basic operators in R.
+
+--
+
+&lt;br&gt;
+
+| Operators |
+| --- |
+| Arithmetic Operators |
+| Relational Operators |
+| Logical Operators    |
+
+---
+class: top, left
+
+## Arithmetic Operators
+
+Operators that performs arithmetic operations between two elements.
+
+--
+
+.panelset[
+.panel[.panel-name[Operator]
+
+Operator | Meaning
+--- | ---
++ | Add
+- | Subtract
+* | Multiplication
+/ | Division
+^ | Exponent
+%% | Modulus
+
+]
+
+.panel[.panel-name[Addition]
+
+
+```r
+a &lt;- c(5,6,7)
+b &lt;- c(2,1,3)
+
+*print(a + b)
+```
+
+```
+## [1]  7  7 10
+```
+
+]
+
+.panel[.panel-name[Multiply]
+
+
+
+```r
+a &lt;- c(1,2,3)
+b &lt;- c(2,3,4)
+
+*print(a * b)
+```
+
+```
+## [1]  2  6 12
+```
+
+]
+
+.panel[.panel-name[Subtraction]
+
+
+
+```r
+a &lt;- c(9,8,7)
+b &lt;- c(2,4,9)
+
+*print(a - b)
+```
+
+```
+## [1]  7  4 -2
+```
+
+]
+
+.panel[.panel-name[Division]
+
+
+```r
+a &lt;- c(22,13,24)
+b &lt;- c(2,3,4)
+
+*print(a / b)
+```
+
+```
+## [1] 11.000000  4.333333  6.000000
+```
+
+]
+
+.panel[.panel-name[Exponent]
+
+
+```r
+*4 ^ 2
+```
+
+```
+## [1] 16
+```
+
+```r
+*99 ^ 3
+```
+
+```
+## [1] 970299
+```
+
+]
+
+.panel[.panel-name[Modulus]
+
+
+```r
+*7 %% 2
+```
+
+```
+## [1] 1
+```
+
+```r
+*99 %% 8
+```
+
+```
+## [1] 3
+```
+
+]
+]
+
+---
+class: top, left
+
+## Relational Operators
+
+Operators that compare two elements or vectors.
+
+--
+
+.panelset[
+.panel[.panel-name[Operator]
+
+Operator | Definition
+--- | ---
+&gt; | Greater than
+&lt; | Less than
+== | Equals to
+!= | Not Equals to
+&gt;= | Greater than or equal to
+&lt;= | Lesser than or equal to
+
+
+]
+
+.panel[.panel-name["&gt;"]
+
+- Greater than ( &gt; )
+
+
+```r
+a &lt;- c(5,2,3,4)
+b &lt;- c(10,1,2,9)
+
+*print(a &gt; b)
+```
+
+```
+## [1] FALSE  TRUE  TRUE FALSE
+```
+
+]
+
+.panel[.panel-name["&lt;"]
+
+- Less Than ( &lt; )
+
+
+```r
+a &lt;- c(9,10,11,21)
+b &lt;- c(11,2,3,55)
+
+*print(a &lt; b)
+```
+
+```
+## [1]  TRUE FALSE FALSE  TRUE
+```
+
+]
+
+.panel[.panel-name["=="]
+
+- Equals to ( == )
+
+
+```r
+a &lt;- c(1, 2, 3)
+b &lt;- c(2,3,5)
+
+*print(a == b)
+```
+
+```
+## [1] FALSE FALSE FALSE
+```
+
+]
+
+.panel[.panel-name["!="]
+
+- Not Equal to (!=)
+
+
+```r
+a &lt;- c(2,3,4,10)
+b &lt;- c(1,3,4,9)
+
+*print(a != b)
+```
+
+```
+## [1]  TRUE FALSE FALSE  TRUE
+```
+
+]
+
+.panel[.panel-name["&gt;="]
+
+- Greater than equal to (&gt;=)
+
+
+```r
+a &lt;- c(2,3,4,10)
+b &lt;- c(5,7,4,9)
+
+*print(a&gt;=b)
+```
+
+```
+## [1] FALSE FALSE  TRUE  TRUE
+```
+
+]
+
+
+
+.panel[.panel-name["&lt;="]
+
+- Less than equal to (&lt;=)
+
+
+```r
+a &lt;- c(2,3,4,9)
+b &lt;- c(2,5,7,8)
+
+*print(a &lt;= b)
+```
+
+```
+## [1]  TRUE  TRUE  TRUE FALSE
+```
+
+]
+
+]
+
+---
+class: top, left
+
+## Logical Operators
+
+Operator which gives boolean values (TRUE or FALSE) when compared.
+
+--
+
+.panelset[
+.panel[.panel-name[AND (&amp;)]
+
+It gives .green[TRUE] value only when both condition result are .green[TRUE].
+
+
+```r
+a &lt;- c(3,9,5)
+b &lt;- c(5,6,7)
+
+*print(a&gt;5 &amp; b&gt;5)
+```
+
+```
+## [1] FALSE  TRUE FALSE
+```
+
+]
+
+.panel[.panel-name[OR (|)]
+
+
+It gives .green[TRUE] value when one of the condition result is .green[TRUE].
+
+
+```r
+a &lt;- c(1,5,3)
+b &lt;- c(4,5,6)
+
+*print(a&lt;5 | b&gt;5)
+```
+
+```
+## [1]  TRUE FALSE  TRUE
+```
+
+]
+
+
+.panel[.panel-name[NOT (!)]
+
+It makes the .green[TRUE] to .red[FALSE] and Vice-versa.
+
+
+```r
+a &lt;- c(3,4,5)
+
+*print(!(a&gt;3))
+```
+
+```
+## [1]  TRUE FALSE FALSE
+```
+
+]
+]
+
+
+---
+class: top, left
+
+## Function
+
+.panelset[
+.panel[.panel-name[About]
+
+.pull-left60[
+- A set of statements which perform a specific task 
+
+- R has a large number of in-built functions
+]
+
+.pull-right40[
+
+&lt;img src="imgs/function.png" width="60%"&gt;
+
+]
+
+
+]
+
+.panel[.panel-name[Syntax]
+
+
+```r
+function_name &lt;- function(arg_1, arg_2)
+{
+ function_body
+  
+ return_value
+}
+```
+
+Here, 
+
+- **function_name**: Name of the Function, stored in R environment as an object
+- **arg_x**: Argument as the inputs
+- **function_body**: Operations performed based the input
+- **return_value**: Final output of the function
+
+]
+
+.panel[.panel-name[Types]
+
+Types | Description
+---|---
+Built-in | Pre-defined function 
+User-defined | Defined by user using R program
+
+]
+
+
+.panel[.panel-name[Built-in]
+
+---|---
+print() | 
+sum() | 
+seq() | 
+mean() | 
+median() |
+min() | 
+max() |
+
+
+]
+
+.panel[.panel-name[Built-in]
+
+- Create a sequence of numbers from 5 to 10.
+- Find mean of numbers from 5 to 10.
+- Find sum of numbers from 10 to 20.
+
+
+```r
+print(seq(5, 10))
+```
+
+```
+## [1]  5  6  7  8  9 10
+```
+
+
+```r
+print(mean(5:10))
+```
+
+```
+## [1] 7.5
+```
+
+
+```r
+print(sum(10:20))
+```
+
+```
+## [1] 165
+```
+
+
+]
+
+.panel[.panel-name[Add number]
+
+- Function for adding number
+
+
+```r
+add_me &lt;- function(num1, num2){
+  sum &lt;- num1 + num2
+  return(sum)
+}
+
+add_me(99, 123)
+```
+
+```
+## [1] 222
+```
+]
+]
+
+---
+class: top, left, tabbg
+
+## Data frame
+
+
+.panelset[
+.panel[.panel-name[About]
+
+.pull-left[
+
+- a table with rows and columns.
+
+- each column contain values of a respective variable.
+
+- each row contain values of different variable.
+]
+
+.pull-right[
+
+.center[
+&lt;img src="imgs/data_frame.png"&gt;
+]
+
+]
+
+]
+
+.panel[.panel-name[Helper]
+
+Function | Description
+--- | ---
+data.frame() | create a data frame
+head() |  first 6 rows of data
+tail() |  last 6 rows of data
+nrows() |  number of rows
+ncols() |  number of cols
+dim() |  dimension / shape of data
+str() |  structure of data
+names() |  column names
+
+]
+
+.panel[.panel-name[Head/Tail]
+
+.pull-left[
+
+```r
+head(cars) 
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"2","_rn_":"1"},{"1":"4","2":"10","_rn_":"2"},{"1":"7","2":"4","_rn_":"3"},{"1":"7","2":"22","_rn_":"4"},{"1":"8","2":"16","_rn_":"5"},{"1":"9","2":"10","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+
+
+```r
+tail(cars)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"23","2":"54","_rn_":"45"},{"1":"24","2":"70","_rn_":"46"},{"1":"24","2":"92","_rn_":"47"},{"1":"24","2":"93","_rn_":"48"},{"1":"24","2":"120","_rn_":"49"},{"1":"25","2":"85","_rn_":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+]
+
+.panel[.panel-name[Create]
+
+- Here, we pass values in each column using vector.
+
+
+```r
+data &lt;- data.frame(
+  id = 1:5,
+  name = c("Bikash", "Sameer", "Jiniya", "Ayusha", "Tanusha"),
+  associate = c("KU", "KU", "KU", "Wiseyak", "Prime College"),
+  tools_used = c("Excel", "Excel", "Excel", "SAS", "Python"),
+  gender = c("Male", "Male", "Female", "Female", "Female")
+)
+```
+
+]
+
+.panel[.panel-name[Shape]
+
+
+```r
+*nrow(data)
+```
+
+```
+## [1] 5
+```
+
+```r
+*ncol(data)
+```
+
+```
+## [1] 5
+```
+
+```r
+*dim(data)
+```
+
+```
+## [1] 5 5
+```
+
+]
+
+.panel[.panel-name[Names]
+
+
+```r
+names(data)
+```
+
+```
+## [1] "id"         "name"       "associate"  "tools_used" "gender"
+```
+
+]
+
+.panel[.panel-name[Structure]
+
+- We use **str()** to get structure of data.
+
+
+```r
+str(data)
+```
+
+```
+## 'data.frame':	5 obs. of  5 variables:
+##  $ id        : int  1 2 3 4 5
+##  $ name      : chr  "Bikash" "Sameer" "Jiniya" "Ayusha" ...
+##  $ associate : chr  "KU" "KU" "KU" "Wiseyak" ...
+##  $ tools_used: chr  "Excel" "Excel" "Excel" "SAS" ...
+##  $ gender    : chr  "Male" "Male" "Female" "Female" ...
+```
+
+]
+
+.panel[.panel-name[Summary]
+
+- We use summary() to get summary statistics of data.
+
+
+```r
+summary(data)
+```
+
+```
+##        id        name            associate          tools_used       
+##  Min.   :1   Length:5           Length:5           Length:5          
+##  1st Qu.:2   Class :character   Class :character   Class :character  
+##  Median :3   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :3                                                           
+##  3rd Qu.:4                                                           
+##  Max.   :5                                                           
+##     gender         
+##  Length:5          
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## 
+```
+
+]
+
+]
+
+
+---
+class: top, left
+
+## Extract Data
+
+* df_name[**row_id_from : row_id_to, col_id_from : col_id_to**]
+
+--
+
+.panelset[
+.panel[.panel-name[Example1]
+
+**Extract first two rows &amp; columns**
+
+
+```r
+data[1:2, 1:2]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Bikash","_rn_":"1"},{"1":"2","2":"Sameer","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Example2]
+
+
+**Extract second row and all columns**
+
+
+```r
+data[2, ]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"2","2":"Sameer","3":"KU","4":"Excel","5":"Male","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Example3]
+
+
+**Extract 3rd row with 2nd and 4th column**
+
+
+```r
+data[3, c(2,4)]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Jiniya","2":"Excel","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Example4]
+
+**Extract 2nd and 4th row with 2nd, 3rd and 4th column**
+
+
+```r
+data[c(2,4), c(3,4)]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["associate"],"name":[1],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"KU","2":"Excel","_rn_":"2"},{"1":"Wiseyak","2":"SAS","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+
+
+---
+class: top, left
+
+## Your Turn 4
+
+<div class="countdown" id="timer_60902974" style="top:0;right:0;" data-warnwhen="20">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+.panelset[
+.panel[.panel-name[Question]
+
+1. Extract column: .red[name] and .green[tools_used]
+2. Extract row: 2nd only
+3. Extract row: 3rd and 4th along with columns: .red[name], .green[gender], .blue[tools_used] 
+]
+
+.panel[.panel-name[Answer]
+
+.column[
+
+```r
+data[, c("name","gender")]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Bikash","2":"Male"},{"1":"Sameer","2":"Male"},{"1":"Jiniya","2":"Female"},{"1":"Ayusha","2":"Female"},{"1":"Tanusha","2":"Female"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+
+.column[
+
+
+```r
+data[2, ]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"2","2":"Sameer","3":"KU","4":"Excel","5":"Male","_rn_":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.column[
+
+```r
+data[3:4,c("name", "gender")]
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Jiniya","2":"Female","_rn_":"3"},{"1":"Ayusha","2":"Female","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+]
+
+---
+class: top, left
+
+## Add Column
+
+
+```r
+#Add the 'address' column
+data$address &lt;- c("Nawalparasi","Birgunj", "Kathmandu","Bhaktapur","Kathmandu")
+
+data
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[5],"type":["chr"],"align":["left"]},{"label":["address"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Bikash","3":"KU","4":"Excel","5":"Male","6":"Nawalparasi"},{"1":"2","2":"Sameer","3":"KU","4":"Excel","5":"Male","6":"Birgunj"},{"1":"3","2":"Jiniya","3":"KU","4":"Excel","5":"Female","6":"Kathmandu"},{"1":"4","2":"Ayusha","3":"Wiseyak","4":"SAS","5":"Female","6":"Bhaktapur"},{"1":"5","2":"Tanusha","3":"Prime College","4":"Python","5":"Female","6":"Kathmandu"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+class: top, left
+
+## Your Turn 05
+
+.panelset[
+
+.panel[.panel-name[Question]
+
+* Add "blood_group" column to the data frame
+
+]
+
+.panel[.panel-name[Answer]
+
+* Add 'blood_group' column
+
+
+```r
+data$blood_group &lt;- c("A","B","C","D","E")
+
+data
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[5],"type":["chr"],"align":["left"]},{"label":["address"],"name":[6],"type":["chr"],"align":["left"]},{"label":["blood_group"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Bikash","3":"KU","4":"Excel","5":"Male","6":"Nawalparasi","7":"A"},{"1":"2","2":"Sameer","3":"KU","4":"Excel","5":"Male","6":"Birgunj","7":"B"},{"1":"3","2":"Jiniya","3":"KU","4":"Excel","5":"Female","6":"Kathmandu","7":"C"},{"1":"4","2":"Ayusha","3":"Wiseyak","4":"SAS","5":"Female","6":"Bhaktapur","7":"D"},{"1":"5","2":"Tanusha","3":"Prime College","4":"Python","5":"Female","6":"Kathmandu","7":"E"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+]
+
+---
+class: top, left
+
+# Add Row
+
+We can add rows to dataframe using rbind() function.
+
+.panelset[
+.panel[.panel-name[Create]
+
+- Create second data frame
+
+
+```r
+new_data &lt;- data.frame(
+  id = 6:9,
+  name = c("Sanjay", "Sarun", "Abhishek", "Binod"),
+  associate = c("Numeric Mind", "KU", "KU", "Numeric Mind"),
+  tools_used = c("R", "SAS", "Excel", "R"),
+  gender = "Male",
+  address = c("Bhaktapur", "Lalitpur", NA, "Kathmandu"),
+  blood_group = c("F", "G", "H", "I")
+)
+```
+
+
+]
+
+.panel[.panel-name[Row bind]
+
+
+```r
+updated_data &lt;- rbind(data, new_data)
+
+head(updated_data)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[4],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[5],"type":["chr"],"align":["left"]},{"label":["address"],"name":[6],"type":["chr"],"align":["left"]},{"label":["blood_group"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Bikash","3":"KU","4":"Excel","5":"Male","6":"Nawalparasi","7":"A","_rn_":"1"},{"1":"2","2":"Sameer","3":"KU","4":"Excel","5":"Male","6":"Birgunj","7":"B","_rn_":"2"},{"1":"3","2":"Jiniya","3":"KU","4":"Excel","5":"Female","6":"Kathmandu","7":"C","_rn_":"3"},{"1":"4","2":"Ayusha","3":"Wiseyak","4":"SAS","5":"Female","6":"Bhaktapur","7":"D","_rn_":"4"},{"1":"5","2":"Tanusha","3":"Prime College","4":"Python","5":"Female","6":"Kathmandu","7":"E","_rn_":"5"},{"1":"6","2":"Sanjay","3":"Numeric Mind","4":"R","5":"Male","6":"Bhaktapur","7":"F","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+---
+
+class: top, left
+
+## Merge two data frame
+
+- Connect two data frame with different columns using a key
+- merge() is used to merge the two data frame
+- must have a common column in two data frame
+
+
+```r
+prof_data &lt;- data.frame(
+  id = 1:9,
+  phone = sample(9800000000:9863999999, 9),
+  profession = "Student"
+)
+
+final_data &lt;- merge(prof_data, updated_data, by = "id")
+
+head(final_data, 3)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["phone"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["profession"],"name":[3],"type":["chr"],"align":["left"]},{"label":["name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["associate"],"name":[5],"type":["chr"],"align":["left"]},{"label":["tools_used"],"name":[6],"type":["chr"],"align":["left"]},{"label":["gender"],"name":[7],"type":["chr"],"align":["left"]},{"label":["address"],"name":[8],"type":["chr"],"align":["left"]},{"label":["blood_group"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"9863049687","3":"Student","4":"Bikash","5":"KU","6":"Excel","7":"Male","8":"Nawalparasi","9":"A","_rn_":"1"},{"1":"2","2":"9800153616","3":"Student","4":"Sameer","5":"KU","6":"Excel","7":"Male","8":"Birgunj","9":"B","_rn_":"2"},{"1":"3","2":"9855296806","3":"Student","4":"Jiniya","5":"KU","6":"Excel","7":"Female","8":"Kathmandu","9":"C","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+class: top, left
+
+## Rename column
+
+- select column with its name and replace with new name
+- name() function gives the name of the data frame column
+
+
+```r
+names(final_data)[names(final_data)=="name"] &lt;- "first_name"
+
+names(final_data)
+```
+
+```
+## [1] "id"          "phone"       "profession"  "first_name"  "associate"  
+## [6] "tools_used"  "gender"      "address"     "blood_group"
+```
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

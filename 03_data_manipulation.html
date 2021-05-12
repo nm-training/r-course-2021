@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Manipulation in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Binod Jung Bogati" />
+    <meta name="date" content="2021-04-29" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+layout: false
+class: top, center
+background-image: url(imgs/data-analysis-cover.png)
+background-size: 75%
+
+# Data Analysis Process
+
+---
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+
+---
+class: middle, center
+
+# Write Tidy Codes with
+
+&lt;img src="imgs/magrittr.png" width="20%"&gt;
+
+
+---
+class: top, left
+
+## Example: Our Way of Doing
+
+.pull-right[
+
+&lt;img src="imgs/phone-call.png"&gt;
+
+]
+
+
+.pull-left[
+
+Assume, you need to make a phone call.
+
+]
+
+--
+
+.pull-left[
+
+- get phone
+- type number
+- make call
+- end call
+
+]
+
+--
+
+.pull-left[
+
+Our equivalent R Code:
+
+
+```r
+end_call(
+  make_call(
+    type_number(
+      get_phone, "9843440863"
+    ),
+    "Hello"
+  )
+)
+```
+
+]
+
+---
+class: top, left
+
+## Understanding Pipe Operator
+
+.pull-left[
+
+With Pipes:
+
+
+```r
+get_phone %&gt;% 
+  type_number("9843440863") %&gt;% 
+  make_call("Hello") %&gt;% 
+  end_call()
+```
+]
+
+--
+
+.pull-right[
+
+Without Pipes:
+
+
+```r
+end_call(
+  make_call(
+    type_number(
+      get_phone, "9843440863"
+    ),
+    "Hello"
+  )
+)
+```
+
+]
+
+--
+
+.pull-left[
+
+Here, 
+
+- **%&gt;%** is pipe operator
+- Shortcut: **Ctrl + Shift + m**
+
+]
+
+---
+class: top, left
+
+## Pipes - %&gt;% ... %&gt;% 
+
+.pull-left[
+
+The pipe operator implemented first in **magrittr** package.
+
+
+```r
+library(magrittr)
+```
+
+Makes code readable by:
+
+- structuring sequences of data operations
+- avoiding nested function calls
+- minimizing the need for local variables and function definitions
+
+]
+
+.pull-right[
+
+&lt;img src="imgs/magrittr.png" id="center"&gt;
+
+]
+
+
+---
+class: center, middle
+
+# Data Manipulation with 
+
+&lt;img src="imgs/dplyr.png" width="20%"&gt;
+
+
+---
+class: top, left
+
+## Grammar of Data Manipulation
+
+.pull-left[
+
+**dplyr** is a grammar of data manipulation that provides verbs (**function**) which solves common data manipulation problems.
+
+
+&lt;img src="imgs/dplyr-godm.png" width="60%"&gt;
+
+]
+
+--
+
+.pull-right[
+
+Here, we'll use following,
+
+| dplyr functions |
+| ------------   |
+| 1. select()    |
+| 2. filter()    |
+| 3. mutate()    |
+| 4. group_by()  |
+| 5. summarize() |  
+| 6. arrange()   | 
+
+]
+
+---
+class: top, left
+
+## dplyr's - Commonly Used Functions
+
+Function | Description
+--- | ---
+1. select() | Picks variables based on their names
+2. filter() | Picks cases based on their values
+3. mutate() | Adds new variables that are functions of existing variables
+4. group_by() | group the variables by columns
+5. summarise() | Reduces multiples values down to a single summary
+6. arrange() | Changes the ordering of the rows
+
+---
+class: top, left
+
+## dplyr - A Grammar of Data Manipulation
+
+
+.panelset[
+.panel[.panel-name[Rules]
+
+
+```r
+library(dplyr)
+
+*data %&gt;%
+* function()
+```
+
+
+- First argument is always a data frame
+- Latter argument performs as per function
+- Always return a data frame
+- Don't modify in place
+
+
+]
+
+.panel[.panel-name[Load]
+
+
+```r
+library(readr)
+
+gapminder &lt;- read_csv("data/gapminder.csv")
+
+head(gapminder, 4)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"1952","4":"28.801","5":"8425333","6":"779.4453"},{"1":"Afghanistan","2":"Asia","3":"1957","4":"30.332","5":"9240934","6":"820.8530"},{"1":"Afghanistan","2":"Asia","3":"1962","4":"31.997","5":"10267083","6":"853.1007"},{"1":"Afghanistan","2":"Asia","3":"1967","4":"34.020","5":"11537966","6":"836.1971"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+---
+class: top, left
+
+## Select - by Name of Variables
+
+--
+
+Let's pick variables from gapminder data:
+**year, country, gdpPercap**
+
+--
+
+.pull-left[
+
+
+```r
+country_gdp_year &lt;- gapminder %&gt;%
+* select(year, country, gdpPercap)
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+head(country_gdp_year)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Afghanistan","3":"779.4453"},{"1":"1957","2":"Afghanistan","3":"820.8530"},{"1":"1962","2":"Afghanistan","3":"853.1007"},{"1":"1967","2":"Afghanistan","3":"836.1971"},{"1":"1972","2":"Afghanistan","3":"739.9811"},{"1":"1977","2":"Afghanistan","3":"786.1134"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+--
+
+.pull-left[
+
+Here, 
+
+- **gapminder** is a data
+- **%&gt;%** is a pipe operator
+- **select()** is a dplyr function
+- **year, country, gdpPercap** are variables
+
+]
+
+
+
+---
+class: top, left
+
+## Filter - by Cases
+
+--
+
+Lets pick only **Asia** from **continent** variable.
+
+--
+
+.pull-left[
+
+
+```r
+gapminder_asia &lt;- gapminder %&gt;% 
+* filter(continent == "Asia")
+```
+
+Here, 
+
+- **filter()** is a dplyr function
+- **gapminder** is a data set
+- **continent** is a case with value **Asia**
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+head(gapminder_asia)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"1952","4":"28.801","5":"8425333","6":"779.4453"},{"1":"Afghanistan","2":"Asia","3":"1957","4":"30.332","5":"9240934","6":"820.8530"},{"1":"Afghanistan","2":"Asia","3":"1962","4":"31.997","5":"10267083","6":"853.1007"},{"1":"Afghanistan","2":"Asia","3":"1967","4":"34.020","5":"11537966","6":"836.1971"},{"1":"Afghanistan","2":"Asia","3":"1972","4":"36.088","5":"13079460","6":"739.9811"},{"1":"Afghanistan","2":"Asia","3":"1977","4":"38.438","5":"14880372","6":"786.1134"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+
+---
+class: top, left
+
+## Logical Operators in R
+
+Operator | Definition | Operator | Definition
+--- | --- | --- | ---
+&lt; | less than | x | y
+&lt;= | less than or equal to | x &amp; y | x AND y
+&gt; | greater than | is.na(x) | test if x is NA
+&gt;= | greater than or equal to | x %in% y | test if x is in y
+== | exactly equal to | !(x %in% y) | test if x is not in y
+!= | not equal to | !x | not x
+
+---
+class: top, left
+
+## Your Turn - 01
+
+Display country-wise, annual life expectancy of Europe.
+
+<div class="countdown" id="timer_608a7757" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+.panelset[
+.panel[.panel-name[Hints]
+
+1. Filter continent by "Europe"
+2. Use **%&gt;%**  to combine two function()
+3. Then, select variables - **year, country, lifeExp**
+
+]
+
+.panel[.panel-name[Answer]
+
+.pull-left[
+
+
+```r
+lifeexp_year_europe &lt;- gapminder %&gt;% 
+  filter(continent == "Europe") %&gt;% 
+  select(year, country, lifeExp)
+```
+
+Here, 
+- %&gt;% is a pipe operator
+- gapminder is a data
+- filter() and select() are dplyr function
+]
+
+.pull-right[
+
+
+```r
+head(lifeexp_year_europe)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["lifeExp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Albania","3":"55.23"},{"1":"1957","2":"Albania","3":"59.28"},{"1":"1962","2":"Albania","3":"64.82"},{"1":"1967","2":"Albania","3":"66.22"},{"1":"1972","2":"Albania","3":"67.69"},{"1":"1977","2":"Albania","3":"68.93"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]]
+
+]
+
+---
+class: top, left
+
+## Mutate - Add New Variables
+
+--
+
+Let's calculate **gdp** using variable **gdpPercap** and **pop**.
+
+--
+.pull-left[
+
+
+```r
+gapminder_total_gdp &lt;- gapminder %&gt;% 
+  mutate(gdp = gdpPercap * pop)
+```
+
+Here, 
+
+- mutate creates new variable i.e
+**gdp**
+
+]
+
+
+--
+
+.pull-right[
+
+
+```r
+head(gapminder_total_gdp)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["gdp"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"1952","4":"28.801","5":"8425333","6":"779.4453","7":"6567086330"},{"1":"Afghanistan","2":"Asia","3":"1957","4":"30.332","5":"9240934","6":"820.8530","7":"7585448670"},{"1":"Afghanistan","2":"Asia","3":"1962","4":"31.997","5":"10267083","6":"853.1007","7":"8758855797"},{"1":"Afghanistan","2":"Asia","3":"1967","4":"34.020","5":"11537966","6":"836.1971","7":"9648014150"},{"1":"Afghanistan","2":"Asia","3":"1972","4":"36.088","5":"13079460","6":"739.9811","7":"9678553274"},{"1":"Afghanistan","2":"Asia","3":"1977","4":"38.438","5":"14880372","6":"786.1134","7":"11697659231"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 02
+
+Rank all **Asian** countries by life expectancy in year **2007**. 
+
+<div class="countdown" id="timer_608a75cb" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+.panelset[
+.panel[.panel-name[Hints]
+
+1. Filter **continent** by "Asia" &amp; **year** by 2007.
+2. Select variables: **country, lifeExp**.
+3. Mutate to create rank variable using **min_rank()** on **lifeExp**.
+
+]
+
+.panel[.panel-name[Answer]
+
+
+.pull-left[
+
+
+```r
+asia_lifeExp &lt;- gapminder %&gt;% 
+  filter(
+    continent == "Asia", 
+    year == 2007
+  ) %&gt;% 
+  select(country, lifeExp) %&gt;% 
+  mutate(rank = min_rank(lifeExp))
+```
+]
+
+.pull-right[
+
+
+```r
+head(asia_lifeExp)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["lifeExp"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"43.828","3":"1"},{"1":"Bahrain","2":"75.635","3":"25"},{"1":"Bangladesh","2":"64.062","3":"7"},{"1":"Cambodia","2":"59.723","3":"3"},{"1":"China","2":"72.961","3":"20"},{"1":"Hong Kong, China","2":"82.208","3":"32"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]]]
+
+---
+class: top, left
+
+## Arrange - by Order
+
+Let's find the **population** in 2007 in order.
+
+--
+
+.panelset[
+.panel[.panel-name[Ascending]
+
+.pull-left[
+
+
+```r
+gapminder_asc &lt;- gapminder %&gt;%
+  filter(year == 2007) %&gt;% 
+* arrange(pop)
+```
+
+Here, 
+
+- **Population** is shown from **Low to High**
+- **Sao Tome and Principe** has low population
+
+
+]
+
+
+.pull-right[
+
+
+```r
+head(gapminder_asc)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Sao Tome and Principe","2":"Africa","3":"2007","4":"65.528","5":"199579","6":"1598.435"},{"1":"Iceland","2":"Europe","3":"2007","4":"81.757","5":"301931","6":"36180.789"},{"1":"Djibouti","2":"Africa","3":"2007","4":"54.791","5":"496374","6":"2082.482"},{"1":"Equatorial Guinea","2":"Africa","3":"2007","4":"51.579","5":"551201","6":"12154.090"},{"1":"Montenegro","2":"Europe","3":"2007","4":"74.543","5":"684736","6":"9253.896"},{"1":"Bahrain","2":"Asia","3":"2007","4":"75.635","5":"708573","6":"29796.048"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]]
+
+.panel[.panel-name[Descending]
+
+.pull-left[
+
+
+```r
+gapminder_desc &lt;- gapminder %&gt;%
+  filter(year == 2007) %&gt;% 
+* arrange(desc(pop))
+```
+
+Here, 
+
+- **Population** is shown from **High to Low**
+- **China** is highly populated country in **2007**.
+
+]
+
+.pull-right[
+
+
+```r
+head(gapminder_desc)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"China","2":"Asia","3":"2007","4":"72.961","5":"1318683096","6":"4959.115"},{"1":"India","2":"Asia","3":"2007","4":"64.698","5":"1110396331","6":"2452.210"},{"1":"United States","2":"Americas","3":"2007","4":"78.242","5":"301139947","6":"42951.653"},{"1":"Indonesia","2":"Asia","3":"2007","4":"70.650","5":"223547000","6":"3540.652"},{"1":"Brazil","2":"Americas","3":"2007","4":"72.390","5":"190010647","6":"9065.801"},{"1":"Pakistan","2":"Asia","3":"2007","4":"65.483","5":"169270617","6":"2605.948"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]]
+
+---
+class: top, left
+
+## Your Turn - 03
+
+- Find countries in Asia with lowely ranked gdpPercap in 1992
+
+<div class="countdown" id="timer_608a747f" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+.panelset[
+.panel[.panel-name[Hints]
+
+1. Filter **continent** by "Asia" &amp; **year** by 1992
+2. Select variables: **country, gdpPercap**
+3. Mutate to create rank variable using **min_rank()** on gdpPercap
+4. Arrange rank in **ascending order**
+
+
+]
+
+.panel[.panel-name[Answer]
+
+.pull-left[
+
+
+```r
+asia_gdpPercap_1992 &lt;- gapminder %&gt;% 
+  filter(
+    continent == "Asia", 
+    year == 1992
+  ) %&gt;% 
+  select(country, gdpPercap) %&gt;% 
+  mutate(
+    rank = min_rank(gdpPercap)
+  ) %&gt;% 
+  arrange(rank)
+```
+
+]
+
+
+.pull-right[
+
+
+```r
+head(asia_gdpPercap_1992)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Myanmar","2":"347.0000","3":"1"},{"1":"Afghanistan","2":"649.3414","3":"2"},{"1":"Cambodia","2":"682.3032","3":"3"},{"1":"Bangladesh","2":"837.8102","3":"4"},{"1":"Nepal","2":"897.7404","3":"5"},{"1":"Vietnam","2":"989.0231","3":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]]
+
+]
+
+
+
+---
+class: top, left
+
+## Group By - One or more variable
+
+Let's group variable by continent where year is 2007.
+
+--
+
+.pull-left[
+
+
+```r
+gapminder_group_by &lt;- gapminder %&gt;% 
+  filter(year == 2007) %&gt;% 
+* group_by(continent)
+```
+
+Here, 
+
+- group_by - group variable by selected column
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+head(gapminder_group_by)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"2007","4":"43.828","5":"31889923","6":"974.5803"},{"1":"Albania","2":"Europe","3":"2007","4":"76.423","5":"3600523","6":"5937.0295"},{"1":"Algeria","2":"Africa","3":"2007","4":"72.301","5":"33333216","6":"6223.3675"},{"1":"Angola","2":"Africa","3":"2007","4":"42.731","5":"12420476","6":"4797.2313"},{"1":"Argentina","2":"Americas","3":"2007","4":"75.320","5":"40301927","6":"12779.3796"},{"1":"Australia","2":"Oceania","3":"2007","4":"81.235","5":"20434176","6":"34435.3674"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+---
+class: top, left
+
+## Summarize - by Group Variables
+
+- Summarize mean life expectancy by continent
+
+--
+
+.pull-left[
+
+
+```r
+gapminder_sum &lt;- gapminder_group_by %&gt;% 
+* summarize(meanlife = mean(lifeExp))
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+head(gapminder_sum)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["continent"],"name":[1],"type":["chr"],"align":["left"]},{"label":["meanlife"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"54.80604"},{"1":"Americas","2":"73.60812"},{"1":"Asia","2":"70.72848"},{"1":"Europe","2":"77.64860"},{"1":"Oceania","2":"80.71950"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+--
+
+.pull-left[
+
+Here, 
+
+
+```r
+gapminder_group_by &lt;- gapminder %&gt;% 
+filter(year == 2007) %&gt;% 
+group_by(continent) %&gt;% 
+```
+
+- summarize - reduce multiple variables
+
+]
+
+---
+class: top, left
+
+## Your Turn - 04
+
+- Summarize mean (population and gdpPerCap) by continent in year 2007
+
+<div class="countdown" id="timer_608a7696" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+--
+
+.pull-left[
+
+
+```r
+library(gapminder)
+
+gapminder_pg &lt;- gapminder_group_by %&gt;% 
+* summarize(mean_pop = mean(pop),
+*           mean_gdp = mean(gdpPercap)
+*           )
+```
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+head(gapminder_pg)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["continent"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_pop"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean_gdp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"17875763","3":"3089.033"},{"1":"Americas","2":"35954847","3":"11003.032"},{"1":"Asia","2":"115513752","3":"12473.027"},{"1":"Europe","2":"19536618","3":"25054.482"},{"1":"Oceania","2":"12274974","3":"29810.188"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
