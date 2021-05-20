@@ -1,0 +1,180 @@
+---
+title: "Basic R tasks(Your turn)"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+##Your turn 01 (Q)
+- Assign some number to **num1** variable and print out.
+
+- Assign alphabet to **alpha1** variable and print out.
+
+- Don't forget to write some comments.
+---
+##Your turn 01(Ans)
+
+Assign some number to **num1** variable and print out
+
+```{r}
+# assiging 123 to num1
+num1 <- 123
+print(num1)
+```
+
+Assign alphabet to **alpha1** variable and print out
+
+```{r}
+#assigning apple to alpha1
+alpha1 <- "apple"
+print(alpha1)
+```
+---
+
+## Your Turn 02(Q)
+
+
+- Find the class of the variable you defined in **Your Turn 1** i.e num1 and num2
+
+---
+
+## Your Turn 02(Ans)
+
+```{r}
+# datatype in num1 and alpha1
+class(num1)
+
+class(alpha1)
+```
+
+
+---
+## Your Turn 03(Q)
+- Create a new vector called **vec3**
+
+- Find the data type of **vec3**
+---
+## Your Turn 03(Ans)
+```{r}
+vec3 <- c("a", 1, "b", 2) #<<
+
+vec3
+
+class(vec3) #<<
+```
+
+---
+
+## Your turn 04(data)
+
+#### **data:**
+
+```{r}
+data <- data.frame(
+  id = 1:5,
+  name = c("Bikash", "Sameer", "Jiniya", "Ayusha", "Tanusha"),
+  associate = c("KU", "KU", "KU", "Wiseyak", "Prime College"),
+  tools_used = c("Excel", "Excel", "Excel", "SAS", "Python"),
+  gender = c("Male", "Male", "Female", "Female", "Female")
+)
+```
+
+```{r echo=FALSE}
+data
+```
+---
+## Your turn 04(Q)
+
+1. Extract column: .red[name] and .green[tools_used]
+2. Extract row: 2nd only
+3. Extract row: 3rd and 4th along with columns: .red[name], .green[gender], .blue[tools_used] 
+
+---
+
+## Your turn 04(Ans)
+
+###1. Extract column: .red[name] and .green[tools_used]
+
+```{r}
+
+data[, c("name","gender")]
+
+```
+---
+
+## Your turn 04(Ans)
+
+###2. Extract row: 2nd only
+
+```{r}
+
+data[2, ]
+```
+---
+
+## Your turn 04(Ans)
+
+
+###3. Extract row: 3rd and 4th along with columns: .red[name], .green[gender], .blue[tools_used] 
+
+
+```{r}
+data[3:4,c("name", "gender")]
+```
+
+---
+
+## Your turn 05(Q)
+
+* Add "blood_group" column to the data frame
+
+---
+
+## Your turn 05(Ans)
+
+```{r}
+data$blood_group <- c("A","B","C","D","E")
+
+data
+```
