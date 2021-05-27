@@ -1,0 +1,338 @@
+---
+title: "Base R"
+date: 
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Your Turn 01
+
+# 1. Assign some number to num1 variable and print out.
+# 2. Assign alphabet to alpha1 variable and print out.
+# 3. Don't forget to write some comments.
+
+
+```{r}
+
+
+```
+
+
+### Your Turn 02
+
+
+# Find class of num1 and num2 variables
+
+```{r}
+
+```
+
+
+### Your Turn 03
+
+# Create a new vector called vec3
+
+# Find the data type of vec3
+
+```{r}
+
+
+
+
+
+
+
+```
+
+
+## Your Turn 04
+
+
+```{r}
+# Perform Arthmetic operations 
+
+x <- c(1, 2, 3)
+y <- c(2, 3, 4)
+
+# Addition
+x + y
+
+# Subtraction
+
+
+## Multiplication
+
+
+## Division
+
+
+####################################333
+
+## Expo
+
+5 ^ 2
+
+
+99 ^ 3
+
+
+```
+
+## Your Turn 05
+
+
+
+```{r}
+
+x <- c(5,7,4,9)
+y <- c(6,5,3,8)
+
+
+## Greater than (>)
+
+x > y
+
+## Less than (<)
+
+
+## Equals to (==)
+
+
+
+## Not Equal to (!=)
+
+
+## Greater than equal to (>=)
+
+
+## Less than equal to (<=)
+
+
+
+```
+
+## Logical Operator
+
+```{r}
+x <- c(2,5, 8)
+y <- c(5, 6, 7)
+
+## check if x & y is greater than 3
+
+
+## check if x & y is greater than 3
+
+
+## check if x & y is greater than 3
+
+
+```
+
+
+## OR Operator
+
+
+```{r}
+x <- c(1,5,3)
+y <- c(4,5,6)
+
+## check if x or is greater 2
+
+
+
+```
+
+
+## NOT Operator
+
+
+```{r}
+x <- c(3,4,5)
+
+## check if x is not greater than 3
+
+print(!(x>3))
+```
+
+## Function
+
+
+```{r}
+
+add_me <- function(x, y) {
+  
+  x + y
+  
+}
+
+add_me(2,5)
+
+
+```
+
+
+
+## Data Frames
+
+## check uppper / lowest 6 data 
+
+```{r}
+head(cars)
+
+
+tail(cars)
+```
+
+
+## create data frame
+
+```{r}
+## custom data
+
+data <- data.frame(
+  id = 1:5,
+  name = c("Bikash", "Sameer", "Jiniya", "Ayusha", "Tanusha"),
+  associate = c("KU", "KU", "KU", "Wiseyak", "Prime College"),
+  tools_used = c("Excel", "Excel", "Excel", "SAS", "Python"),
+  gender = c("Male", "Male", "Female", "Female", "Female")
+)
+
+
+```
+
+
+```{r}
+## dimensions
+
+nrow()
+
+ncol()
+
+dim()
+
+```
+
+
+```{r}
+## column / variable names
+
+names()
+```
+
+
+```{r}
+str()
+
+
+```
+
+```{r}
+summary()
+```
+
+## Extract Data
+
+
+```{r}
+## Extract first two rows & columns
+
+data[1:2, 1:2]
+
+```
+
+```{r}
+## Extract second row and all columns
+
+data[2, ]
+
+```
+
+```{r}
+## Extract 3rd row with 2nd and 4th column
+
+data[3, c(2, )]
+```
+
+
+```{r}
+# Extract 2nd and 4th row with 2nd, 3rd and 4th column
+
+data[c( ,4), c(3,4)]
+```
+
+
+
+### Your Turn 04
+
+> Extract column: name and tools_used
+> Extract row: 2nd only
+> Extract row: 3rd and 4th along with columns: name, gender, tools_used
+
+
+```{r}
+
+```
+
+
+## Your Turn 05
+
+> Add "blood_group" column to the data frame
+
+
+```{r}
+
+
+
+
+```
+
+
+## Example
+
+```{r}
+new_data <- data.frame(
+  id = 6:9,
+  name = c("Sanjay", "Sarun", "Abhishek", "Binod"),
+  associate = c("Numeric Mind", "KU", "KU", "Numeric Mind"),
+  tools_used = c("R", "SAS", "Excel", "R"),
+  gender = "Male",
+  address = c("Bhaktapur", "Lalitpur", NA, "Kathmandu"),
+  blood_group = c("F", "G", "H", "I")
+)
+```
+
+## Row bind
+
+```{r}
+updated_data <- (data, new_data)
+
+head(updated_data)
+
+```
+
+## Merge
+
+```{r}
+prof_data <- data.frame(
+  id = 1:9,
+  phone = sample(9800000000:9863999999, 9),
+  profession = "Student"
+)
+
+
+final_data <- (prof_data, updated_data, by = "id")
+
+
+head(final_data)
+```
+
+
+```{r}
+names(final_data)[names(final_data)=="name"] <- "first_name"
+names(final_data)
+```
+
