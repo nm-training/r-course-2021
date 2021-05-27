@@ -27,10 +27,10 @@ xaringanExtra::use_panelset()
 xaringanExtra::html_dependency_webcam()
 
 # These are the defaults
-xaringanExtra::use_extra_styles(
-  hover_code_line = TRUE,         #<<
-  mute_unhighlighted_code = TRUE  #<<
-)
+# xaringanExtra::use_extra_styles(
+#   hover_code_line = TRUE,         #<<
+#   mute_unhighlighted_code = TRUE  #<<
+# )
 
 # xaringan::summon_remark()
 ```
@@ -92,8 +92,6 @@ class: top, left
 ## Your Turn
 
 `r countdown(minutes = 0, warn_when = 10, seconds = 120,  top = 0)`
-
-- Copy the File from GitHub
 
 - Open 01_basic_R.Rmd and look around
 
@@ -319,7 +317,7 @@ class: top, left, highlight-last-item
 .panelset[
 .panel[.panel-name[Rules]
 
-- Variable name must start with a letter (A-Z, a-z)
+- Variable name must start with alphabet or dot.
 
 - Only accepts letters, numbers, dot and underscore
 
@@ -432,10 +430,9 @@ class(alpha1)
 class: top, left, tabbg
 
 ## Data Structures
-
 --
 
-Data Structure are the R Objects that is used to store some kind of data.
+Data Structure is a collection of data types in an organized way.
 
 --
 
@@ -606,45 +603,33 @@ Operator | Meaning
 .panel[.panel-name[Addition]
 
 ```{r}
-a <- c(5,6,7)
-b <- c(2,1,3)
-
-print(a + b) #<<
-```
-
-]
-
-.panel[.panel-name[Multiply]
-
-
-```{r}
-a <- c(1,2,3)
-b <- c(2,3,4)
-
-print(a * b) #<<
+10 + 5
 ```
 
 ]
 
 .panel[.panel-name[Subtraction]
 
-
 ```{r}
-a <- c(9,8,7)
-b <- c(2,4,9)
-
-print(a - b) #<<
+10 - 5
 ```
 
 ]
 
+.panel[.panel-name[Multiplication]
+
+
+```{r}
+10 * 5
+```
+
+]
+
+
 .panel[.panel-name[Division]
 
 ```{r}
-a <- c(22,13,24)
-b <- c(2,3,4)
-
-print(a / b) #<<
+10 / 5
 ```
 
 ]
@@ -652,8 +637,7 @@ print(a / b) #<<
 .panel[.panel-name[Exponent]
 
 ```{r}
-4 ^ 2 #<<
-99 ^ 3 #<<
+10 ^ 5 #<<
 ```
 
 ]
@@ -661,8 +645,7 @@ print(a / b) #<<
 .panel[.panel-name[Modulus]
 
 ```{r}
-7 %% 2 #<<
-99 %% 8 #<<
+10 %% 5 #<<
 ```
 
 ]
@@ -697,10 +680,7 @@ Operator | Definition
 - Greater than ( > )
 
 ```{r}
-a <- c(5,2,3,4)
-b <- c(10,1,2,9)
-
-print(a > b) #<<
+10 > 5 #<<
 ```
 
 ]
@@ -710,10 +690,7 @@ print(a > b) #<<
 - Less Than ( < )
 
 ```{r}
-a <- c(9,10,11,21)
-b <- c(11,2,3,55)
-
-print(a < b) #<<
+10 < 5 #<<
 ```
 
 ]
@@ -723,10 +700,9 @@ print(a < b) #<<
 - Equals to ( == )
 
 ```{r}
-a <- c(1, 2, 3)
-b <- c(2,3,5)
+10 == 5 #<<
 
-print(a == b) #<<
+5 == 5 #<<
 ```
 
 ]
@@ -736,10 +712,9 @@ print(a == b) #<<
 - Not Equal to (!=)
 
 ```{r}
-a <- c(2,3,4,10)
-b <- c(1,3,4,9)
+10 != 5  #<<
 
-print(a != b) #<<
+10 != 10 #<<
 ```
 
 ]
@@ -749,10 +724,9 @@ print(a != b) #<<
 - Greater than equal to (>=)
 
 ```{r}
-a <- c(2,3,4,10)
-b <- c(5,7,4,9)
+10 >= 5 #<<
 
-print(a>=b) #<<
+10 >= 10 #<<
 ```
 
 ]
@@ -765,10 +739,9 @@ print(a>=b) #<<
 
 ```{r}
 
-a <- c(2,3,4,9)
-b <- c(2,5,7,8)
+10 <= 15 #<<
 
-print(a <= b) #<<
+15 <= 10 #<<
 
 ```
 
@@ -791,10 +764,7 @@ Operator which gives boolean values (TRUE or FALSE) when compared.
 It gives .green[TRUE] value only when both condition result are .green[TRUE].
 
 ```{r}
-a <- c(3,9,5)
-b <- c(5,6,7)
-
-print(a>5 & b>5) #<<
+3 > 5 & 5 > 5 #<<
 ```
 
 ]
@@ -805,10 +775,7 @@ print(a>5 & b>5) #<<
 It gives .green[TRUE] value when one of the condition result is .green[TRUE].
 
 ```{r}
-a <- c(1,5,3)
-b <- c(4,5,6)
-
-print(a<5 | b>5) #<<
+1<5 | 4>5 #<<
 ```
 
 ]
@@ -819,9 +786,7 @@ print(a<5 | b>5) #<<
 It makes the .green[TRUE] to .red[FALSE] and Vice-versa.
 
 ```{r}
-a <- c(3,4,5)
-
-print(!(a>3)) #<<
+!(4>3) #<<
 ```
 
 ]
@@ -883,14 +848,15 @@ User-defined | Defined by user using R program
 
 .panel[.panel-name[Built-in]
 
+Function | Description
 ---|---
-print() | 
-sum() | 
-seq() | 
-mean() | 
-median() |
-min() | 
-max() |
+print() | Prints the statement
+sum() | Summation
+seq() | Sequence generation
+mean() |  Mean value
+median() | Median value
+min() | Manimum
+max() | Maximum
 
 
 ]
@@ -902,15 +868,15 @@ max() |
 - Find sum of numbers from 10 to 20.
 
 ```{r}
-print(seq(5, 10))
+seq(5, 10)
 ```
 
 ```{r}
-print(mean(5:10))
+mean(5:10)
 ```
 
 ```{r}
-print(sum(10:20))
+sum(10:20)
 ```
 
 
@@ -935,7 +901,6 @@ add_me(99, 123)
 class: top, left, tabbg
 
 ## Data frame
-
 
 .panelset[
 .panel[.panel-name[About]
