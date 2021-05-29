@@ -33,24 +33,7 @@ layout: true
 <div class="my-header"></div>
 <div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
 
----
-class: left, top
-background-image: url(imgs/tidyverse-explore.png)
-background-size: cover
-
----
-class: left, top
-background-image: url(imgs/tidyverse-solar-system.png)
-background-size: 80%
-
-## Tidyverse is a Collection R Packages
-
----
-class: left, top
-background-image: url(imgs/baseR-vs-tidyverse.jpg)
-background-size: 60%
-
-## Base R vs Tidyverse
+# Data Analysis Process
 
 ---
 layout: false
@@ -58,12 +41,95 @@ class: top, center
 background-image: url(imgs/data-analysis-cover.png)
 background-size: 75%
 
-# Data Analysis Process
 
 ---
 layout: true
 <div class="my-header"></div>
 <div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+class: top, left
+
+## Today's Content
+
+- Project & File Paths
+
+- Read (Load) Data
+
+- Write (Save) Data 
+
+---
+class: top, left
+
+## RStudio Project 
+
+.pull-left[
+
+Manage your project easily with:
+
+- separate working directory 
+
+- isolated source code & history
+
+- switch between projects
+]
+
+--
+
+.pull-right[
+
+<img src="imgs/r-projects-structure.png" width = "80%">
+
+
+]
+
+---
+class: top, left
+
+# File Paths
+
+.panelset[
+.panel[.panel-name[Full Paths]
+
+
+```{r eval=FALSE}
+
+# Linux / Mac
+  
+"/home/binod/documents/projects/data/file_name.csv"
+
+# Windows : 
+
+"C:\Users\binod\Documents\project\data\file_name.csv" 
+```
+
+- Note: To avoid path errors replace file names having space with underscore.
+
+]
+
+.panel[.panel-name[Relative Path]
+
+Here, . dot is a current directory (folder).
+
+```{r eval = F}
+# Linux / Mac
+
+"./data/file_name.csv"
+
+# Windows:
+
+".\data\file_name.csv"
+
+```
+
+]
+
+]
+
+---
+class: middle, center
+
+# Read / Write Data
 
 ---
 class: top, left
@@ -103,10 +169,10 @@ library("readxl")
 ### Read R Data
 load("./data/cars.rda")
  
-rds_data <- readRDS("./data/cars.rds")
+rds_cars <- readRDS("./data/cars.rds")
 
 ### Read CSV File
-csv_data <- read_csv("./data/cars.csv")
+csv_cars <- read_csv("./data/cars.csv")
 
 ```
 
@@ -116,16 +182,16 @@ csv_data <- read_csv("./data/cars.csv")
 
 ```{r}
 ### Read Excel Data
-excel_data <- read_excel("./data/cars.xlsx")
+excel_cars <- read_excel("./data/cars.xlsx")
 
 # Read SAS Data
-sas_data <- read_sas("./data/cars.sas7bdat")
+sas_cars <- read_sas("./data/cars.sas7bdat")
 
 ### Read SPSS Data 
-spss_data <- read_sav("./data/cars.sav")
+spss_cars <- read_sav("./data/cars.sav")
 
 ### Read Stata Files
-stata_data <- read_dta("./data/cars.dta")
+stata_cars <- read_dta("./data/cars.dta")
 ```
 
 ]]
@@ -170,13 +236,13 @@ library(haven)
 
 ```{r}
 # write to RDA
-save(cars, file = "./data/cars_data.rda")
+save(cars, file = "./data/rda_cars.rda")
 
 # write to RDS
-saveRDS(cars, "./data/cars_data.rds")
+saveRDS(rds_cars, "./data/rds_cars.rds")
 
 # write to CSV
-write_csv(cars, "./data/cars_data.csv")
+write_csv(csv_cars, "./data/csv_cars.csv")
 ```
 
 ]
@@ -185,16 +251,16 @@ write_csv(cars, "./data/cars_data.csv")
 
 ```{r}
 # write to Excel 
-write_xlsx(cars, "./data/cars_data.xlsx")
+write_xlsx(excel_cars, "./data/excel_cars.xlsx")
 
 # write to SAS
-write_sas(cars, "./data/cars_data.sas7bdat")
+write_sas(sas_cars, "./data/sas_cars.sas7bdat")
 
 # write to SPSS
-write_sav(cars, "./data/cars_data.sav")
+write_sav(spss_cars, "./data/spss_cars.sav")
 
 # write to Stata
-write_dta(cars, "./data/cars_data.dta")
+write_dta(stata_cars, "./data/stata_cars.dta")
 ```
 
 ]]

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Import Data in R</title>
+    <title>Tidyverse</title>
     <meta charset="utf-8" />
     <meta name="author" content="Binod Jung Bogati" />
-    <meta name="date" content="2021-05-29" />
+    <meta name="date" content="2021-05-28" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -24,253 +24,39 @@ layout: true
 &lt;div class="my-header"&gt;&lt;/div&gt;
 &lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
 
-# Data Analysis Process
+
+
+---
+class: left, top
+background-image: url(imgs/tidyverse-explore.png)
+background-size: cover
+
+---
+class: left, top
+
+## Tidyverse is a Collection R Packages
+
+
+```r
+library(tidyverse) # already installed
+```
+
+&lt;img src="imgs/tidyverse-solar-system.png"&gt;
+
+
+
+---
+class: left, top
+background-image: url(imgs/baseR-vs-tidyverse.jpg)
+background-size: 60%
+
+## Base R vs Tidyverse
 
 ---
 layout: false
 class: top, center
 background-image: url(imgs/data-analysis-cover.png)
 background-size: 75%
-
-
----
-layout: true
-&lt;div class="my-header"&gt;&lt;/div&gt;
-&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
-
----
-class: top, left
-
-## Today's Content
-
-- Project &amp; File Paths
-
-- Read (Load) Data
-
-- Write (Save) Data 
-
----
-class: top, left
-
-## RStudio Project 
-
-.pull-left[
-
-Manage your project easily with:
-
-- separate working directory 
-
-- isolated source code &amp; history
-
-- switch between projects
-]
-
---
-
-.pull-right[
-
-&lt;img src="imgs/r-projects-structure.png" width = "80%"&gt;
-
-
-]
-
----
-class: top, left
-
-# File Paths
-
-.panelset[
-.panel[.panel-name[Full Paths]
-
-- Separate file names with underscore instead of spaces.
-- ~ is a /home/
-
-
-```r
-# Linux / Mac
-  
-"/home/binod/documents/projects/data/file_name.csv"
-
-# Windows : 
-
-"C:\Users\binod\Documents\project\data\file_name.csv" 
-```
-
-]
-
-.panel[.panel-name[Relative Path]
-
-Here, . dot is a current directory (folder).
-
-
-```r
-# Linux / Mac
-
-"./data/file_name.csv"
-
-# Windows:
-
-".\data\file_name.csv"
-```
-
-
-]
-
-]
-
----
-class: top, left
-
-## Read Data Files in R
-
-
-.panelset[
-.panel[.panel-name[Syntax]
-
-Function | Description
---- | ---
-readRDS/RDA | Read R Data
-read_csv() | Read CSV Data
-read_excel() | Read Excel Data
-read_sas() | Read SAS Data
-read_sav() | Read SPSS Data
-read_dta() | Read Stata Data
-
-]
-
-.panel[.panel-name[Load]
-
-* We need following packages:
-
-
-```r
-library("readr")
-library("haven")
-library("readxl")
-```
-
-]
-
-.panel[.panel-name[Read I]
-
-
-```r
-### Read R Data
-load("./data/cars.rda")
- 
-rds_cars &lt;- readRDS("./data/cars.rds")
-
-### Read CSV File
-csv_cars &lt;- read_csv("./data/cars.csv")
-```
-
-]
-
-.panel[.panel-name[Read II]
-
-
-```r
-### Read Excel Data
-excel_cars &lt;- read_excel("./data/cars.xlsx")
-
-# Read SAS Data
-sas_cars &lt;- read_sas("./data/cars.sas7bdat")
-
-### Read SPSS Data 
-spss_cars &lt;- read_sav("./data/cars.sav")
-
-### Read Stata Files
-stata_cars &lt;- read_dta("./data/cars.dta")
-```
-
-]]
-
----
-class: top, left
-
-## Write Data from R
-
-
-.panelset[
-.panel[.panel-name[Syntax]
-
-Function | Description
---- | ---
-saveRDS/save | Write to RDS/RDA file
-write_csv() | Write to CSV file
-write_xlsx() | Write to Excel File
-write_sas() | Write to SAS File
-write_sav() | Write to SPSS Data
-write_dta() | Write Stata File
-
-]
-
-.panel[.panel-name[Load]
-
-* We need following packages
-
-
-```r
-library(readr)
-library(writexl)
-library(haven)
-```
-
-]
-
-
-.panel[.panel-name[Write I]
-
-* Write Data from R 
-
-
-
-```r
-# write to RDA
-save(cars, file = "./data/rda_cars.rda")
-
-# write to RDS
-saveRDS(rds_cars, "./data/rds_cars.rds")
-
-# write to CSV
-write_csv(csv_cars, "./data/csv_cars.csv")
-```
-
-]
-
-.panel[.panel-name[Write II]
-
-
-```r
-# write to Excel 
-write_xlsx(excel_cars, "./data/excel_cars.xlsx")
-
-# write to SAS
-write_sas(sas_cars, "./data/sas_cars.sas7bdat")
-
-# write to SPSS
-write_sav(spss_cars, "./data/spss_cars.sav")
-
-# write to Stata
-write_dta(stata_cars, "./data/stata_cars.dta")
-```
-
-]]
-
----
-class: top, left
-
-
-## Take Always
-
-Package | Read / Write
---- | ---
-readr | most flat files (.csv, .tsv, etc.)
-readxl | excel files (.xls, .xlsx)
-haven | SPSS, Stata, and SAS data files
-writexl | write excel files (.xls, .xlsx)
-
-These packages will help you import/export data efficiently.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>
