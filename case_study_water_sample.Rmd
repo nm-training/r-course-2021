@@ -1,0 +1,310 @@
+---
+title: "Case study(Water sample analysis)"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+### Water quality varies from place to place, depending on the condition of the source water from which it is drawn and the treatment it receives, but it must meet certain standards before it is concluded safe for drinking purposes.
+### There are many possible sources of contamination, including:
+
+- ####Sewage releases
+- ####Naturally occurring chemicals and minerals (for example, arsenic, radon, uranium)
+- ####Local land use practices (for example, fertilizers, pesticides, livestock, concentrated feeding operations).
+- ####Manufacturing processes (for example, heavy metals, cyanide)
+- ####Malfunctioning on-site wastewater treatment systems (for example, septic systems)
+- ####In addition, drinking water that is not properly treated or that travels through an improperly maintained distribution system (pipes) may also create conditions that increase risk of contamination.
+
+---
+##Importance of water quality testing:
+- ####Water analysis measures the physical, chemical, biological, and microbiological characteristics of water.
+
+- #### Water quality sampling and testing allows managers and owners to establish baseline values, ultimately increasing the knowledge and understanding surrounding the specific issues of a waterbody.
+- #### To prevent health hazards.
+- #### Water-quality monitoring is used to alert us to current, ongoing, and emerging problems.
+- #### Assessments based on monitoring data help law makers and water managers measure effectiveness of water policies, determine if water quality is getting better or worse, and formulate new policies to better protect human health and the environment.
+
+---
+<img src="imgs/water_std.png" width="200%">
+
+---
+
+## Here, we are going to calculate few water quality parameters:
+
+- #### Total hardness, calcium and magnesium
+- #### Ammonia
+- #### Nitrate
+- #### Fluoride
+- #### Chloride
+- #### Fecal Coliform count and Total coliform count(MPN level)
+
+---
+
+## Hardness of water:
+
+#### The main cause of water hardness is dissolved salts of calcium and magnesium. Moreover the other ions like Strontium, Iron, Barium and Manganese also contribute to hardness of water.
+
+#### The EDTA(Ethylene Diamine Tetraacetic acid) titration method gives good results for control and routine applications.
+
+#### Total hardness(mg/L) and calcium concentration(mg/L) are calculated which then gives the magnesium concentration(mg/L).
+
+---
+## Total hardness
+
+#### Apparatus required:
+- ##### Conical flask
+- ##### Pipette
+- ##### Burette
+- ##### Stand
+- ##### Measuring cylinder
+
+#### Chemicals required:
+- ##### Buffer solution(NH4OH)
+- ##### Indicator: Eriochrome black T
+- ##### Standard EDTA solution
+- ##### Dilute NaOH
+
+---
+#Total hardness
+
+#### Procedure:
+
+- ##### Take certain volume(50ml or 25ml) of test sample of water.
+- ##### Add 2-3 ml 1:1 HCl, boil and neutralize with dilute NaOH after cooling.
+- ##### Add 1-5 ml of NH4OH buffer solution.
+- ##### Add 2-3 drops of Eriochrome black T indicator which turns the sample to wine red color.
+- ##### Note the initial reading in the burette filled with 0.01M EDTA solution and titrate near the end point( Color changes from wine red to blue).
+- ##### Note the final reading of the burette. 
+
+---
+class: center, middle
+<img src="imgs/th_p1.png" width="70%">
+
+---
+class: center, middle
+
+<img src="imgs/th_p2.png" width="70%">
+
+---
+class:center, middle
+
+##### Note the volume of 0.01M EDTA consumed(Initial and the final reading).
+<img src="imgs/burette.png" width="8%">
+---
+
+## Documentation of burette reading(0.01M EDTA) for total hardness:
+
+
+
+```{r, echo=FALSE}
+w_ana<- readr::read_csv(paste0(getwd(),"/data/water_analysis.csv"))
+head(w_ana) %>% dplyr::select(Samples,Volume_sample, TH_final, TH_initial)
+```
+
+---
+
+## Total hardness
+##### Total hardness of water can be calculated using the formula:
+
+##### Total hardness(mg/L)= 
+
+```{r, eval=FALSE}
+
+A x B x 1000/ sample volume(ml) #<<
+
+
+```
+
+
+
+##### where,
+
+#####A= volume of 0.01M EDTA consumed
+
+#####       B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at                 the calcium indicator end point
+#####           [1ml EDTA Disodium(0.01M) is equivalent to 1mg                  Caco3]
+
+---
+class: center, middle
+
+## Perform task 1-3
+
+---
+
+### Task 1:
+
+##### Load 'water_analysis.csv' dataset from your 'data' folder and save it under the variable name: water and observe the dataset.
+
+```{r}
+library(readr)
+water<- read_csv("C:/projects_shiny/r machine learning/teach/2021/data/water_analysis.csv")
+head(water)
+```
+
+---
+
+### Task 2:
+
+##### Load the tidyverse package and remove unnecessary columns for now: Keep Samples, Volume_sample, TH_final and TH_initial for calculating total hardness.
+
+```{r}
+library(tidyverse)
+total_hardness<- water %>% select(Samples, Volume_sample, TH_final, TH_initial)
+```
+
+---
+
+### Task 3:
+
+- ##### Observe dataset from task 2: the 'Samples' represent the different arbitrary water samples.'Volume_sample' represents the volume of sample(in ml) taken for test.
+
+
+- ##### 'TH_initial' represents the initial record of the volume of the burette containing 0.01M EDTA before titration and "TH_final" represents the final record of the volume of the burette after reaching the end point. The volume of EDTA consumed is the difference between TH_final and TH_initial.
+
+- #####Calculate the total hardness of the water samples given :
+
+#####   - mg CaCO3 equivalent to 1.00 mL EDTA(0.01M) titrant at the calcium indicator end point is 1
+
+```{r, eval=FALSE}
+
+Hint: formula for total hardness:
+
+   A x B x 1000/ sample volume(ml) #<<
+
+
+where,
+
+ A= volume of 0.01M EDTA consumed
+
+ B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+```
+
+---
+
+```{r}
+total_hardness<- total_hardness %>%
+  mutate(EDTA_consumed = TH_final-TH_initial) #<<
+
+total_hardness<- total_hardness %>%
+  mutate(Total_Hardness= (EDTA_consumed*1*1000)/Volume_sample) #<<
+
+head(total_hardness)
+```
+---
+## Calcium:
+
+#### Apparatus required:
+- ##### Conical flask
+- ##### Pipette
+- ##### Burette
+- ##### Stand
+- ##### Measuring cylinder
+
+#### Chemicals required:
+- ##### Indicator: Mureoxide powder/solution
+- ##### Standard EDTA solution
+- ##### Dilute NaOH
+
+---
+## Calcium
+
+#### Procedure:
+
+- ##### Take certain volume(50ml or 25ml) of test sample of water.
+- ##### Add NaOH to increase the pH to 12-13.
+- ##### Add a pinch of mureoxide indicator which turns the sample to red color.
+- ##### Note the initial reading in the burette filled with 0.01M EDTA solution and titrate near the end point( Color changes from red to violet).
+- ##### Note the final reading of the burette. 
+
+---
+class:center, middle
+
+##### Note the volume of 0.01M EDTA consumed(Initial and the final reading).
+<img src="imgs/burette.png" width="8%">
+---
+
+## Documentation of burette reading(0.01M EDTA) for calcium:
+
+```{r, echo=FALSE}
+)
+head(w_ana) %>% dplyr::select(Samples,Volume_sample, Ca_final, Ca_initial)
+```
+
+
+---
+
+## Calcium
+##### Calcium content can be calculated using the formula:
+
+##### Calcium(mg/L)= 
+
+```{r, eval=FALSE}
+
+A X B X (400.8μg/1000) X 1000/sample volume(ml)
+
+A x B x 400.8(mg)/ sample volume(ml) #<<
+
+
+[Standard EDTA titrant, 0.0100M, is equivalent to 400.8 μg Ca/1.00 mL]
+
+```
+
+
+
+##### where,
+
+#####A= volume of 0.01M EDTA consumed
+
+#####       B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at                 the calcium indicator end point
+#####           [1ml EDTA Disodium(0.01M) is equivalent to 1mg                  Caco3]
+
+---
+class: center, middle
+
+## Perform task 4-6
+
+---
+
+## Task 4:
