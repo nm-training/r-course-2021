@@ -4,7 +4,7 @@
     <title>Import Data in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Binod Jung Bogati" />
-    <meta name="date" content="2021-05-29" />
+    <meta name="date" content="2021-05-30" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -82,41 +82,47 @@ class: top, left
 .panelset[
 .panel[.panel-name[Full Paths]
 
-- Separate file names with underscore instead of spaces.
-- ~ is a /home/
 
 
 ```r
 # Linux / Mac
   
-"/home/binod/documents/projects/data/file_name.csv"
+*"/home/binod/documents/projects/data/file_name.csv"
 
 # Windows : 
 
-"C:\Users\binod\Documents\project\data\file_name.csv" 
+*"C:\Users\binod\Documents\project\data\file_name.csv"
 ```
+
+
+- Tips: (File / Folders names) Always replace space with underscore.
 
 ]
 
 .panel[.panel-name[Relative Path]
 
-Here, . dot is a current directory (folder).
 
 
 ```r
-# Linux / Mac
-
-"./data/file_name.csv"
-
-# Windows:
-
-".\data\file_name.csv"
+*"./data/file_name.csv"
 ```
 
+Here, 
+
+- . dot is a current directory (folder)
+
+- /data/ is a data folder
+
+- file_name.csv is a name of csv file
 
 ]
 
 ]
+
+---
+class: middle, center
+
+# Read / Write Data
 
 ---
 class: top, left
@@ -155,12 +161,13 @@ library("readxl")
 
 
 ```r
-### Read R Data
+# Read RDA Data
 load("./data/cars.rda")
  
+# Read RDS Data
 rds_cars &lt;- readRDS("./data/cars.rds")
 
-### Read CSV File
+# Read CSV Data
 csv_cars &lt;- read_csv("./data/cars.csv")
 ```
 
@@ -179,7 +186,7 @@ sas_cars &lt;- read_sas("./data/cars.sas7bdat")
 ### Read SPSS Data 
 spss_cars &lt;- read_sav("./data/cars.sav")
 
-### Read Stata Files
+### Read Stata Data
 stata_cars &lt;- read_dta("./data/cars.dta")
 ```
 

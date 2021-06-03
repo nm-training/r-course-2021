@@ -96,31 +96,34 @@ class: top, left
 
 # Linux / Mac
   
-"/home/binod/documents/projects/data/file_name.csv"
+"/home/binod/documents/projects/data/file_name.csv" #<<
 
 # Windows : 
 
-"C:\Users\binod\Documents\project\data\file_name.csv" 
+"C:\Users\binod\Documents\project\data\file_name.csv" #<<
 ```
 
-- Note: To avoid path errors replace file names having space with underscore.
+
+- Tips: (File / Folders names) Always replace space with underscore.
 
 ]
 
 .panel[.panel-name[Relative Path]
 
-Here, . dot is a current directory (folder).
 
 ```{r eval = F}
-# Linux / Mac
 
-"./data/file_name.csv"
-
-# Windows:
-
-".\data\file_name.csv"
+"./data/file_name.csv" #<<
 
 ```
+
+Here, 
+
+- . dot is a current directory (folder)
+
+- /data/ is a data folder
+
+- file_name.csv is a name of csv file
 
 ]
 
@@ -166,12 +169,13 @@ library("readxl")
 .panel[.panel-name[Read I]
 
 ```{r}
-### Read R Data
+# Read RDA Data
 load("./data/cars.rda")
  
+# Read RDS Data
 rds_cars <- readRDS("./data/cars.rds")
 
-### Read CSV File
+# Read CSV Data
 csv_cars <- read_csv("./data/cars.csv")
 
 ```
@@ -190,7 +194,7 @@ sas_cars <- read_sas("./data/cars.sas7bdat")
 ### Read SPSS Data 
 spss_cars <- read_sav("./data/cars.sav")
 
-### Read Stata Files
+### Read Stata Data
 stata_cars <- read_dta("./data/cars.dta")
 ```
 
