@@ -1,0 +1,315 @@
+---
+title: "Applications of R"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retina = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = F,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+.panelset[
+
+
+.panel[.panel-name[Reticulate]
+
+
+
+.pull-left[
+- #### Reticulate embeds a Python session within your R session, enabling seamless, high-performance interoperability.
+
+- #### If you are an R developer that uses Python for some of your work or a member of data science team that uses both languages, reticulate can dramatically streamline your workflow.
+]
+
+.pull-right[
+
+<img src="imgs/reticulate.png" width="80%">
+
+
+]
+]
+
+
+.panel[.panel-name[Features of reticulate package]
+
+
+- #### It allows the users to use python interactively within an R session.
+- ##### It allows the users to source python scripts and import python modules in the R environment.
+
+- ##### It allows R objects to interact with python objects and vice versa.
+- ##### It can translate python object to R object and vice versa.
+
+- ##### It allows the users to switch between different versions of python including virtual environment and Conda environment.
+
+
+]
+]
+---
+
+## Reticulate
+
+.panelset[
+
+
+
+.panel[.panel-name[Python script]
+```{r, include=FALSE}
+library(reticulate)
+conda_python()
+```
+
+
+
+```{python, eval=F}
+#Python codes:
+import pandas as pd
+import numpy as np
+
+car_python = pd.read_csv("C:/projects_shiny/r machine learning/teach/2021/data/cars_data.csv")
+car_python.head(4)
+```
+
+```{python, echo=F}
+#Python codes:
+
+import pandas as pd
+import numpy as np
+
+car_python = pd.read_csv("C:/projects_shiny/r machine learning/teach/2021/data/cars_data.csv")
+
+car_python["Speed_category"]= ""
+
+
+
+
+for i in range(len(car_python)):
+  if car_python.loc[i, "speed"]>0 and car_python.loc[i,"speed"]<=10:
+    car_python.loc[i, "Speed_category"]= "Low speed"
+  elif car_python.loc[i, "speed"]>10 and car_python.loc[i, "speed"]<20:
+    car_python.loc[i, "Speed_category"]= "Medium speed"  
+  else:
+    car_python.loc[i, "Speed_category"]= "High speed"
+
+
+car_python.head(4)
+
+```
+
+
+
+
+]
+
+.panel[.panel-name[Python object in R]
+
+```{r}
+
+R_cars<- py$car_python  #<<
+
+head(R_cars, n=4)
+```
+
+
+
+]
+
+.panel[.panel-name[Source python script]
+
+
+.pull-left[
+<img src="imgs/python_script.png" width="100%">
+]
+
+
+.pull-right[
+
+```{r, include=FALSE}
+source_python("time.py")
+
+for(i in seq(nrow(R_cars))){
+  
+  R_cars[i, "Time"]= 
+    time(R_cars[i, "dist"], R_cars[i, "speed"])
+  
+}
+```
+
+
+```{python, include=F}
+
+python_cars2 = r.R_cars   
+
+python_cars2.head()
+```
+
+<img src="imgs/reticulate_python3.png" width="100%">
+]
+
+]
+
+.panel[.panel-name[R object in python]
+
+<img src="imgs/reticulate_python4.png" width="50%">
+
+]
+
+]
+
+
+---
+
+## Reticulate
+
+.panelset[
+
+.panel[.panel-name[ggplot2 graph with python dataframe]
+.pull-left[
+```{r my_plt}
+library(ggplot2)
+
+my_plt<- ggplot(data = py$python_cars2, #<<
+                aes(speed, dist))+
+  geom_point(aes( color= Speed_category,
+                  shape= Speed_category)) +
+  
+  geom_line(color= 'orange', alpha=0.5,
+            linetype='dashed')+
+  
+  geom_smooth(se= F, color='red')
+
+
+my_plt
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk('my_plt', 'png')`)
+]
+]
+
+
+.panel[.panel-name[Interactive graphs with plotly]
+
+.pull-left[
+```{r, eval=FALSE}
+#Interactive plot:
+library(plotly)
+my_plt2<- my_plt %>% ggplotly()  #<<
+my_plt2
+
+```
+]
+.pull-right[
+```{r, echo=FALSE}
+#Interactive plot:
+library(plotly)
+my_plt2<- my_plt %>% ggplotly()
+my_plt2
+
+```
+]
+
+
+
+]
+
+
+]
+---
+
+## Reticulate 
+
+
+.panel[
+
+.panel[.panel-name[Interactive graphs with plotly]
+
+.pull-left[
+```{r, eval=FALSE}
+#3d graph by plotly using python dataframe
+
+my_plot3<-plot_ly(data = py$python_cars2, #<<
+                  x=~speed,
+                  y=~dist,
+                  z=~Time) %>% 
+  add_markers(color= ~Speed_category)
+
+my_plot3
+
+```
+]
+
+.pull-right[
+```{r, echo=FALSE}
+
+#3d graph by plotly using python dataframe
+
+my_plot3<-plot_ly(data = py$python_cars2,  #<<
+                  x=~speed,
+                  y=~dist,
+                  z=~Time) %>% 
+  add_markers(color= ~Speed_category)
+
+my_plot3
+
+```
+]
+
+
+
+]
+
+]
+---
+
+## Shiny web apps:
+
+- ##### Shiny package in R helps the users to build web apps.
+- ##### Shiny combines the computational power of R with the interactivity of the modern web.
+- ##### Users do not necessarily need to have the knowledge of HTML or CSS.
+- ##### Shiny package provides built in widgets and is also supported by numerous packages.
+- ##### Shiny apps provide a way to present your work to others.
+
+---
+
+
+## Numeric Mind web apps:
+
+

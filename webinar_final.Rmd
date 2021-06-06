@@ -1,0 +1,182 @@
+---
+title: "Applications of R"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retina = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = F,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+class: center, middle
+
+## Reticulate package
+
+
+---
+
+## Reticulate
+
+.panelset[
+
+
+.panel[.panel-name[Reticulate package]
+
+
+
+.pull-left[
+- #### Reticulate embeds a Python session within your R session, enabling seamless, high-performance interoperability.
+
+- #### If you are an R developer that uses Python for some of your work or a member of data science team that uses both languages, reticulate can dramatically streamline your workflow.
+]
+
+.pull-right[
+
+<img src="imgs/reticulate.png" width="80%">
+
+
+]
+]
+
+
+.panel[.panel-name[Features of reticulate package]
+
+
+- ##### It allows the users to use python interactively within an R session.
+- ##### It allows the users to source python scripts and import python modules in the R environment.
+
+- ##### It allows R objects to interact with python objects and vice versa.
+- ##### It can translate python object to R object and vice versa.
+
+- ##### It allows the users to switch between different versions of python including virtual environment and Conda environment.
+
+
+]
+]
+---
+class: center, middle
+
+## Reticulate demo
+
+---
+
+## Shiny web apps:
+
+- ##### Shiny package in R helps the users to build web apps.
+- ##### Shiny combines the computational power of R with the interactivity of the modern web.
+- ##### Users do not necessarily need to have the knowledge of HTML or CSS.
+- ##### Shiny package provides built in widgets and is also supported by numerous packages.
+- ##### Shiny apps provide a way to present your work to others.
+
+---
+class: center, middle
+
+## Numeric Mind web apps:
+
+### **PDF analyser**
+### **Shiny TLF(A clinical data reporting tool)**
+
+---
+
+##### PDF Analyser
+.panelset[
+
+.panel[.panel-name[About]
+
+### Features:
+- ##### Creates a table with correlation values between the pdfs based on the proportion of frequent words.
+- ##### Gives individual file report based on the threshold.
+- ##### Creates word-cloud based on the frequency of the words used.
+]
+
+
+.panel[.panel-name[App:]
+
+<img src="imgs/pdf_analyser0.png" width="100%">
+
+]
+
+
+]
+]
+
+---
+
+##### ShinyTLF
+.panelset[
+
+.panel[.panel-name[About]
+
+##### ShinyTLF(Shiny Tables, Listings and Figures) app is created to:
+- ##### Automate clinical reporting.
+- ##### Create productivity tools(Packages).
+- ##### To make data analysis user friendly.
+- ##### To explore use-cases of R in Pharma.
+
+
+]
+
+.panel[.panel-name[Clinical trial analysis steps]
+
+<img src="imgs/clinical_trial_steps.png" width= "100%">
+
+]
+
+.panel[.panel-name[Features:]
+
+- ##### Supports multiple data formats(SAS, SPSS, CSV, EXCEL)
+- ##### Data Inspection
+- ##### Advanced filter operations
+- ##### Downloadable data/pdf reports
+
+
+
+]
+
+.panel[.panel-name[App]
+
+<img src= "imgs/shinyTLF.png" width="100%">
+
+]
+
+]
+
+

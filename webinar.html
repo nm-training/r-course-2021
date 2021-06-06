@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Applications of R</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-06-06" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/plotly-binding/plotly.js"></script>
+    <script src="libs/typedarray/typedarray.min.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+    <script src="libs/crosstalk/js/crosstalk.min.js"></script>
+    <link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+    <script src="libs/plotly-main/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Applications of R
+### Numeric Mind
+### 2021-06-06
+
+---
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+.panelset[
+
+
+.panel[.panel-name[Reticulate]
+
+
+
+.pull-left[
+- #### Reticulate embeds a Python session within your R session, enabling seamless, high-performance interoperability.
+
+- #### If you are an R developer that uses Python for some of your work or a member of data science team that uses both languages, reticulate can dramatically streamline your workflow.
+]
+
+.pull-right[
+
+&lt;img src="imgs/reticulate.png" width="80%"&gt;
+
+
+]
+]
+
+
+.panel[.panel-name[Features of reticulate package]
+
+
+- #### It allows the users to use python interactively within an R session.
+- ##### It allows the users to source python scripts and import python modules in the R environment.
+
+- ##### It allows R objects to interact with python objects and vice versa.
+- ##### It can translate python object to R object and vice versa.
+
+- ##### It allows the users to switch between different versions of python including virtual environment and Conda environment.
+
+
+]
+]
+---
+
+## Reticulate
+
+.panelset[
+
+
+
+.panel[.panel-name[Python script]
+
+
+
+
+
+```python
+#Python codes:
+import pandas as pd
+import numpy as np
+
+car_python = pd.read_csv("C:/projects_shiny/r machine learning/teach/2021/data/cars_data.csv")
+car_python.head(4)
+```
+
+
+```
+##    speed  dist Speed_category
+## 0      4     2      Low speed
+## 1      4    10      Low speed
+## 2      7     4      Low speed
+## 3      7    22      Low speed
+```
+
+
+
+
+]
+
+.panel[.panel-name[Python object in R]
+
+
+```r
+*R_cars&lt;- py$car_python
+
+head(R_cars, n=4)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Speed_category"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"4","2":"2","3":"Low speed","_rn_":"1"},{"1":"4","2":"10","3":"Low speed","_rn_":"2"},{"1":"7","2":"4","3":"Low speed","_rn_":"3"},{"1":"7","2":"22","3":"Low speed","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+
+]
+
+.panel[.panel-name[Source python script]
+
+
+.pull-left[
+&lt;img src="imgs/python_script.png" width="100%"&gt;
+]
+
+
+.pull-right[
+
+
+
+
+
+
+&lt;img src="imgs/reticulate_python3.png" width="100%"&gt;
+]
+
+]
+
+.panel[.panel-name[R object in python]
+
+&lt;img src="imgs/reticulate_python4.png" width="50%"&gt;
+
+]
+
+]
+
+
+---
+
+## Reticulate
+
+.panelset[
+
+.panel[.panel-name[ggplot2 graph with python dataframe]
+.pull-left[
+
+```r
+library(ggplot2)
+
+*my_plt&lt;- ggplot(data = py$python_cars2,
+                aes(speed, dist))+
+  geom_point(aes( color= Speed_category,
+                  shape= Speed_category)) +
+  
+  geom_line(color= 'orange', alpha=0.5,
+            linetype='dashed')+
+  
+  geom_smooth(se= F, color='red')
+
+
+my_plt
+```
+]
+.pull-right[
+![](figures/my_plt-1.png)
+]
+]
+
+
+.panel[.panel-name[Interactive graphs with plotly]
+
+.pull-left[
+
+```r
+#Interactive plot:
+library(plotly)
+*my_plt2&lt;- my_plt %&gt;% ggplotly()
+my_plt2
+```
+]
+.pull-right[
+<div id="htmlwidget-985b611399ff5cac1704" style="width:504px;height:360px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-985b611399ff5cac1704">{"x":{"data":[{"x":[20,20,20,20,20,22,23,24,24,24,24,25],"y":[32,48,52,56,64,66,54,70,92,93,120,85],"text":["Speed_category: High speed<br />Speed_category: High speed<br />speed: 20<br />dist:  32","Speed_category: High speed<br />Speed_category: High speed<br />speed: 20<br />dist:  48","Speed_category: High speed<br />Speed_category: High speed<br />speed: 20<br />dist:  52","Speed_category: High speed<br />Speed_category: High speed<br />speed: 20<br />dist:  56","Speed_category: High speed<br />Speed_category: High speed<br />speed: 20<br />dist:  64","Speed_category: High speed<br />Speed_category: High speed<br />speed: 22<br />dist:  66","Speed_category: High speed<br />Speed_category: High speed<br />speed: 23<br />dist:  54","Speed_category: High speed<br />Speed_category: High speed<br />speed: 24<br />dist:  70","Speed_category: High speed<br />Speed_category: High speed<br />speed: 24<br />dist:  92","Speed_category: High speed<br />Speed_category: High speed<br />speed: 24<br />dist:  93","Speed_category: High speed<br />Speed_category: High speed<br />speed: 24<br />dist: 120","Speed_category: High speed<br />Speed_category: High speed<br />speed: 25<br />dist:  85"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"High speed","legendgroup":"High speed","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[4,4,7,7,8,9,10,10,10],"y":[2,10,4,22,16,10,18,26,34],"text":["Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  4<br />dist:   2","Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  4<br />dist:  10","Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  7<br />dist:   4","Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  7<br />dist:  22","Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  8<br />dist:  16","Speed_category: Low speed<br />Speed_category: Low speed<br />speed:  9<br />dist:  10","Speed_category: Low speed<br />Speed_category: Low speed<br />speed: 10<br />dist:  18","Speed_category: Low speed<br />Speed_category: Low speed<br />speed: 10<br />dist:  26","Speed_category: Low speed<br />Speed_category: Low speed<br />speed: 10<br />dist:  34"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,186,56,1)"}},"hoveron":"points","name":"Low speed","legendgroup":"Low speed","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,16,16,17,17,17,18,18,18,18,19,19,19],"y":[17,28,14,20,24,28,26,34,34,46,26,36,60,80,20,26,54,32,40,32,40,50,42,56,76,84,36,46,68],"text":["Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 11<br />dist:  17","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 11<br />dist:  28","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 12<br />dist:  14","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 12<br />dist:  20","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 12<br />dist:  24","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 12<br />dist:  28","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 13<br />dist:  26","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 13<br />dist:  34","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 13<br />dist:  34","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 13<br />dist:  46","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 14<br />dist:  26","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 14<br />dist:  36","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 14<br />dist:  60","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 14<br />dist:  80","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 15<br />dist:  20","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 15<br />dist:  26","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 15<br />dist:  54","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 16<br />dist:  32","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 16<br />dist:  40","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 17<br />dist:  32","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 17<br />dist:  40","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 17<br />dist:  50","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 18<br />dist:  42","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 18<br />dist:  56","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 18<br />dist:  76","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 18<br />dist:  84","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 19<br />dist:  36","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 19<br />dist:  46","Speed_category: Medium speed<br />Speed_category: Medium speed<br />speed: 19<br />dist:  68"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(97,156,255,1)"}},"hoveron":"points","name":"Medium speed","legendgroup":"Medium speed","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[4,4,7,7,8,9,10,10,10,11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,16,16,17,17,17,18,18,18,18,19,19,19,20,20,20,20,20,22,23,24,24,24,24,25],"y":[2,10,4,22,16,10,18,26,34,17,28,14,20,24,28,26,34,34,46,26,36,60,80,20,26,54,32,40,32,40,50,42,56,76,84,36,46,68,32,48,52,56,64,66,54,70,92,93,120,85],"text":["speed:  4<br />dist:   2","speed:  4<br />dist:  10","speed:  7<br />dist:   4","speed:  7<br />dist:  22","speed:  8<br />dist:  16","speed:  9<br />dist:  10","speed: 10<br />dist:  18","speed: 10<br />dist:  26","speed: 10<br />dist:  34","speed: 11<br />dist:  17","speed: 11<br />dist:  28","speed: 12<br />dist:  14","speed: 12<br />dist:  20","speed: 12<br />dist:  24","speed: 12<br />dist:  28","speed: 13<br />dist:  26","speed: 13<br />dist:  34","speed: 13<br />dist:  34","speed: 13<br />dist:  46","speed: 14<br />dist:  26","speed: 14<br />dist:  36","speed: 14<br />dist:  60","speed: 14<br />dist:  80","speed: 15<br />dist:  20","speed: 15<br />dist:  26","speed: 15<br />dist:  54","speed: 16<br />dist:  32","speed: 16<br />dist:  40","speed: 17<br />dist:  32","speed: 17<br />dist:  40","speed: 17<br />dist:  50","speed: 18<br />dist:  42","speed: 18<br />dist:  56","speed: 18<br />dist:  76","speed: 18<br />dist:  84","speed: 19<br />dist:  36","speed: 19<br />dist:  46","speed: 19<br />dist:  68","speed: 20<br />dist:  32","speed: 20<br />dist:  48","speed: 20<br />dist:  52","speed: 20<br />dist:  56","speed: 20<br />dist:  64","speed: 22<br />dist:  66","speed: 23<br />dist:  54","speed: 24<br />dist:  70","speed: 24<br />dist:  92","speed: 24<br />dist:  93","speed: 24<br />dist: 120","speed: 25<br />dist:  85"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,165,0,0.5)","dash":"dash"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[4,4.26582278481013,4.53164556962025,4.79746835443038,5.06329113924051,5.32911392405063,5.59493670886076,5.86075949367089,6.12658227848101,6.39240506329114,6.65822784810127,6.92405063291139,7.18987341772152,7.45569620253165,7.72151898734177,7.9873417721519,8.25316455696202,8.51898734177215,8.78481012658228,9.05063291139241,9.31645569620253,9.58227848101266,9.84810126582278,10.1139240506329,10.379746835443,10.6455696202532,10.9113924050633,11.1772151898734,11.4430379746835,11.7088607594937,11.9746835443038,12.2405063291139,12.506329113924,12.7721518987342,13.0379746835443,13.3037974683544,13.5696202531646,13.8354430379747,14.1012658227848,14.3670886075949,14.6329113924051,14.8987341772152,15.1645569620253,15.4303797468354,15.6962025316456,15.9620253164557,16.2278481012658,16.4936708860759,16.7594936708861,17.0253164556962,17.2911392405063,17.5569620253165,17.8227848101266,18.0886075949367,18.3544303797468,18.620253164557,18.8860759493671,19.1518987341772,19.4177215189873,19.6835443037975,19.9493670886076,20.2151898734177,20.4810126582278,20.746835443038,21.0126582278481,21.2784810126582,21.5443037974684,21.8101265822785,22.0759493670886,22.3417721518987,22.6075949367089,22.873417721519,23.1392405063291,23.4050632911392,23.6708860759494,23.9367088607595,24.2025316455696,24.4683544303797,24.7341772151899,25],"y":[5.89362799029165,6.36979648949433,6.86770195664437,7.38718087807426,7.9280697401165,8.49020502910359,9.07342323136803,9.67756083324231,10.3024543210589,10.9479401811504,11.6138548998492,12.3000349634879,13.0063168583989,13.7325370709147,14.4785320873679,15.2441383940909,16.038951302272,16.8704020859224,17.7318371567465,18.6165760664486,19.5179383667326,20.4292436093027,21.3438113458629,22.2594025349227,23.2050646498759,24.1811879104838,25.1802192106031,26.194605444091,27.2167935048044,28.2392302866005,29.2543626833362,30.2703236243659,31.3016802989947,32.3404850587728,33.3788237186911,34.4217988461122,35.4709130603759,36.5204738079061,37.5706971022114,38.6617753842618,39.7622911865459,40.8224050703758,41.8238137785629,42.8492416136034,43.8863825351748,44.9116221234058,45.9013459584251,46.8319396203613,47.6797886893433,48.4206693130199,48.9736315769786,49.3526418182079,49.641294401509,49.9231836916834,50.2819040535325,50.8010498518576,51.56421545146,52.6039124963778,53.7369414480156,54.9387183256612,56.2108844111871,57.5550809864658,58.9729493333699,60.4661307337718,62.036266469544,63.6849978225591,65.4139660746895,67.2248125078077,69.1188428195369,71.0918017973586,73.1428757638376,75.2733152128232,77.484370638165,79.7772925337125,82.1533313933152,84.6137377108226,87.1597619800843,89.7926546949496,92.5136663492682,95.3240474368896],"text":["speed:  4.000000<br />dist:  5.893628","speed:  4.265823<br />dist:  6.369796","speed:  4.531646<br />dist:  6.867702","speed:  4.797468<br />dist:  7.387181","speed:  5.063291<br />dist:  7.928070","speed:  5.329114<br />dist:  8.490205","speed:  5.594937<br />dist:  9.073423","speed:  5.860759<br />dist:  9.677561","speed:  6.126582<br />dist: 10.302454","speed:  6.392405<br />dist: 10.947940","speed:  6.658228<br />dist: 11.613855","speed:  6.924051<br />dist: 12.300035","speed:  7.189873<br />dist: 13.006317","speed:  7.455696<br />dist: 13.732537","speed:  7.721519<br />dist: 14.478532","speed:  7.987342<br />dist: 15.244138","speed:  8.253165<br />dist: 16.038951","speed:  8.518987<br />dist: 16.870402","speed:  8.784810<br />dist: 17.731837","speed:  9.050633<br />dist: 18.616576","speed:  9.316456<br />dist: 19.517938","speed:  9.582278<br />dist: 20.429244","speed:  9.848101<br />dist: 21.343811","speed: 10.113924<br />dist: 22.259403","speed: 10.379747<br />dist: 23.205065","speed: 10.645570<br />dist: 24.181188","speed: 10.911392<br />dist: 25.180219","speed: 11.177215<br />dist: 26.194605","speed: 11.443038<br />dist: 27.216794","speed: 11.708861<br />dist: 28.239230","speed: 11.974684<br />dist: 29.254363","speed: 12.240506<br />dist: 30.270324","speed: 12.506329<br />dist: 31.301680","speed: 12.772152<br />dist: 32.340485","speed: 13.037975<br />dist: 33.378824","speed: 13.303797<br />dist: 34.421799","speed: 13.569620<br />dist: 35.470913","speed: 13.835443<br />dist: 36.520474","speed: 14.101266<br />dist: 37.570697","speed: 14.367089<br />dist: 38.661775","speed: 14.632911<br />dist: 39.762291","speed: 14.898734<br />dist: 40.822405","speed: 15.164557<br />dist: 41.823814","speed: 15.430380<br />dist: 42.849242","speed: 15.696203<br />dist: 43.886383","speed: 15.962025<br />dist: 44.911622","speed: 16.227848<br />dist: 45.901346","speed: 16.493671<br />dist: 46.831940","speed: 16.759494<br />dist: 47.679789","speed: 17.025316<br />dist: 48.420669","speed: 17.291139<br />dist: 48.973632","speed: 17.556962<br />dist: 49.352642","speed: 17.822785<br />dist: 49.641294","speed: 18.088608<br />dist: 49.923184","speed: 18.354430<br />dist: 50.281904","speed: 18.620253<br />dist: 50.801050","speed: 18.886076<br />dist: 51.564215","speed: 19.151899<br />dist: 52.603912","speed: 19.417722<br />dist: 53.736941","speed: 19.683544<br />dist: 54.938718","speed: 19.949367<br />dist: 56.210884","speed: 20.215190<br />dist: 57.555081","speed: 20.481013<br />dist: 58.972949","speed: 20.746835<br />dist: 60.466131","speed: 21.012658<br />dist: 62.036266","speed: 21.278481<br />dist: 63.684998","speed: 21.544304<br />dist: 65.413966","speed: 21.810127<br />dist: 67.224813","speed: 22.075949<br />dist: 69.118843","speed: 22.341772<br />dist: 71.091802","speed: 22.607595<br />dist: 73.142876","speed: 22.873418<br />dist: 75.273315","speed: 23.139241<br />dist: 77.484371","speed: 23.405063<br />dist: 79.777293","speed: 23.670886<br />dist: 82.153331","speed: 23.936709<br />dist: 84.613738","speed: 24.202532<br />dist: 87.159762","speed: 24.468354<br />dist: 89.792655","speed: 24.734177<br />dist: 92.513666","speed: 25.000000<br />dist: 95.324047"],"type":"scatter","mode":"lines","name":"fitted values","line":{"width":3.77952755905512,"color":"rgba(255,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":43.1050228310502},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2.95,26.05],"tickmode":"array","ticktext":["5","10","15","20","25"],"tickvals":[5,10,15,20,25],"categoryorder":"array","categoryarray":["5","10","15","20","25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"speed","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.9,125.9],"tickmode":"array","ticktext":["0","25","50","75","100","125"],"tickvals":[0,25,50,75,100,125],"categoryorder":"array","categoryarray":["0","25","50","75","100","125"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"dist","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.982677165354331},"annotations":[{"text":"Speed_category","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"18b064077e35":{"colour":{},"shape":{},"x":{},"y":{},"type":"scatter"},"18b0b215c51":{"x":{},"y":{}},"18b03dbc38d5":{"x":{},"y":{}}},"cur_data":"18b064077e35","visdat":{"18b064077e35":["function (y) ","x"],"18b0b215c51":["function (y) ","x"],"18b03dbc38d5":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+]
+
+
+
+]
+
+
+]
+---
+
+## Reticulate 
+
+
+.panel[
+
+.panel[.panel-name[Interactive graphs with plotly]
+
+.pull-left[
+
+```r
+#3d graph by plotly using python dataframe
+
+*my_plot3&lt;-plot_ly(data = py$python_cars2,
+                  x=~speed,
+                  y=~dist,
+                  z=~Time) %&gt;% 
+  add_markers(color= ~Speed_category)
+
+my_plot3
+```
+]
+
+.pull-right[
+<div id="htmlwidget-f25282be3a65c0d5e42a" style="width:504px;height:360px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f25282be3a65c0d5e42a">{"x":{"visdat":{"18b0cc17ae2":["function () ","plotlyVisDat"]},"cur_data":"18b0cc17ae2","attrs":{"18b0cc17ae2":{"x":{},"y":{},"z":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","color":{},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"xaxis":{"title":"speed"},"yaxis":{"title":"dist"},"zaxis":{"title":"Time"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[20,20,20,20,20,22,23,24,24,24,24,25],"y":[32,48,52,56,64,66,54,70,92,93,120,85],"z":[1.6,2.4,2.6,2.8,3.2,3,2.34782608695652,2.91666666666667,3.83333333333333,3.875,5,3.4],"type":"scatter3d","mode":"markers","name":"High speed","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"frame":null},{"x":[4,4,7,7,8,9,10,10,10],"y":[2,10,4,22,16,10,18,26,34],"z":[0.5,2.5,0.571428571428571,3.14285714285714,2,1.11111111111111,1.8,2.6,3.4],"type":"scatter3d","mode":"markers","name":"Low speed","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"frame":null},{"x":[11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,16,16,17,17,17,18,18,18,18,19,19,19],"y":[17,28,14,20,24,28,26,34,34,46,26,36,60,80,20,26,54,32,40,32,40,50,42,56,76,84,36,46,68],"z":[1.54545454545455,2.54545454545455,1.16666666666667,1.66666666666667,2,2.33333333333333,2,2.61538461538462,2.61538461538462,3.53846153846154,1.85714285714286,2.57142857142857,4.28571428571429,5.71428571428571,1.33333333333333,1.73333333333333,3.6,2,2.5,1.88235294117647,2.35294117647059,2.94117647058824,2.33333333333333,3.11111111111111,4.22222222222222,4.66666666666667,1.89473684210526,2.42105263157895,3.57894736842105],"type":"scatter3d","mode":"markers","name":"Medium speed","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+]
+
+
+
+]
+
+]
+---
+
+## Shiny web apps:
+
+- ##### Shiny package in R helps the users to build web apps.
+- ##### Shiny combines the computational power of R with the interactivity of the modern web.
+- ##### Users do not necessarily need to have the knowledge of HTML or CSS.
+- ##### Shiny package provides built in widgets and is also supported by numerous packages.
+- ##### Shiny apps provide a way to present your work to others.
+
+---
+
+
+## Numeric Mind web apps:
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+---
+title: "Reticulate"
+author: "SanjayHamal"
+date: "6/3/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+
+```{r}
+#R code
+
+library(reticulate)
+conda_python()
+
+```
+
+
+```{python}
+
+""" python code :
+Here, A csv file is imported with pandas and a new column is added.
+"""
+
+import pandas as pd
+import numpy as np
+
+car_python = pd.read_csv("C:/projects_shiny/r machine learning/teach/2021/data/cars_data.csv")
+
+car_python["Speed_category"]= ""
+
+
+
+
+for i in range(len(car_python)):
+  if car_python.loc[i, "speed"]>0 and car_python.loc[i,"speed"]<=10:
+    car_python.loc[i, "Speed_category"]= "Low speed"
+  elif car_python.loc[i, "speed"]>10 and car_python.loc[i, "speed"]<20:
+    car_python.loc[i, "Speed_category"]= "Medium speed"  
+  else:
+    car_python.loc[i, "Speed_category"]= "High speed"
+
+
+car_python.head(4)
+
+
+```
+
+
+```{r}
+#R code:
+#Fetching python object to R using py$ 
+#syntax
+
+R_cars<- py$car_python 
+
+head(R_cars, n=4)
+```
+
+```{r, message=FALSE, warning=FALSE}
+#R code:
+# Sourcing python script:
+# Using python function->time() from time.py in R code:
+
+source_python("time.py")
+
+for(i in seq(nrow(R_cars))){
+  
+  R_cars[i, "Time"]= 
+    time(R_cars[i, "dist"], R_cars[i, "speed"]) #<<
+  
+}
+
+head(R_cars)
+
+
+```
+
+
+```{python}
+
+#Python code:
+#Using R object in python
+
+python_cars2 = r.R_cars
+
+python_cars2
+```
+
+
+```{r, fig.retina=5}
+
+#Using python object in R to create a plot directly:
+
+ggplot(data = py$python_cars2, aes(speed, dist))+
+  geom_point(aes( color= Speed_category, shape= Speed_category)) +
+  geom_line(color= 'orange', alpha=0.5, linetype='dashed')+
+  geom_smooth(se= F, color='red')
+
+```
+
