@@ -721,7 +721,7 @@ ggplot(
 ]
 
 
-.panel[.panel-name[Layer 1]
+.panel[.panel-name[Additional changes]
 
 .pull-left[
 

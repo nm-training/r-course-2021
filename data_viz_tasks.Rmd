@@ -1,0 +1,311 @@
+---
+title: "Data visualization tasks(Your turn)"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+library(tidyverse)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+## Your turn 01 and 02(Q)
+- Load the tidyverse package
+- Load the csv dataset from the given url and save it under the variable name **movies**:
+- https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv
+
+---
+
+## Your turn 01 and 02(Ans)
+
+
+```{r}
+library(tidyverse)
+ 
+movies = read_csv(
+'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
+
+head(movies)
+
+
+```
+
+
+
+
+---
+
+## Your turn 03(Q)
+
+- Insert [movies] dataset in ggplot2 syntax.
+
+---
+
+## Your turn 03(Ans)
+
+```{r t3, eval=FALSE}
+ggplot(movies)
+```
+![](`r knitr::fig_chunk('t3', 'png')`)
+
+---
+
+## Your turn 04(Q)
+
+- Map domestic_gross to x-axis, worldwide_gross to y-axis
+- Set the color of point to blue
+- Set the shape of point to any points(1 or 2 or...24)[Your choice]
+- Set the size of points to 5
+
+---
+
+## Your turn 04(Ans)
+
+```{r t4, eval=FALSE}
+ggplot(data = movies)+
+ geom_point(mapping = aes(x=domestic_gross, y=worldwide_gross),#<<
+             color="blue",  #<<
+             shape= 10, #<<
+              size= 5) #<<
+```
+![](`r knitr::fig_chunk('t4', 'png')`)
+---
+
+## Your turn 05(Q)
+
+- Set the color aesthetics to genre
+---
+
+## Your turn 05(Ans)
+
+```{r t5, eval=FALSE}
+ggplot(data = movies)+
+geom_point(mapping = aes(x=domestic_gross,
+                         y=worldwide_gross,
+                          color= genre)) #<<
+```
+![](`r knitr::fig_chunk('t5', 'png')`)
+
+---
+
+## Your turn 06(Q)
+
+- Apply the aesthetics globally such that:  production_budget is mapped to x-axis and domestic_gross is mapped to y-axis for all the plots.
+
+---
+
+## Your turn 06(Ans)
+
+```{r t6, eval=FALSE}
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point()+
+  geom_smooth()
+
+
+```
+![](`r knitr::fig_chunk('t6', 'png')`)
+
+---
+
+## Your turn 07 (Q)
+
+- Change the color of points in geom_point to 'orange'
+- Change the linetype in geom_smooth to 'dashed'.
+
+---
+## Your turn 07(Ans)
+
+```{r t7, eval=FALSE}
+
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point(color= 'orange')+
+  geom_smooth(linetype= 'dashed')
+
+
+```
+![](`r knitr::fig_chunk('t7', 'png')`)
+
+---
+
+## Your turn 08(Q)
+
+- Create a bar plot to visualize the counts of genre and also, fill the bar plot according to mpaa_rating:
+
+---
+
+## Yout turn 08(Ans)
+
+```{r t8, eval=FALSE}
+ggplot(data = movies)+
+  geom_bar(aes(x=  genre, fill=mpaa_rating  )) #<<
+
+
+```
+
+![](`r knitr::fig_chunk('t8', 'png')`)
+---
+
+## Your turn 09(Q)
+- Task 8 creates a bar_chart with default: position='stack'.
+- Copy the ggplot code from task8 and modify the position to      'dodge' to create a dodged bar graph.
+
+---
+## Your turn 09(Ans)
+
+```{r t9, eval=FALSE}
+
+ggplot(data = movies)+
+  geom_bar(aes(x=  genre, fill=mpaa_rating  )
+           ,position = 'dodge') 
+
+
+```
+![](`r knitr::fig_chunk('t9', 'png')`)
+
+---
+## Your turn 10(Q)
+
+ Label the graph from task9 with with labs(   )
+-  Give the title: Movie genre with mpaa rating
+-  Give the subtitle: (1946-2016)
+-  Give the caption: Source[tidytuesday]
+-  Label x-axis as: Different movie genre
+-  Label y-axis as: Total number of movies released
+-  Label the legend as: Movie ratings
+
+---
+
+## Your turn 10(Ans)
+
+```{r t10, eval=FALSE}
+
+task9=ggplot(data = movies)+
+  geom_bar(aes(x= genre     , fill= mpaa_rating    ), position = 'dodge')
+task9+ labs(
+  title= "Movie genre with mpaa rating",
+  subtitle= "(1946-2016)",
+  caption= "Source[tidytuesday]",
+  x= "Different movie genre",
+  y= "Total number of movies released",
+  fill= "Movie ratings" 
+  
+)
+
+```
+
+---
+
+## Your turn 10(Ans)
+
+![](`r knitr::fig_chunk('t10', 'png')`)
+
+---
+
+## Your turn 11(Q)
+
+Create a box plot for worldwide_gross.
+
+```{r t11}
+
+ggplot(data = movies   ) +
+ geom_boxplot(mapping = 
+                aes(y = worldwide_gross)) #<<
+```
+
+![](`r knitr::fig_chunk('t11', 'png')`)
+
+---
+
+## Your turn 12(Q)
+
+Create a box plot of worldwide_gross for each genre.
+
+```{r t12}
+
+
+ggplot(data = movies  ) +
+ geom_boxplot(mapping = 
+                aes(x=  genre, y = worldwide_gross))
+
+```
+![](`r knitr::fig_chunk('t12', 'png')`)
+
+
+---
+
+##Your turn 13
+
+Create a subplot with 2 columns based on genre.
+
+```{r t13}
+gross<- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#Here gross is the scatter plot between production budget and domestic gross.
+
+
+#Create a subplot with 2 columns based on genre:
+gross+ facet_wrap(facets = ~genre  , ncol =  2 ) #<<
+
+```
+
+![](`r knitr::fig_chunk('t13', 'png')`)
+
+---
+
+## Your turn 14
+
+Create a subplot based on genre and mapp_rating.
+
+```{r t14}
+gross<- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#gross is the scatter plot between production budget and domestic gross.
+
+#Create a subplot based on genre and mpaa_rating.
+
+
+gross+facet_grid(genre~ mpaa_rating     )
+```
+
+![](`r knitr::fig_chunk('t14', 'png')`)
+

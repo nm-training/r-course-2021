@@ -1,0 +1,135 @@
+---
+title: "Tidy data tasks(Your turn)"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+library(tidyverse)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+## Your turn 01(Q):
+
+- Tidy the dataset: table4a and store it under variable name: 'table_a'.
+
+
+```{r}
+table4a
+
+```
+
+---
+
+
+ ## Your turn 01(Ans):
+
+
+
+```{r}
+table_a<-pivot_longer(table4a,
+  cols = 2:3,
+  names_to = "year",
+  values_to = "cases"
+)
+table_a
+```
+
+---
+
+
+## Your turn 02(Q)
+
+- Reshape table4b into tidy format and store it under the variable name 'table_b'
+
+```{r}
+table4b
+```
+
+---
+
+## Your turn 02(Ans)
+
+```{r}
+table_b<-pivot_longer(table4b,
+  cols = 2:3,
+  names_to = "year",
+  values_to = "population"
+)
+table_b
+```
+
+---
+
+## Your turn 03(Q)
+
+- Join **table_a** and **table_b** by **country** and **year** and store it under the variable name **df**.
+
+---
+
+## Your turn 03(Ans)
+
+```{r}
+df <- left_join(table_a, table_b, 
+  by = c("country", "year") 
+) 
+
+df
+```
+
+---
+
+## Your turn 04(Q):
+
+- What is the average rate of cases in year 2000?
+
+---
+
+## Your turn 04(Ans):
+
+```{r}
+df %>%
+  filter(year == 2000) %>%
+  select(-year) %>%
+  mutate(rate = cases / population) %>%
+  summarize(avg = mean(rate))
+```
+

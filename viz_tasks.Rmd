@@ -1,0 +1,321 @@
+---
+title: "Data visualization tasks"
+subtitle: "Sanjay Hamal"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+
+library(dplyr)
+library(kableExtra)
+library(tidyverse)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+
+```{r, echo=FALSE}
+
+
+movies = read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
+#movies<- read_csv("C:/Users/Sanjay/Documents/sanjay-projects/class/movies.csv")
+
+
+
+```
+
+##### Task A[Task 1-5]:
+.panelset[
+
+
+.panel[.panel-name[Task1]
+##### **Observe the dataset:**
+##### movies:
+
+
+```{r message=FALSE, echo=FALSE}
+
+movies %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+.panel[.panel-name[Task2]
+###Load the tidyverse package here:
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+options(scipen = 999)
+```
+
+
+]
+
+.panel[.panel-name[Task3]
+## Insert [movies] dataset in ggplot2 syntax:
+.pull-left[
+```{r t3, eval=FALSE}
+ggplot(movies) #<<
+```
+]
+.pull-right[
+
+![](`r knitr::fig_chunk('t3', 'png')`)
+
+]
+
+
+.panel[.panel-name[Task4]
+
+.pull-left[
+- #####Map domestic_gross to x-axis, worldwide_gross to y-axis
+- #####Set the color of point to blue
+- #####Set the shape of point to any points(1 or 2 or...24)[Your choice]
+- #####Set the size of points to 5
+```{r t4, eval=FALSE}
+ggplot(data = movies)+
+ geom_point(mapping = aes(x=domestic_gross, y=worldwide_gross),#<<
+             color="blue",  #<<
+             shape= 10, #<<
+              size= 5) #<<
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk('t4', 'png')`)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Task5]
+
+.pull-left[
+- #####Set the color aesthetics to genre
+```{r t5, eval=FALSE}
+ggplot(data = movies)+
+geom_point(mapping = aes(x=domestic_gross,
+                         y=worldwide_gross,
+                         color= genre)) #<<
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk('t5', 'png')`)
+]
+
+
+]
+
+]
+]
+---
+
+##### Task B[Task 6-7]:
+.panelset[
+
+
+.panel[.panel-name[Dataset]
+
+##### movies:
+
+
+```{r message=FALSE, echo=FALSE}
+
+movies %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+
+
+.panel[.panel-name[Task6]
+- #####Apply the aesthetics globally such that:  production_budget is mapped to x-axis and domestic_gross is mapped to y-axis for all the plots.
+- ##### Also, correct the positions of "+" sign:
+.pull-left[
+```{r t6, eval=FALSE}
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point()+
+  geom_smooth()
+
+
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk('t6', 'png')`)
+]
+
+
+
+]
+
+
+.panel[.panel-name[Task7]
+- #####Change the color of points in geom_point to 'orange'
+- #####Change the linetype in geom_smooth to 'dashed'.
+.pull-left[
+```{r t7, eval=FALSE}
+
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point(color= 'orange')+
+  geom_smooth(linetype= 'dashed')
+
+
+```
+  ]
+.pull-right[
+
+![](`r knitr::fig_chunk('t7', 'png')`)
+  ]
+]
+
+
+
+
+]
+---
+
+##### Task C[Task 8-9]:
+.panelset[
+
+
+.panel[.panel-name[Dataset]
+
+##### movies:
+
+
+```{r message=FALSE, echo=FALSE}
+
+movies %>%knitr::kable(format = "html") %>%  kable_paper() %>%
+  scroll_box(width = "500px", height = "350px")
+ 
+```
+]
+
+
+
+.panel[.panel-name[Task8]
+- #####Create a bar plot to visualize the counts of genre and also, fill the bar plot according to mpaa_rating:
+
+.pull-left[
+```{r t8, eval=FALSE}
+ggplot(data = movies)+
+  geom_bar(aes(x=  genre, fill=mpaa_rating  )) #<<
+
+
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk('t8', 'png')`)
+]
+
+
+
+]
+
+
+.panel[.panel-name[Task9]
+- #####Task 8 creates a bar_chart with default: position='stack'.
+- #####Copy the ggplot code from task8 and modify the position to      'dodge' to create a dodged bar graph.
+.pull-left[
+```{r t9, eval=FALSE}
+
+ggplot(data = movies)+
+  geom_bar(aes(x=  genre, fill=mpaa_rating  )
+           ,position = 'dodge') 
+
+
+```
+  ]
+.pull-right[
+
+![](`r knitr::fig_chunk('t9', 'png')`)
+  ]
+]
+]
+
+---
+.panelset[
+.panel[.panel-name[Task10]
+##### Label the graph from task9 with with labs(   )
+- ##### Give the title: Movie genre with mpaa rating
+- ##### Give the subtitle: (1946-2016)
+- ##### Give the caption: Source[tidytuesday]
+- ##### Label x-axis as: Different movie genre
+- ##### Label y-axis as: Total number of movies released
+- ##### Label the legend as: Movie ratings
+]
+
+.panel[.panel-name[Task10-Ans]
+
+.pull-left[
+```{r t10, eval=FALSE}
+
+task9=ggplot(data = movies)+
+  geom_bar(aes(x= genre     , fill= mpaa_rating    ), position = 'dodge')
+task9+ labs(
+  title= "Movie genre with mpaa rating",
+  subtitle= "(1946-2016)",
+  caption= "Source[tidytuesday]",
+  x= "Different movie genre",
+  y= "Total number of movies released",
+  fill= "Movie ratings" 
+  
+)
+
+```
+]
+.pull-right[
+
+![](`r knitr::fig_chunk('t10', 'png')`)
+]
+
+
+
+]
+
+
+
+
+
+
+
+
+]

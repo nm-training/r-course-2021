@@ -1,0 +1,143 @@
+---
+title: "Data manipulation tasks(Your turn)"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+library(tidyverse)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+---
+
+##Your turn 01(Q)
+
+- Import a csv file, **gapminder**, from data folder. 
+
+---
+
+##Your turn 01(Ans)
+
+```{r}
+gapminder <- read_csv("./data/gapminder.csv")
+
+head(gapminder, 4)
+```
+
+---
+
+##Your turn 02(Q)
+
+- Display country-wise, annual life expectancy of Europe.
+
+---
+
+## Your turn 02(Ans)
+
+```{r}
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  select(year, country, lifeExp)
+
+```
+
+---
+
+## Your turn 03(Q)
+
+- Rank all **Asian** countries by life expectancy in year **2007**.
+
+---
+
+## Your turn 03(Ans)
+
+```{r}
+gapminder %>% 
+  filter(
+    continent == "Asia", 
+    year == 2007
+  ) %>% 
+  select(country, lifeExp) %>% 
+  mutate(rank = min_rank(lifeExp))
+```
+
+---
+
+## Your turn 04(Q)
+
+- Find countries in Asia with lowly ranked gdpPercap in 1992.
+
+---
+
+## Your turn 04(Ans)
+
+```{r}
+gapminder %>% 
+  filter(
+    continent == "Asia", 
+    year == 1992
+  ) %>% 
+  select(country, gdpPercap) %>% 
+  mutate(
+    rank = min_rank(gdpPercap)
+  ) %>% 
+  arrange(rank)
+```
+
+---
+
+## Your turn 05(Q)
+
+- Summarize mean (population and gdpPerCap) by continent in year 2007
+
+---
+
+## Your turn 05(Ans)
+
+```{r}
+gapminder %>% 
+  filter(year == 2007) %>% 
+  group_by(continent) %>% 
+   summarize(mean_pop = mean(pop), 
+            mean_gdp = mean(gdpPercap) 
+            )
+```
+
+

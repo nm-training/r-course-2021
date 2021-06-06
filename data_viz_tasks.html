@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data visualization tasks(Your turn)</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-06-06" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data visualization tasks(Your turn)
+### Numeric Mind
+### 2021-06-06
+
+---
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+
+## Your turn 01 and 02(Q)
+- Load the tidyverse package
+- Load the csv dataset from the given url and save it under the variable name **movies**:
+- https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv
+
+---
+
+## Your turn 01 and 02(Ans)
+
+
+
+```r
+library(tidyverse)
+ 
+movies = read_csv(
+'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
+
+head(movies)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["X1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["release_date"],"name":[2],"type":["chr"],"align":["left"]},{"label":["movie"],"name":[3],"type":["chr"],"align":["left"]},{"label":["production_budget"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["domestic_gross"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["worldwide_gross"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["distributor"],"name":[7],"type":["chr"],"align":["left"]},{"label":["mpaa_rating"],"name":[8],"type":["chr"],"align":["left"]},{"label":["genre"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"6/22/2007","3":"Evan Almighty","4":"1.75e+08","5":"100289690","6":"174131329","7":"Universal","8":"PG","9":"Comedy"},{"1":"2","2":"7/28/1995","3":"Waterworld","4":"1.75e+08","5":"88246220","6":"264246220","7":"Universal","8":"PG-13","9":"Action"},{"1":"3","2":"5/12/2017","3":"King Arthur: Legend of the Sword","4":"1.75e+08","5":"39175066","6":"139950708","7":"Warner Bros.","8":"PG-13","9":"Adventure"},{"1":"4","2":"12/25/2013","3":"47 Ronin","4":"1.75e+08","5":"38362475","6":"151716815","7":"Universal","8":"PG-13","9":"Action"},{"1":"5","2":"6/22/2018","3":"Jurassic World: Fallen Kingdom","4":"1.70e+08","5":"416769345","6":"1304866322","7":"Universal","8":"PG-13","9":"Action"},{"1":"6","2":"8/1/2014","3":"Guardians of the Galaxy","4":"1.70e+08","5":"333172112","6":"771051335","7":"Walt Disney","8":"PG-13","9":"Action"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+
+
+---
+
+## Your turn 03(Q)
+
+- Insert [movies] dataset in ggplot2 syntax.
+
+---
+
+## Your turn 03(Ans)
+
+
+```r
+ggplot(movies)
+```
+![](figures/t3-1.png)
+
+---
+
+## Your turn 04(Q)
+
+- Map domestic_gross to x-axis, worldwide_gross to y-axis
+- Set the color of point to blue
+- Set the shape of point to any points(1 or 2 or...24)[Your choice]
+- Set the size of points to 5
+
+---
+
+## Your turn 04(Ans)
+
+
+```r
+ggplot(data = movies)+
+*geom_point(mapping = aes(x=domestic_gross, y=worldwide_gross),
+*            color="blue",
+*            shape= 10,
+*             size= 5)
+```
+![](figures/t4-1.png)
+---
+
+## Your turn 05(Q)
+
+- Set the color aesthetics to genre
+---
+
+## Your turn 05(Ans)
+
+
+```r
+ggplot(data = movies)+
+geom_point(mapping = aes(x=domestic_gross,
+                         y=worldwide_gross,
+*                         color= genre))
+```
+![](figures/t5-1.png)
+
+---
+
+## Your turn 06(Q)
+
+- Apply the aesthetics globally such that:  production_budget is mapped to x-axis and domestic_gross is mapped to y-axis for all the plots.
+
+---
+
+## Your turn 06(Ans)
+
+
+```r
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point()+
+  geom_smooth()
+```
+![](figures/t6-1.png)
+
+---
+
+## Your turn 07 (Q)
+
+- Change the color of points in geom_point to 'orange'
+- Change the linetype in geom_smooth to 'dashed'.
+
+---
+## Your turn 07(Ans)
+
+
+```r
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point(color= 'orange')+
+  geom_smooth(linetype= 'dashed')
+```
+![](figures/t7-1.png)
+
+---
+
+## Your turn 08(Q)
+
+- Create a bar plot to visualize the counts of genre and also, fill the bar plot according to mpaa_rating:
+
+---
+
+## Yout turn 08(Ans)
+
+
+```r
+ggplot(data = movies)+
+* geom_bar(aes(x=  genre, fill=mpaa_rating  ))
+```
+
+![](figures/t8-1.png)
+---
+
+## Your turn 09(Q)
+- Task 8 creates a bar_chart with default: position='stack'.
+- Copy the ggplot code from task8 and modify the position to      'dodge' to create a dodged bar graph.
+
+---
+## Your turn 09(Ans)
+
+
+```r
+ggplot(data = movies)+
+  geom_bar(aes(x=  genre, fill=mpaa_rating  )
+           ,position = 'dodge') 
+```
+![](figures/t9-1.png)
+
+---
+## Your turn 10(Q)
+
+ Label the graph from task9 with with labs(   )
+-  Give the title: Movie genre with mpaa rating
+-  Give the subtitle: (1946-2016)
+-  Give the caption: Source[tidytuesday]
+-  Label x-axis as: Different movie genre
+-  Label y-axis as: Total number of movies released
+-  Label the legend as: Movie ratings
+
+---
+
+## Your turn 10(Ans)
+
+
+```r
+task9=ggplot(data = movies)+
+  geom_bar(aes(x= genre     , fill= mpaa_rating    ), position = 'dodge')
+task9+ labs(
+  title= "Movie genre with mpaa rating",
+  subtitle= "(1946-2016)",
+  caption= "Source[tidytuesday]",
+  x= "Different movie genre",
+  y= "Total number of movies released",
+  fill= "Movie ratings" 
+  
+)
+```
+
+---
+
+## Your turn 10(Ans)
+
+![](figures/t10-1.png)
+
+---
+
+## Your turn 11(Q)
+
+Create a box plot for worldwide_gross.
+
+
+```r
+ggplot(data = movies   ) +
+ geom_boxplot(mapping = 
+*               aes(y = worldwide_gross))
+```
+
+![](figures/t11-1.png)
+
+---
+
+## Your turn 12(Q)
+
+Create a box plot of worldwide_gross for each genre.
+
+
+```r
+ggplot(data = movies  ) +
+ geom_boxplot(mapping = 
+                aes(x=  genre, y = worldwide_gross))
+```
+![](figures/t12-1.png)
+
+
+---
+
+##Your turn 13
+
+Create a subplot with 2 columns based on genre.
+
+
+```r
+gross&lt;- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#Here gross is the scatter plot between production budget and domestic gross.
+
+
+#Create a subplot with 2 columns based on genre:
+*gross+ facet_wrap(facets = ~genre  , ncol =  2 )
+```
+
+![](figures/t13-1.png)
+
+---
+
+## Your turn 14
+
+Create a subplot based on genre and mapp_rating.
+
+
+```r
+gross&lt;- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#gross is the scatter plot between production budget and domestic gross.
+
+#Create a subplot based on genre and mpaa_rating.
+
+
+gross+facet_grid(genre~ mpaa_rating     )
+```
+
+![](figures/t14-1.png)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
