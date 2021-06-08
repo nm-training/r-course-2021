@@ -135,8 +135,64 @@ class: center, middle
 ]
 
 
+
+]
+
+
+---
+
+##### Clinical trial steps:
+
+.panelset[
+
+.panel[.panel-name[Clinical trial analysis steps]
+
+<img src="imgs/clinical_trial_steps.png" width= "100%">
+
+]
+.panel[.panel-name[CRF form]
+
+.pull-left[
+
+<img src="imgs/crf_form.png" width= "100%">
+]
+
+.pull-right[
+<img src="imgs/annotate.png" width= "100%">
 ]
 ]
+
+
+.panel[.panel-name[SDTM example]
+
+- DM[Demographic]
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+head(read.csv("./data/dm_data.csv"))
+```
+
+
+]
+
+.panel[.panel-name[ADAM example]
+
+- ADSL[Subject-Level Analysis Dataset]
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+head(read.csv("./data/adsl_demo.csv"))
+```
+
+]
+
+.panel[.panel-name[Mock Shell]
+
+<img src="imgs/mock shell.png" width= "70%">
+
+]
+]
+
 
 ---
 
@@ -154,11 +210,7 @@ class: center, middle
 
 ]
 
-.panel[.panel-name[Clinical trial analysis steps]
 
-<img src="imgs/clinical_trial_steps.png" width= "100%">
-
-]
 
 .panel[.panel-name[Features:]
 
@@ -179,4 +231,8 @@ class: center, middle
 
 ]
 
+---
+class: center, middle
+
+## ShinyTLF demo
 

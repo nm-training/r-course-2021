@@ -96,7 +96,7 @@ python_cars2
 ```{r, fig.retina=5}
 
 #Using python object in R to create a plot directly:
-
+library(tidyverse)
 ggplot(data = py$python_cars2, aes(speed, dist))+
   geom_point(aes( color= Speed_category, shape= Speed_category)) +
   geom_line(color= 'orange', alpha=0.5, linetype='dashed')+

@@ -3,7 +3,7 @@
   <head>
     <title>Applications of R</title>
     <meta charset="utf-8" />
-    <meta name="date" content="2021-06-06" />
+    <meta name="date" content="2021-06-08" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -19,7 +19,7 @@ class: center, middle, inverse, title-slide
 
 # Applications of R
 ### Numeric Mind
-### 2021-06-06
+### 2021-06-08
 
 ---
 
@@ -119,8 +119,67 @@ class: center, middle
 ]
 
 
+
+]
+
+
+---
+
+##### Clinical trial steps:
+
+.panelset[
+
+.panel[.panel-name[Clinical trial analysis steps]
+
+&lt;img src="imgs/clinical_trial_steps.png" width= "100%"&gt;
+
+]
+.panel[.panel-name[CRF form]
+
+.pull-left[
+
+&lt;img src="imgs/crf_form.png" width= "100%"&gt;
+]
+
+.pull-right[
+&lt;img src="imgs/annotate.png" width= "100%"&gt;
 ]
 ]
+
+
+.panel[.panel-name[SDTM example]
+
+- DM[Demographic]
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["STUDYID"],"name":[1],"type":["int"],"align":["right"]},{"label":["DOMAIN"],"name":[2],"type":["chr"],"align":["left"]},{"label":["USUBJID"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["SUBJID"],"name":[4],"type":["int"],"align":["right"]},{"label":["SITEID"],"name":[5],"type":["int"],"align":["right"]},{"label":["INVID"],"name":[6],"type":["int"],"align":["right"]},{"label":["INVNAM"],"name":[7],"type":["chr"],"align":["left"]},{"label":["BRTHDTC"],"name":[8],"type":["int"],"align":["right"]},{"label":["AGE"],"name":[9],"type":["int"],"align":["right"]}],"data":[{"1":"112346","2":"DM","3":"227593","4":"69","5":"336315","6":"114588","7":"REHMAN","8":"1961","9":"59","_rn_":"1"},{"1":"112346","2":"DM","3":"227593","4":"25","5":"336230","6":"353923","7":"CHAPAGAIN","8":"1975","9":"45","_rn_":"2"},{"1":"112346","2":"DM","3":"227593","4":"70","5":"336315","6":"114588","7":"REHMAN","8":"1969","9":"51","_rn_":"3"},{"1":"112346","2":"DM","3":"227593","4":"71","5":"336315","6":"114588","7":"REHMAN","8":"1970","9":"50","_rn_":"4"},{"1":"112346","2":"DM","3":"227593","4":"6","5":"336231","6":"121490","7":"STARK","8":"1967","9":"53","_rn_":"5"},{"1":"112346","2":"DM","3":"227593","4":"7","5":"336231","6":"121490","7":"STARK","8":"1977","9":"43","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+.panel[.panel-name[ADAM example]
+
+- ADSL[Subject-Level Analysis Dataset]
+
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["STUDYID"],"name":[1],"type":["int"],"align":["right"]},{"label":["INVID"],"name":[2],"type":["int"],"align":["right"]},{"label":["INVNAM"],"name":[3],"type":["chr"],"align":["left"]},{"label":["SITEID"],"name":[4],"type":["int"],"align":["right"]},{"label":["USUBJID"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["SUBJID"],"name":[6],"type":["int"],"align":["right"]},{"label":["LTSUBJID"],"name":[7],"type":["int"],"align":["right"]},{"label":["AGE"],"name":[8],"type":["int"],"align":["right"]},{"label":["AGEU"],"name":[9],"type":["chr"],"align":["left"]},{"label":["AGEGR1"],"name":[10],"type":["chr"],"align":["left"]},{"label":["AGEGR1N"],"name":[11],"type":["int"],"align":["right"]},{"label":["AGEGR2"],"name":[12],"type":["chr"],"align":["left"]},{"label":["AGEGR2N"],"name":[13],"type":["int"],"align":["right"]},{"label":["AGEGR3"],"name":[14],"type":["chr"],"align":["left"]},{"label":["AGEGR3N"],"name":[15],"type":["int"],"align":["right"]},{"label":["AGEGR4"],"name":[16],"type":["chr"],"align":["left"]},{"label":["AGEGR4N"],"name":[17],"type":["int"],"align":["right"]},{"label":["BRTHDTC"],"name":[18],"type":["int"],"align":["right"]},{"label":["SEX"],"name":[19],"type":["chr"],"align":["left"]},{"label":["SEXN"],"name":[20],"type":["int"],"align":["right"]},{"label":["SRGENDER"],"name":[21],"type":["chr"],"align":["left"]},{"label":["SRGENDRN"],"name":[22],"type":["int"],"align":["right"]},{"label":["RACE"],"name":[23],"type":["chr"],"align":["left"]},{"label":["RACEN"],"name":[24],"type":["int"],"align":["right"]},{"label":["ARACE"],"name":[25],"type":["chr"],"align":["left"]},{"label":["ARACEN"],"name":[26],"type":["int"],"align":["right"]},{"label":["RACEGR1"],"name":[27],"type":["chr"],"align":["left"]},{"label":["RACEGR1N"],"name":[28],"type":["int"],"align":["right"]},{"label":["RACEGR2"],"name":[29],"type":["chr"],"align":["left"]},{"label":["RACEGR2N"],"name":[30],"type":["int"],"align":["right"]},{"label":["ETHNIC"],"name":[31],"type":["chr"],"align":["left"]},{"label":["ETHNICN"],"name":[32],"type":["int"],"align":["right"]},{"label":["AETHNIC"],"name":[33],"type":["chr"],"align":["left"]},{"label":["AETHNICN"],"name":[34],"type":["int"],"align":["right"]},{"label":["COUNTRY"],"name":[35],"type":["chr"],"align":["left"]},{"label":["COUNTRYN"],"name":[36],"type":["int"],"align":["right"]},{"label":["PPROTFL"],"name":[37],"type":["chr"],"align":["left"]},{"label":["PPROTFN"],"name":[38],"type":["int"],"align":["right"]},{"label":["SAFFL"],"name":[39],"type":["chr"],"align":["left"]},{"label":["SAFFN"],"name":[40],"type":["int"],"align":["right"]},{"label":["SCRNFL"],"name":[41],"type":["chr"],"align":["left"]},{"label":["SCRNFN"],"name":[42],"type":["int"],"align":["right"]},{"label":["ENRLFL"],"name":[43],"type":["chr"],"align":["left"]},{"label":["ENRLFN"],"name":[44],"type":["int"],"align":["right"]},{"label":["ITTEFN"],"name":[45],"type":["int"],"align":["right"]},{"label":["ITTEFL"],"name":[46],"type":["chr"],"align":["left"]},{"label":["MNTFL"],"name":[47],"type":["chr"],"align":["left"]},{"label":["MNTFN"],"name":[48],"type":["int"],"align":["right"]},{"label":["LTFUFL"],"name":[49],"type":["chr"],"align":["left"]},{"label":["LTFUFN"],"name":[50],"type":["int"],"align":["right"]},{"label":["CVFFL"],"name":[51],"type":["chr"],"align":["left"]},{"label":["CVFFN"],"name":[52],"type":["int"],"align":["right"]},{"label":["ARM"],"name":[53],"type":["chr"],"align":["left"]},{"label":["ARMCD"],"name":[54],"type":["chr"],"align":["left"]},{"label":["ACTARM"],"name":[55],"type":["chr"],"align":["left"]},{"label":["ACTARMCD"],"name":[56],"type":["chr"],"align":["left"]},{"label":["TRT01P"],"name":[57],"type":["chr"],"align":["left"]},{"label":["TRT01PN"],"name":[58],"type":["int"],"align":["right"]},{"label":["TRT01A"],"name":[59],"type":["chr"],"align":["left"]},{"label":["TRT01AN"],"name":[60],"type":["int"],"align":["right"]},{"label":["TRTSDT"],"name":[61],"type":["chr"],"align":["left"]},{"label":["TRTEDT"],"name":[62],"type":["chr"],"align":["left"]},{"label":["MNTCMPS"],"name":[63],"type":["chr"],"align":["left"]},{"label":["MNTCMPSN"],"name":[64],"type":["int"],"align":["right"]},{"label":["MNTEDT"],"name":[65],"type":["chr"],"align":["left"]},{"label":["LTFCMPS"],"name":[66],"type":["chr"],"align":["left"]},{"label":["LTFCMPSN"],"name":[67],"type":["int"],"align":["right"]},{"label":["LSEFL"],"name":[68],"type":["chr"],"align":["left"]},{"label":["LSEFN"],"name":[69],"type":["int"],"align":["right"]},{"label":["DTHFL"],"name":[70],"type":["lgl"],"align":["right"]},{"label":["DTHFN"],"name":[71],"type":["lgl"],"align":["right"]},{"label":["ACOUNTRY"],"name":[72],"type":["chr"],"align":["left"]},{"label":["MDSFL"],"name":[73],"type":["chr"],"align":["left"]},{"label":["DISCREAS"],"name":[74],"type":["chr"],"align":["left"]},{"label":["MNTSDT"],"name":[75],"type":["chr"],"align":["left"]},{"label":["SCRFLDTS"],"name":[76],"type":["lgl"],"align":["right"]},{"label":["SCRFLSID"],"name":[77],"type":["lgl"],"align":["right"]},{"label":["SCRFLRS"],"name":[78],"type":["lgl"],"align":["right"]},{"label":["SCRFLST"],"name":[79],"type":["lgl"],"align":["right"]},{"label":["BMIBL"],"name":[80],"type":["dbl"],"align":["right"]},{"label":["BMIGR1N"],"name":[81],"type":["int"],"align":["right"]},{"label":["BMIGR1"],"name":[82],"type":["chr"],"align":["left"]},{"label":["BMIUNIT"],"name":[83],"type":["chr"],"align":["left"]},{"label":["HTUNIT"],"name":[84],"type":["chr"],"align":["left"]},{"label":["HEIGHTBL"],"name":[85],"type":["int"],"align":["right"]},{"label":["WTUNIT"],"name":[86],"type":["chr"],"align":["left"]},{"label":["WEIGHTBL"],"name":[87],"type":["dbl"],"align":["right"]},{"label":["HEPBST"],"name":[88],"type":["chr"],"align":["left"]},{"label":["HEPBSTCD"],"name":[89],"type":["int"],"align":["right"]},{"label":["HEPCST"],"name":[90],"type":["chr"],"align":["left"]},{"label":["HEPCSTCD"],"name":[91],"type":["int"],"align":["right"]},{"label":["HEPBCST"],"name":[92],"type":["chr"],"align":["left"]},{"label":["HEPBCSCD"],"name":[93],"type":["int"],"align":["right"]},{"label":["LTARTSDT"],"name":[94],"type":["chr"],"align":["left"]},{"label":["LSTINJDT"],"name":[95],"type":["chr"],"align":["left"]},{"label":["LSTORLDT"],"name":[96],"type":["chr"],"align":["left"]},{"label":["MTH12SDT"],"name":[97],"type":["chr"],"align":["left"]},{"label":["MTH26SDT"],"name":[98],"type":["lgl"],"align":["right"]},{"label":["HIVRKFL"],"name":[99],"type":["chr"],"align":["left"]},{"label":["HIVRK"],"name":[100],"type":["chr"],"align":["left"]},{"label":["CD4BL"],"name":[101],"type":["int"],"align":["right"]},{"label":["CD4BLGR1"],"name":[102],"type":["chr"],"align":["left"]},{"label":["CD4BLG1N"],"name":[103],"type":["int"],"align":["right"]},{"label":["CDCBLCAT"],"name":[104],"type":["chr"],"align":["left"]},{"label":["CDCBCATN"],"name":[105],"type":["int"],"align":["right"]},{"label":["HISDEPFL"],"name":[106],"type":["chr"],"align":["left"]},{"label":["HISSUIFL"],"name":[107],"type":["chr"],"align":["left"]},{"label":["HISANXFL"],"name":[108],"type":["chr"],"align":["left"]},{"label":["HISANX"],"name":[109],"type":["chr"],"align":["left"]},{"label":["HISSUI"],"name":[110],"type":["chr"],"align":["left"]},{"label":["HISDEP"],"name":[111],"type":["chr"],"align":["left"]}],"data":[{"1":"112346","2":"114588","3":"REHMAN","4":"336315","5":"227593","6":"69","7":"69","8":"59","9":"YEARS","10":"&gt;=50","11":"3","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&gt;=50","17":"2","18":"1961","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - WHITE/CAUCASIAN/EUROPEAN HERITAGE","26":"9","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"NOT HISPANIC OR LATINO","32":"2","33":"NOT HISPANIC OR LATINO","34":"2","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"9/24/2018","62":"12/26/2019","63":"ONGOING","64":"1","65":"12/26/2019","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"9/24/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"24.53287","81":"1","82":"&lt;30","83":"kg/m2","84":"cm","85":"170","86":"kg","87":"70.9","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"12/26/2019","96":"9/24/2018","97":"8/26/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"679","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"N","107":"N","108":"N","109":"no previous history of anxiety","110":"no previous history of suicidal ideation","111":"no previous history of depression","_rn_":"1"},{"1":"112346","2":"353923","3":"CHAPAGAIN","4":"336230","5":"227593","6":"25","7":"25","8":"45","9":"YEARS","10":"35 - &lt;50","11":"2","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&lt;50","17":"1","18":"1975","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - ARABIC/NORTH AFRICAN HERITAGE","26":"8","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"NOT HISPANIC OR LATINO","32":"2","33":"NOT HISPANIC OR LATINO","34":"2","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"9/14/2018","62":"12/9/2019","63":"ONGOING","64":"1","65":"12/9/2019","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"9/14/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"22.65432","81":"1","82":"&lt;30","83":"kg/m2","84":"cm","85":"180","86":"kg","87":"73.4","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"12/9/2019","96":"9/14/2018","97":"8/14/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"553","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"N","107":"N","108":"Y","109":"previous history of anxiety","110":"no previous history of suicidal ideation","111":"no previous history of depression","_rn_":"2"},{"1":"112346","2":"114588","3":"REHMAN","4":"336315","5":"227593","6":"70","7":"70","8":"51","9":"YEARS","10":"&gt;=50","11":"3","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&gt;=50","17":"2","18":"1969","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - WHITE/CAUCASIAN/EUROPEAN HERITAGE","26":"9","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"NOT HISPANIC OR LATINO","32":"2","33":"NOT HISPANIC OR LATINO","34":"2","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"9/24/2018","62":"12/26/2019","63":"ONGOING","64":"1","65":"12/26/2019","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"9/24/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"34.91349","81":"2","82":"&gt;=30","83":"kg/m2","84":"cm","85":"170","86":"kg","87":"100.9","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"12/26/2019","96":"9/24/2018","97":"8/26/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"1143","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"Y","107":"N","108":"Y","109":"previous history of anxiety","110":"no previous history of suicidal ideation","111":"previous history of depression","_rn_":"3"},{"1":"112346","2":"114588","3":"REHMAN","4":"336315","5":"227593","6":"71","7":"71","8":"50","9":"YEARS","10":"35 - &lt;50","11":"2","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&lt;50","17":"1","18":"1970","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - WHITE/CAUCASIAN/EUROPEAN HERITAGE","26":"9","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"NOT HISPANIC OR LATINO","32":"2","33":"NOT HISPANIC OR LATINO","34":"2","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"9/27/2018","62":"12/30/2019","63":"ONGOING","64":"1","65":"12/30/2019","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"9/27/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"28.92734","81":"1","82":"&lt;30","83":"kg/m2","84":"cm","85":"170","86":"kg","87":"83.6","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"12/30/2019","96":"9/27/2018","97":"8/27/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"529","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"Y","107":"N","108":"N","109":"no previous history of anxiety","110":"no previous history of suicidal ideation","111":"previous history of depression","_rn_":"4"},{"1":"112346","2":"121490","3":"STARK","4":"336231","5":"227593","6":"6","7":"6","8":"53","9":"YEARS","10":"&gt;=50","11":"3","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&gt;=50","17":"2","18":"1967","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - WHITE/CAUCASIAN/EUROPEAN HERITAGE","26":"9","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"HISPANIC OR LATINO","32":"1","33":"HISPANIC OR LATINO","34":"1","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"9/28/2018","62":"1/3/2020","63":"ONGOING","64":"1","65":"1/3/2020","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"9/28/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"26.22793","81":"1","82":"&lt;30","83":"kg/m2","84":"cm","85":"188","86":"kg","87":"92.7","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"1/3/2020","96":"9/28/2018","97":"8/30/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"591","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"N","107":"N","108":"N","109":"no previous history of anxiety","110":"no previous history of suicidal ideation","111":"no previous history of depression","_rn_":"5"},{"1":"112346","2":"121490","3":"STARK","4":"336231","5":"227593","6":"7","7":"7","8":"43","9":"YEARS","10":"35 - &lt;50","11":"2","12":"19 - 64","13":"2","14":"18 - 64","15":"1","16":"&lt;50","17":"1","18":"1977","19":"M","20":"2","21":"MALE","22":"2","23":"WHITE","24":"6","25":"WHITE - WHITE/CAUCASIAN/EUROPEAN HERITAGE","26":"9","27":"White","28":"1","29":"Non-Black/African American","30":"2","31":"HISPANIC OR LATINO","32":"1","33":"HISPANIC OR LATINO","34":"1","35":"USA","36":"13","37":"Y","38":"1","39":"Y","40":"1","41":"Y","42":"1","43":"Y","44":"1","45":"1","46":"Y","47":"Y","48":"1","49":"N","50":"0","51":"N","52":"0","53":"PQR","54":"A","55":"PQR","56":"A","57":"X","58":"1","59":"X","60":"1","61":"10/5/2018","62":"1/10/2020","63":"ONGOING","64":"1","65":"1/10/2020","66":"","67":"NA","68":"N","69":"0","70":"NA","71":"NA","72":"United States","73":"N","74":"","75":"10/5/2018","76":"NA","77":"NA","78":"NA","79":"NA","80":"23.91003","81":"1","82":"&lt;30","83":"kg/m2","84":"cm","85":"170","86":"kg","87":"69.1","88":"Negative","89":"0","90":"Negative","91":"0","92":"Neither","93":"4","94":"NA","95":"1/10/2020","96":"10/5/2018","97":"9/3/2019","98":"NA","99":"Y","100":"HOMOSEXUAL CONTACT","101":"859","102":"&gt;=500","103":"3","104":"Stage I","105":"1","106":"N","107":"N","108":"N","109":"no previous history of anxiety","110":"no previous history of suicidal ideation","111":"no previous history of depression","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Mock Shell]
+
+&lt;img src="imgs/mock shell.png" width= "70%"&gt;
+
+]
+]
+
 
 ---
 
@@ -138,11 +197,7 @@ class: center, middle
 
 ]
 
-.panel[.panel-name[Clinical trial analysis steps]
 
-&lt;img src="imgs/clinical_trial_steps.png" width= "100%"&gt;
-
-]
 
 .panel[.panel-name[Features:]
 
@@ -163,6 +218,10 @@ class: center, middle
 
 ]
 
+---
+class: center, middle
+
+## ShinyTLF demo
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
