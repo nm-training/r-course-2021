@@ -72,8 +72,59 @@ class: top, left
 | Labeling |
 | Extra graphical representations |
 
+---
+
+## Graph examples:
+
+.pull-left[
+![](`r knitr::fig_chunk('ggplot_mapping', 'png')`)
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('blood_line', 'png')`)
+]
+---
+
+## Graph examples:
+
+.pull-left[
+![](`r knitr::fig_chunk('blood_regression', 'png')`)
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('diamonds_cut_fill', 'png')`)
+]
 
 ---
+
+## Graph examples:
+
+.pull-left[
+![](`r knitr::fig_chunk('fruits_legend', 'png')`)
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('diamonds_histogram', 'png')`)
+
+]
+
+
+---
+
+## Graph examples:
+
+.pull-left[
+![](`r knitr::fig_chunk('diamonds_freqpoly', 'png')`)
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('diamonds_boxplot_2', 'png')`)
+]
+
+---
+
 class: top, left
 
 ## Grammar of Graphics
@@ -523,7 +574,7 @@ ggplot(data = blood) +
 ---
 class: top, left
 
-## Geometic Objects
+## Geometric Objects
 
 .panelset[
 
@@ -758,12 +809,28 @@ class: top, left
 
 .panelset[
 .panel[.panel-name[Data]
+
+.pull-left[
+
 - mpg:
+
 ```{r, echo=FALSE}
 mpg[1:30,] %>%knitr::kable(format = "html") %>%  kable_paper() %>%
   scroll_box(width = "500px", height = "350px")
 ```
+]
+.pull-right[
+- #####mpg is a fuel economy data from 1999 to 2008 for 38 popular models of cars.
+- #####displ: engine displacement(in Litres)
+- #####drv  : the type of drive train, where f = front-wheel drive,               r = rear wheel drive, 4 = 4wd
+- #####cty  : city miles per gallon
+- #####hwy  : highway miles per gallon
+- #####fl   : fuel type
+- #####trans: type of transmission
+- #####class: type of car
 
+
+]
 
 
 ]
