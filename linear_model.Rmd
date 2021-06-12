@@ -1,0 +1,137 @@
+---
+title: "Simple linear regression"
+author: "SanjayHamal"
+date: "6/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Task1
+```{r}
+#Lets look at a simple dataset. Load the sales dataset from your data folder and save it under the name 'budget'.
+
+library(tidyverse)
+budget<- read.csv("./data/sales.csv")
+budget
+
+```
+```{r}
+#Lets look at the relationship between Advertisement budget and Sales.
+
+ggplot(data = budget, mapping = aes(x=Advertisement_budget, y= Sales))+geom_point()
+
+
+
+```
+```{r}
+#Check for outliers[univariate]
+
+
+ggplot(data=budget, aes(y=Sales))+geom_boxplot()
+
+
+
+#install.packagaes(rstatix)
+library(rstatix)
+identify_outliers(data = budget, variable = "Sales")
+
+is_outlier(budget$Sales)
+is_extreme(budget$Sales)
+
+
+```
+```{r}
+#Remove outliers[Sales] from your dataset
+
+budget<- budget %>% filter(is_outlier(Sales)==F)
+
+budget
+ggplot(sales, aes(Sales))+geom_boxplot()
+
+is_outlier(budget$Sales)
+is_extreme(budget$Sales)
+```
+
+```{r}
+#install.packages("MASS")
+library(MASS)
+
+#Linear model for predicting values of Sales based on Advertisement_budget.
+
+model1<- lm(Sales~Advertisement_budget, data=budget)
+
+
+summary(model1)
+
+
+```
+
+```{r}
+#Graph of linear model.
+
+ggplot(data=sales, aes(x=Advertisement_budget, y= Sales))+
+  
+  geom_point()+
+  
+  geom_smooth(method='lm', se=F)
+```
+
+```{r}
+
+#prediction of new sets of values
+New_ad_budget<- data.frame(Advertisement_budget= c(100, 1000, 10000, 100000))
+
+predict.lm(model1, New_ad_budget)
+
+
+
+```
+
+
+
+
+```{r}
+
+#Graph of linear model with details:
+
+Rsq<- summary(model1)$r.squared
+Rsq<- round(Rsq, digits=4)
+Rsq
+
+slope=summary(model1)$coef[[1]]
+slope= round(slope, digits = 4)
+slope
+
+
+coefficient<-summary(model1)$coef[[2]]
+coefficient<- round(coefficient, digits = 4)
+coefficient
+
+
+```
+
+```{r}
+#Graph of linear model with details:
+
+ggplot(data=sales, aes(x=Advertisement_budget, y= Sales))+
+  
+  geom_point()+
+  
+  geom_smooth(method='lm', se=F)+
+  
+  annotate('text',
+           label= paste('R sq:', Rsq),
+           x=2500,
+           y= 302, size=4, color='red')+
+  
+  annotate('text', label= paste('y=', 'x*', slope, "+", coefficient),
+           x=5500,
+           y= 250, size=4, color='red')
+
+
+
+```
