@@ -1223,6 +1223,8 @@ class: top, left
 ```{r}
 names(final_data)[names(final_data)=="name"] <- "first_name"
 
+names(final_data)[3] <- ""
+
 names(final_data)
 ```
 

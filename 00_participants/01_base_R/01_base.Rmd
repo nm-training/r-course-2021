@@ -52,7 +52,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-# Perform Arthmetic operations 
+# Perform Arithmetic operations 
 
 x <- 10
 y <- 5
@@ -291,7 +291,6 @@ new_data <- data.frame(
   associate = c("Numeric Mind", "KU", "KU", "Numeric Mind"),
   tools_used = c("R", "SAS", "Excel", "R"),
   gender = "Male",
-#  address = c("Bhaktapur", "Lalitpur", NA, "Kathmandu"),
   blood_group = c("F", "G", "H", "I")
 )
 ```
