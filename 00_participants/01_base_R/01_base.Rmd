@@ -48,7 +48,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-## Your Turn 04
+## Excercise - I
 
 
 ```{r}
@@ -79,13 +79,11 @@ x + y
 
 ```
 
-## Your Turn 05
+## Excercise - II
 
-
+### Relational Operation
 
 ```{r}
-## Perform Relational Operation
-
 x <- 5
 y <- 10
 
@@ -113,7 +111,7 @@ x > y
 
 ```
 
-## Logical Operator
+### Logical Operator
 
 ```{r}
 x <- 5
@@ -125,7 +123,7 @@ y <- 10
 ```
 
 
-## OR Operator
+### OR Operator
 
 
 ```{r}
@@ -139,7 +137,7 @@ y <- 10
 ```
 
 
-## NOT Operator
+### NOT Operator
 
 
 ```{r}
@@ -321,7 +319,7 @@ head(final_data)
 ## Rename
 
 ```{r}
-names(final_data)[3] <- "first_name" <- "first_name"
+names(final_data)[] <- "first_name" 
 names(final_data)
 ```
 
