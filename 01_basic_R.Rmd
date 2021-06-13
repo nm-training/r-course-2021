@@ -604,7 +604,7 @@ Operator | Meaning
 .panel[.panel-name[Addition]
 
 ```{r}
-10 + 5
+10 + 5  #<<
 ```
 
 ]
@@ -612,7 +612,7 @@ Operator | Meaning
 .panel[.panel-name[Subtraction]
 
 ```{r}
-10 - 5
+10 - 5  #<<
 ```
 
 ]
@@ -621,7 +621,7 @@ Operator | Meaning
 
 
 ```{r}
-10 * 5
+10 * 5  #<<
 ```
 
 ]
@@ -630,7 +630,7 @@ Operator | Meaning
 .panel[.panel-name[Division]
 
 ```{r}
-10 / 5
+10 / 5  #<<
 ```
 
 ]
@@ -792,6 +792,13 @@ It makes the .green[TRUE] to .red[FALSE] and Vice-versa.
 
 ]
 ]
+
+---
+class: middle, center
+
+# Let's Take a Break
+
+`r countdown(minutes = 0, warn_when = 10, seconds = 300,  top = 0)`
 
 
 ---
@@ -1221,9 +1228,9 @@ class: top, left
 - name() function gives the name of the data frame column
 
 ```{r}
-names(final_data)[names(final_data)=="name"] <- "first_name"
+names(final_data)[3] <- "first_name"
 
-names(final_data)[3] <- ""
+#names(final_data)[names(final_data)=="name"] <- "first_name"
 
 names(final_data)
 ```

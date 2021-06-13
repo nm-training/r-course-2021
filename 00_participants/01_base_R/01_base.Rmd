@@ -69,14 +69,12 @@ x + y
 ## Division
 
 
-####################################333
-
 ## Expo
 
 5 ^ 2
 
-
-99 ^ 3
+## Modulus
+99 %% 3
 
 
 ```
@@ -86,6 +84,7 @@ x + y
 
 
 ```{r}
+## Perform Relational Operation
 
 x <- 5
 y <- 10
