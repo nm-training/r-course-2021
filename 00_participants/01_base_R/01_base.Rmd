@@ -279,8 +279,6 @@ data[c( ,4), c(3,4)]
 ```{r}
 
 
-
-
 ```
 
 
@@ -293,7 +291,7 @@ new_data <- data.frame(
   associate = c("Numeric Mind", "KU", "KU", "Numeric Mind"),
   tools_used = c("R", "SAS", "Excel", "R"),
   gender = "Male",
-  address = c("Bhaktapur", "Lalitpur", NA, "Kathmandu"),
+#  address = c("Bhaktapur", "Lalitpur", NA, "Kathmandu"),
   blood_group = c("F", "G", "H", "I")
 )
 ```

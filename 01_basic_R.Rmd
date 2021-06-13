@@ -317,7 +317,7 @@ class: top, left, highlight-last-item
 .panelset[
 .panel[.panel-name[Rules]
 
-- Variable name must start with alphabet or dot.
+- Variable name must start with alphabet (or dot).
 
 - Only accepts letters, numbers, dot and underscore
 
@@ -331,7 +331,7 @@ class: top, left, highlight-last-item
 - Incorrect
 
 ```{r eval=FALSE}
-.my_data <- 500 #<< 
+_my_data <- 500 #<< 
 1_my_data <- 345 #<< 
 ```
 
@@ -340,6 +340,7 @@ class: top, left, highlight-last-item
 ```{r}
 my_data <- 200
 my_1data <- 400
+.my_data <- 600
 ```
 
 
