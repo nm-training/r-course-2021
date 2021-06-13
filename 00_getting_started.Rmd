@@ -18,7 +18,17 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+
 options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
         htmltools.preserve.raw = FALSE)
 library(countdown)
@@ -53,7 +63,6 @@ class: left, top
 
 <img src="imgs/about-numericmind.png">
 
-
 ---
 class: center, top
 
@@ -72,7 +81,6 @@ class: center, top
   <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("linkedin", fill = "black")`</a>
   <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("facebook", fill = "black")`</a>
 </div>
-
 
 ]
 
@@ -98,7 +106,14 @@ class: top, center
 
 ## Top Companies Supporting 
 
- <img src="imgs/supporting_companies.png" width = "90%">
+<img src="imgs/supporting_companies.png" width = "90%">
+
+---
+class: top, left
+
+## R and RStudio
+
+<img src="imgs/r_engine.png" width="80%">
 
 ---
 class: middle, center
@@ -108,41 +123,97 @@ class: middle, center
 ---
 class: top, left
 
-## Install R (https://cran.r-project.org)
+## Download / Install (learnr.numericmind.com/rsetup)
+
+<iframe src="https://learnr.numericmind.com/rsetup/" width="100%" height="500px">
+
+<!-- --- -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Install R (https://cran.r-project.org) -->
 
 
-<img src="imgs/install_R.png">
+<!-- <img src="imgs/install_R.png"> -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Windows (https://cran.r-project.org/bin/windows/Rtools/) -->
+
+
+<!-- <img src="imgs/rtools.png"> -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Install RStudio (http://bit.ly/rstudio-nm) -->
+
+<!-- <img src="imgs/install_rstudio.png"> -->
+
+<!-- --- -->
 
 ---
-class: top, left
+class: middle, center
 
-## Windows (https://cran.r-project.org/bin/windows/Rtools/)
+# Let's look at RStudio
 
-
-<img src="imgs/rtools.png">
 
 ---
-class: top, left
 
-## Install RStudio (http://bit.ly/rstudio-nm)
-
-<img src="imgs/install_rstudio.png">
-
----
 class: top, left
 
 # Writing Your First Code
 
+.panelset[
+
+.panel[.panel-name[Calculator]
+
 ```{r}
-1 + 5
+1 + 5  # Add
+
+10 - 5  # Subtract
+
+10 * 5 # Multiply
+
+10 / 2 # Divide
 ```
+
+]
+
+.panel[.panel-name[Functions]
+
+.pull-left[
+
 ```{r}
-## 1 + 2 + 3 + 5 + 6 ... + 1000
+1:10
 
 sum(1:1000) #<<
+
+mean(1:10)
+
+median(10:20)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+min(10:20)
+
+max(10:100)
+
+seq(2, 20, 2)
 ```
 
 
+]
+
+
+]]
 
 
 ---
@@ -150,10 +221,27 @@ class: top, left
 
 # Creating Your First Plot
 
-```{r fig.height=5, fig.width=10}
+.pull-left[
+
+```{r plot_cars}
 plot(cars)
 ```
 
+Here, 
+
+- speed - miles per hour
+
+- dist - stopping distance (ft)
+
+]
+
+.pull-right[
+
+
+![](`r knitr::fig_chunk('plot_cars', 'png')`)
+
+
+]
 
 ---
 class: middle, center
@@ -173,6 +261,36 @@ class: top, left
 
 ]
 
+.panel[.panel-name[Load]
+
+.pull-left[
+
+```{r first_ggplot2, echo=T, include=T}
+library(ggplot2)
+
+ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point()
+
+```
+
+Here, 
+
+- speed - miles per hour
+- dist - stopping distance (ft)
+
+]
+
+
+.pull-right[
+
+![](`r knitr::fig_chunk('first_ggplot2', 'png')`)
+
+
+]
+
+
+]
+
 .panel[.panel-name[About]
 
 - R packages are a collection of functions, complied code & sample data
@@ -182,23 +300,8 @@ class: top, left
 
 ]
 
-.panel[.panel-name[Load]
 
-```{r}
-library(ggplot2)
-
-ggplot(cars, aes(x = speed, y = dist)) +
-  geom_point()
-
-
-
-```
-
-
-]
-
-
-.panel[.panel-name[Load]
+.panel[.panel-name[Install]
 
 To install and load package we use following:
 

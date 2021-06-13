@@ -56,6 +56,33 @@ class: middle, center
 
 <img src="imgs/magrittr.png" width="20%">
 
+---
+class: top, left
+
+## Pipes - %>% ... %>% 
+
+.pull-left[
+
+The pipe operator implemented first in **magrittr** package.
+
+```{r eval=FALSE}
+library(magrittr)
+```
+
+Makes code readable by:
+
+- structuring sequences of data operations
+- avoiding nested function calls
+- minimizing the need for local variables and function definitions
+
+]
+
+.pull-right[
+
+<img src="imgs/magrittr.png" id="center">
+
+]
+
 
 ---
 class: top, left
@@ -153,33 +180,6 @@ Here,
 
 - **%>%** is pipe operator
 - Shortcut: **Ctrl + Shift + m**
-
-]
-
----
-class: top, left
-
-## Pipes - %>% ... %>% 
-
-.pull-left[
-
-The pipe operator implemented first in **magrittr** package.
-
-```{r eval=FALSE}
-library(magrittr)
-```
-
-Makes code readable by:
-
-- structuring sequences of data operations
-- avoiding nested function calls
-- minimizing the need for local variables and function definitions
-
-]
-
-.pull-right[
-
-<img src="imgs/magrittr.png" id="center">
 
 ]
 
@@ -456,7 +456,7 @@ select_filter
 ```{r eval = F}
 # Method 3:
 gapminder %>% 
-  filter(country == "Asia") %>% 
+  filter(country == "Nepal") %>% 
   select(year, country, gdpPercap)
 ```
 ]

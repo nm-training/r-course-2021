@@ -10,3 +10,5 @@ readr
 purrr
 stringr
 forcats
+xaringanExtra
+fontawesome
