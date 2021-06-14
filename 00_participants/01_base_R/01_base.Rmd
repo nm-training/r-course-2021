@@ -290,7 +290,7 @@ new_data <- data.frame(
   associate = c("Numeric Mind", "KU", "KU", "Numeric Mind"),
   tools_used = c("R", "SAS", "Excel", "R"),
   gender = "Male",
-  blood_group = c("F", "G", "H", "I")
+  blood_group = c("A+", "B+", "AB-", "O+")
 )
 ```
 
@@ -319,9 +319,10 @@ final_data <- (prof_data, updated_data, by = "id")
 head(final_data)
 ```
 
+## Rename
 
 ```{r}
-names(final_data)[names(final_data)=="name"] <- "first_name"
+names(final_data)[3] <- "first_name" <- "first_name"
 names(final_data)
 ```
 
