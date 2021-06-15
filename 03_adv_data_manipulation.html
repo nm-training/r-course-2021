@@ -4,7 +4,7 @@
     <title>Data Manipulation in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Binod Jung Bogati" />
-    <meta name="date" content="2021-06-03" />
+    <meta name="date" content="2021-06-15" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -300,14 +300,9 @@ Let's pick variables from gapminder data:
 country_gdp &lt;- gapminder %&gt;% 
 * select(year, country, gdpPercap)
 
-# select(gapminder, year, country, gdpPercap)
+#select(gapminder, year,country,gdpPercap)
 ```
 
-]
-
---
-
-.pull-left[
 Here, 
 
 - **select()** is a dplyr function
@@ -354,12 +349,6 @@ asia &lt;- gapminder %&gt;%
   
 # filter(gapminder, continent == "Asia")
 ```
-
-]
-
-.pull-left[
-
-Here, 
 
 - **filter()** is a dplyr function
 - **gapminder** is a data set
@@ -498,7 +487,7 @@ class: top, left
 
 Display country-wise, annual life expectancy of Europe.
 
-<div class="countdown" id="timer_60b90c32" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60c84c3b" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -597,7 +586,7 @@ class: top, left
 
 Rank all **Asian** countries by life expectancy in year **2007**. 
 
-<div class="countdown" id="timer_60b90de5" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60c84b0f" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -730,7 +719,7 @@ class: top, left
 
 - Find countries in Asia with lowly ranked gdpPercap in 1992
 
-<div class="countdown" id="timer_60b90f42" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60c84b2b" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -885,7 +874,7 @@ class: top, left
 
 - Summarize mean (population and gdpPerCap) by continent in year 2007
 
-<div class="countdown" id="timer_60b90cc3" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60c84c85" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1120,7 +1109,7 @@ country_income &lt;- gapminder %&gt;%
 *       gdpPercap &lt; 1000 ~ "Low Income",
 *       between(gdpPercap, 1000, 5000) ~ "Lower-Middle Income",
 *       between(gdpPercap, 5000, 20000) ~ "Upper-Middle Income",
-        # gdpPercap &gt; 500 &amp; gdpPercap &lt; 2000 ~ "Upper-Middle Income",
+      # gdpPercap &gt; 5000 &amp; gdpPercap &lt; 20000 ~ "Upper-Middle Income",
 *       gdpPercap &gt; 20000 ~ "High Income"
       )
   ) %&gt;%

@@ -300,14 +300,9 @@ Let's pick variables from gapminder data:
 country_gdp <- gapminder %>% 
   select(year, country, gdpPercap) #<<
 
-# select(gapminder, year, country, gdpPercap)
+#select(gapminder, year,country,gdpPercap)
 ```
 
-]
-
---
-
-.pull-left[
 Here, 
 
 - **select()** is a dplyr function
@@ -347,12 +342,7 @@ asia <- gapminder %>%
 # filter(gapminder, continent == "Asia")
 ```
 
-]
-
-.pull-left[
-
 Here, 
-
 - **filter()** is a dplyr function
 - **gapminder** is a data set
 - **continent** is a case with value **Asia**
@@ -991,7 +981,7 @@ country_income <- gapminder %>%
         gdpPercap < 1000 ~ "Low Income",                          #<<
         between(gdpPercap, 1000, 5000) ~ "Lower-Middle Income",   #<<
         between(gdpPercap, 5000, 20000) ~ "Upper-Middle Income",  #<<
-        # gdpPercap > 500 & gdpPercap < 2000 ~ "Upper-Middle Income",
+      # gdpPercap > 5000 & gdpPercap < 20000 ~ "Upper-Middle Income",
         gdpPercap > 20000 ~ "High Income"                         #<<
       )
   ) %>%

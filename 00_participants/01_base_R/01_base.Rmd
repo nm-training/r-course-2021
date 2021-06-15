@@ -297,7 +297,6 @@ new_data <- data.frame(
 updated_data <- (data, new_data)
 
 head(updated_data)
-
 ```
 
 ## Merge

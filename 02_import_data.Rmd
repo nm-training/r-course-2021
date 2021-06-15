@@ -182,6 +182,16 @@ csv_cars <- read_csv("./data/cars.csv")
 
 ]
 
+.panel[.panel-name[RDA vs RDS]
+
+RDA | RDS
+--- | ---
+Hold multiple R Objects | Hold single R Object
+
+]
+
+
+
 .panel[.panel-name[Read II]
 
 ```{r}
@@ -269,9 +279,9 @@ write_dta(stata_cars, "./data/stata_cars.dta")
 
 ]]
 
+
 ---
 class: top, left
-
 
 ## Take Always
 
@@ -283,3 +293,33 @@ haven | SPSS, Stata, and SAS data files
 writexl | write excel files (.xls, .xlsx)
 
 These packages will help you import/export data efficiently.
+
+---
+class: middle, center
+
+## Bonus Content
+
+
+
+## Bonus
+
+## Read Googlesheets
+
+
+```{r}
+library(googlesheets4)
+
+gs4_deauth()
+
+google_data <- read_sheet("1uBM0XT1hcIO2arC98F7v1b4uHx3egJ41VjHkZkRVZWI")
+
+google_data
+```
+
+
+
+
+
+
+
+
