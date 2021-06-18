@@ -1,0 +1,129 @@
+---
+title: "Simple linear regression"
+author: "SanjayHamal"
+date: "6/18/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#Task1
+Lets look at a simple dataset. Load the sales dataset from your data folder and save it under the name 'budget'.
+```{r}
+#Lets look at a simple dataset. Load the sales dataset from your data folder and save it under the name 'budget'.
+
+library(tidyverse)
+budget<- read.csv("./data/sales.csv")
+budget
+
+```
+
+
+#Task2
+Lets look at the relationship between advertisement budget and sales.
+
+```{r}
+
+ggplot(data =    ,
+       mapping = aes(x=advertisement_budget, y= sales))  
+  
+
+
+
+
+```
+
+#Task3
+Check for outliers[univariate]
+Hint : you can use box plot:geom_boxplot() to see if there are any outliers
+
+```{r}
+.
+
+
+ggplot(data=budget, aes(y=sales)) + 
+
+
+
+
+
+```
+
+#Task4
+Another method to check if there are any outliers.
+```{r}
+
+
+#install.packagaes(rstatix)
+library(rstatix)
+identify_outliers(data = budget, variable = "sales")
+
+is_outlier(budget$sales)
+is_extreme(budget$sales)
+```
+
+
+#Task5
+Remove outliers
+
+```{r}
+
+budget<- budget %>% filter(is_outlier(sales)==F)
+budget
+```
+
+#Task6
+Again visualize your dataset for outliers using box plot.
+```{r}
+
+ggplot(data = budget, mapping= aes(y= sales))+ 
+
+```
+
+#Task7
+Create a linear regression model to predict sales based on advertisement_budget.
+
+```{r}
+
+#install.packages("MASS")
+library(MASS)
+
+#Linear model for predicting values of Sales based on Advertisement_budget.
+
+model1<- lm(sales~advertisement_budget, data=budget)
+
+
+summary(model1)
+
+```
+#Task8
+Regression plot
+
+```{r}
+#Graph of linear model.
+
+ggplot(data=budget, aes(x=advertisement_budget, y= sales))+
+  
+  geom_point()+
+  
+  geom_smooth(method='lm', se=F)
+```
+
+#Task9
+Predict Sales for new dataset
+
+```{r}
+
+#Create a new dataset
+New_ad_budget<- data.frame(advertisement_budget= c(100, 1000, 10000, 100000))
+
+New_ad_budget
+
+predict.lm(model1, New_ad_budget)
+```
+
+
+
