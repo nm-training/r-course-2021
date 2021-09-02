@@ -4,7 +4,7 @@
     <title>Advanced Visualization with ggplot2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Sanjay Hamal" />
-    <meta name="date" content="2021-08-30" />
+    <meta name="date" content="2021-09-02" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 ## (Graph Customization)
 ### Sanjay Hamal
 ### Numeric Mind
-### 2021-08-30
+### 2021-09-02
 
 ---
 
@@ -1514,6 +1514,228 @@ ggplot(movies )+
 
 ]
 
+---
+#### Text and labels
+
+.panelset[
+
+.panel[.panel-name[geom_text]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+* geom_text(
+*   aes(x=100000000,
+*       y=1000000000,
+*       label= "You can type anything"),
+*   color='red',
+*   size= 5,
+*   hjust=0,
+*   vjust=0,
+*   family= "Sans")
+```
+]
+
+.pull-right[
+
+![](figures/sg43ex1-1.png)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[geom_label]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+* geom_label(
+*   aes(x=100000000,
+*       y=1000000000,
+*       label= "You can label anything"),
+*   color='red',
+*   family=  "Sans",
+*   size= 5,
+*   hjust=0,
+*   vjust=0)
+```
+]
+
+.pull-right[
+
+![](figures/sg43ex2-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Text in bar graph]
+.pull-left[
+
+```r
+ggplot(head(movies))+
+  geom_col(aes(x=movie,
+               y=domestic_gross,
+               fill=movie))+
+  geom_text(
+*   aes(x=movie,
+*       y=domestic_gross,
+*       label=genre),
+*   size=4,
+*   vjust=1,
+*   angle=270
+  )+ 
+  coord_flip()
+```
+]
+
+
+.pull-right[
+
+![](figures/sg43ex3-1.png)
+
+]
+
+
+
+]
+
+]
+
+
+
+---
+#### BBC Visual and Data Journalism
+.panelset[
+
+
+
+.panel[.panel-name[bbplot]
+
+.pull-left[
+-  The BBC Data and Visualisation Journalism team used ggplot to analyse complex data and create publication-ready visualisations.
+
+-  They soon found out that every time they wanted to create a chart they had to retype every individual element and argument to convert the default ggplot style to in-house BBC style. 
+
+- Thus, they developed their own package to meet the needs of the team and keep the workflow simple.
+  ]
+  
+.pull-right[
+  
+&lt;img src="imgs/bbplt.png"&gt;
+
+]  
+
+]
+
+.panel[.panel-name[Installation and functions ]
+
+To install bbplot, use the codes:
+
+- **install.packages('devtools');devtools::install_github('bbc/bbplot')**
+
+There are two functions in bbplot:
+
+- **bbc_syle()**:  It makes text size, font and colour, axis lines, axis text, margins and many other standard chart components into BBC style, which has been formulated based on recommendations and feedback from the design team.
+
+- **finalise_plot()**: It will left-align the title, subtitle and add the footer with a source and an image in the bottom right corner of your plot. It will also save it to your specified location. 
+
+]
+
+.panel[.panel-name[bbc_style()]
+
+
+.pull-left[
+
+```r
+*library(bbplot)
+ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+* bbc_style()
+```
+
+]
+.pull-right[
+![](figures/sg43-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Additional modifications]
+
+.pull-left[
+
+```r
+my_bbplot&lt;-ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+* bbc_style() +
+  
+* geom_hline(yintercept = 0,
+             size=1,
+             colour="black")+
+* theme(legend.justification = "left")
+ 
+my_bbplot 
+```
+]
+
+.pull-right[
+![](figures/sg44-1.png)
+
+]
+]
+
+
+.panel[.panel-name[finalise_plot()]
+
+.pull-left[
+
+```r
+finalise_plot(
+* plot_name = my_bbplot,
+              
+* source = "Source:tidytuesday",
+              
+* save_filepath = "C:/Users/Sanjay/Desktop/plt.png",
+              
+* width_pixels=500,
+              
+* height_pixels= 500)
+```
+]
+
+.pull-right[
+
+&lt;img src="imgs/plt.png"&gt;
+
+]
+
+]
+
+]
 
 
 

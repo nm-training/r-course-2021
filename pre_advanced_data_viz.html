@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Visualization with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Sanjay Hamal" />
+    <meta name="date" content="2021-09-02" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Visualization with ggplot2
+## (Basics)
+### Sanjay Hamal
+### Numeric Mind
+### 2021-09-02
+
+---
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+
+
+
+
+
+---
+class: middle, center
+
+# Data Visualization with
+
+&lt;img src="imgs/ggplot2.png" width="20%"&gt;
+
+
+---
+class: top, left
+
+## Table of Content
+
+|Topics |
+|--- |
+|ggplot2 |
+| Layers  |             |
+| Aesthetic mappings | |
+| Geometric objects |
+| Statistical transformations |
+| Position adjustments |
+| Coordinate system |
+| Labeling |
+| Extra graphical representations |
+
+---
+
+## Graphs: Scatter plot
+
+.pull-left[
+
+![](figures/ggplot_mapping-1.png)
+
+]
+
+.pull-right[
+
+- ### Scatter plot uses dots to represent values for two different numeric variables.
+- ### Scatter plots are used to observe relationships between variables.
+]
+---
+
+## Graphs: Line chart
+
+.pull-left[
+![](figures/blood_line-1.png)
+
+]
+
+.pull-right[
+
+- ### A line chart is a type of chart that displays information as a series of data points connected by straight line segments.
+
+- ### A line chart displays trends with a continuous line.
+]
+---
+## Graphs: Bar chart
+.pull-left[
+
+![](figures/diamonds_cut_fill-1.png)
+]
+
+.pull-right[
+
+- ### The measure of data is represented in the form of vertical or horizontal rectangular bars, where the lengths of the bars are equivalent to the measure of data.
+- ### One axis of a bar chart measures a value, while the other axis lists variables. When the data is plotted, the chart presents a comparison of the variables.
+]
+---
+
+## Graphs: Histogram
+
+.pull-left[
+![](figures/diamonds_histogram-1.png)
+]
+
+.pull-right[
+
+- ###A frequency distribution shows how often each different value in a set of data occurs. A histogram is the most commonly used graph to show frequency distributions. 
+- ### It looks very much like a bar chart.
+- ### Bar chart is used to visualize distribution of categorical variables whereas Histogram is used to visualize distribution of continuous variables.
+]
+---
+
+## Graphs: Boxplot
+
+.pull-left[
+![](figures/diamonds_boxplot_2-1.png)
+]
+
+.pull-right[
+
+- ####Box plots (also called box-and-whisker plots or box-whisker plots) give a good graphical image of the concentration of the data. 
+- ####They also show how far the extreme values are from most of the data. 
+- ####A box plot is constructed from five values: the minimum value, the first quartile, the median, the third quartile, and the maximum value. 
+- ####We use these values to compare how close other data values are to them.
+]
+---
+
+class: top, left
+
+## Grammar of Graphics
+
+.pull-left[
+
+ggplot2 is a data visualization tool that follow grammar of graphics
+and provides us with different verbs (functions).
+
+&lt;img src="imgs/ggplot2_tidyverse.png" width="40%"&gt;
+
+]
+
+.pull-right[
+
+
+```r
+*library(ggplot2)
+```
+
+]
+
+---
+class: top, left
+
+## ggplot2: Layers
+
+
+- Plots in **ggplot2** are made up of layers which make our work easier.
+
+--
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.pull-left[
+
+&lt;img src="imgs/ggplot2_layers.png" width="80%"&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;img src="imgs/ggplot2_layers_2.png" width="80%"&gt;
+
+]
+
+
+
+---
+class: top, left
+
+## ggplot2: Layers
+
+.panelset[
+.panel[.panel-name[Data]
+
+Let's have a look at a table available in R called "cars". 
+
+.pull-left[
+
+```r
+head(cars)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"2","_rn_":"1"},{"1":"4","2":"10","_rn_":"2"},{"1":"7","2":"4","_rn_":"3"},{"1":"7","2":"22","_rn_":"4"},{"1":"8","2":"16","_rn_":"5"},{"1":"9","2":"10","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+]
+
+]
+
+.panel[.panel-name[Blank]
+
+.pull-left[
+
+
+```r
+*ggplot(cars)
+```
+
+&lt;br&gt;&lt;br&gt;
+
+Here, 
+
+- **ggplot** is a function for plotting
+
+- **cars** is a data set.
+
+]
+
+
+.pull-right[
+
+![](figures/ggplot_blank1-1.png)
+
+]
+]
+
+.panel[.panel-name[Layer 1]
+
+.pull-left[
+
+
+```r
+ggplot(cars) +
+* geom_point(aes(x = speed, y = dist))
+```
+
+&lt;br&gt;&lt;br&gt;
+
+Here, 
+
+- **+** is a operator which join our layers
+
+]
+
+.pull-right[
+
+![](figures/ggplot_layer1ex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Layer 2]
+
+.pull-left[
+
+
+```r
+ggplot(cars) +
+  geom_point(aes(x = speed, y = dist)) +
+* geom_line(aes(x = speed, y = dist))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/ggplot_layer2ex-1.png)
+
+
+]
+]
+
+]
+
+
+
+---
+class: top, left
+
+## ggplot2: Aesthetic Mapping 
+
+.panelset[
+.panel[.panel-name[About]
+
+.pull-left[
+
+- An aesthetic is a visual property of the objects in your plot. It include things like the size, the shape, or the color of your points.
+
+- For a particular layer, the components of X-axis and Y-axis are defined in aesthetics. 
+
+
+
+]
+.pull-right[
+
+![](figures/ggplot_layer2aex-1.png)
+
+
+]
+
+
+
+]
+
+.panel[.panel-name[Data]
+
+.pull-left[
+
+
+```r
+head(cars)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"2","_rn_":"1"},{"1":"4","2":"10","_rn_":"2"},{"1":"7","2":"4","_rn_":"3"},{"1":"7","2":"22","_rn_":"4"},{"1":"8","2":"16","_rn_":"5"},{"1":"9","2":"10","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+]
+
+
+.panel[.panel-name[Axis]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars) +
+  geom_point(
+*   mapping = aes(x = speed, y = dist)
+  )
+```
+
+
+Here, 
+
+- geom_point() is used for creating scatter plot
+
+]
+
+.pull-right[
+
+![](figures/ggplot_mappingex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Color]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars) +
+  geom_point(
+    mapping = aes(x = speed, y = dist),
+*   color = "red"
+  )
+```
+
+- The colors could be simple "red", "blue", "green" and so on or Colors can specified as a hexadecimal RGB triplet, such as "#0066CC".
+
+]
+
+.pull-right[
+
+![](figures/ggplot_colorex-1.png)
+
+]
+]
+
+
+
+.panel[.panel-name[Size]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars) +
+  geom_point(
+    mapping = aes(x = speed, y = dist),
+    color = "red",
+*   size = 5
+  )
+```
+
+
+]
+
+.pull-right[
+
+![](figures/ggplot_sizeex-1.png)
+
+
+]]
+
+
+.panel[.panel-name[Shape]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars) +
+  geom_point(
+    mapping = aes(x = speed, y = dist),
+    color = "blue",
+    size = 8,
+*   shape = 3
+  )
+```
+
+
+- In ggplot2, there are **25 shapes** available.
+- Here, **shape = 3** is **+** 
+- By default, the **shape = 21** i.e circle 
+
+]
+
+.pull-right[
+
+![](figures/ggplot_shapeex-1.png)
+
+]
+]
+
+.panel[.panel-name[Shape List]
+
+.pull-left[
+
+.center[
+&lt;img src="imgs/ggplot2_shapes_list.png" width="70%"&gt;
+]
+
+]
+
+]
+
+.panel[.panel-name[Opacity]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars) +
+  geom_point(
+    mapping = aes(x = speed, y = dist),
+    color = "blue",
+    size = 8,
+    shape = 3,
+*   alpha = 0.4
+  )
+```
+
+
+]
+
+.pull-right[
+
+![](figures/ggplot_alphaex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Revisit]
+
+.pull-left[
+
+| Topics  | Description |
+|---|---|
+| aes(x =, y =) | set variables for x-axis and y-axis
+| color = | set color of points
+| shape = | set shape of points
+|  size = | size of points
+| alpha = | opacity of points
+
+
+]
+
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 01
+
+<div class="countdown" id="timer_6130abbe" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+class: top, left
+
+## Mapping Aesthetics to the variables
+
+.panelset[
+
+.panel[.panel-name[Data]
+
+- blood:
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Location"],"name":[1],"type":["int"],"align":["right"]},{"label":["Demand"],"name":[2],"type":["int"],"align":["right"]},{"label":["Types"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Serial_num"],"name":[4],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"10","3":"A+","4":"4","5":"Male"},{"1":"2","2":"8","3":"A+","4":"13","5":"Female"},{"1":"3","2":"1","3":"AB+","4":"8","5":"Male"},{"1":"4","2":"9","3":"A+","4":"6","5":"Female"},{"1":"5","2":"6","3":"O+","4":"9","5":"Female"},{"1":"6","2":"2","3":"AB+","4":"11","5":"Male"},{"1":"7","2":"7","3":"O+","4":"5","5":"Male"},{"1":"8","2":"5","3":"AB+","4":"1","5":"Female"},{"1":"9","2":"3","3":"AB+","4":"3","5":"Female"},{"1":"10","2":"4","3":"O+","4":"12","5":"Female"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+
+.panel[.panel-name[Color]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping =
+      aes(
+        x = Location, y = Demand,
+*       color = Types
+      ),
+    size = 5
+  )
+```
+
+- Notice that, the color attribute is wrapped inside **aes()**. 
+]
+
+.pull-right[
+
+![](figures/blood_colorex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Color and Shape]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping =
+      aes(
+        x = Location, y = Demand,
+        color = Types,
+*       shape = Gender
+      ),
+    size = 8
+  )
+```
+
+- Notice that the color and shape attributes are wrapped inside **aes()**.
+
+]
+
+.pull-right[
+
+![](figures/blood_shapeex-1.png)
+
+]
+]
+
+]
+
+---
+class: top, left
+
+## Geometric Objects
+
+.panelset[
+
+.panel[.panel-name[About]
+
+.pull-left[
+
+
+- A geom is the geometrical object that a plot uses to represent data.
+
+- geom_point is the geometrical object that plots scatter plot to represent data.
+
+
+]
+
+.pull-right[
+
+
+]
+
+]
+
+
+.panel[.panel-name[Types]
+
+.pull-left[
+
+| Type | Function |
+|---|---|
+| Point | `geom_point()` |
+| Line | `geom_line()` |
+| Bar | `geom_bar()`, `geom_col()` |
+| Histogram | `geom_histogram()` |
+| Regression | `geom_smooth()` |
+| Box plot | `geom_boxplot()` |
+| Count | `geom_count()` |
+| Density | `geom_density()` |
+
+
+]
+
+.pull-right[
+
+| Type | Function |
+|---|---|
+| Text | `geom_text()` |
+| Vert./Horiz. Line | `geom_{vh}line()` |
+
+]
+
+]
+
+
+
+.panel[.panel-name[Common Mistakes]
+
+
+**Incorrect way**
+
+
+```r
+ggplot(data = blood)
+*+geom_point(mapping = aes(x = Location, y = Demand))
+*+geom_line(mapping = aes(x = Location, y = Demand))
+```
+
+
+**Correct way**
+
+
+```r
+ggplot(data = blood) +
+* geom_point(mapping = aes(x = Location, y = Demand)) +
+* geom_line(mapping = aes(x = Location, y = Demand)) +
+  geom_smooth(mapping = aes(x = Location, y = Demand))
+```
+
+Here, 
+
+'+' sign should be placed in the same line where the previous layer ends.
+
+
+]
+
+
+
+]
+
+---
+class: top, left
+
+## Combining plots
+
+
+.panelset[
+.panel[.panel-name[Data]
+
+
+```r
+head(blood)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Location"],"name":[1],"type":["int"],"align":["right"]},{"label":["Demand"],"name":[2],"type":["int"],"align":["right"]},{"label":["Types"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Serial_num"],"name":[4],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"10","3":"A+","4":"4","5":"Male","_rn_":"1"},{"1":"2","2":"8","3":"A+","4":"13","5":"Female","_rn_":"2"},{"1":"3","2":"1","3":"AB+","4":"8","5":"Male","_rn_":"3"},{"1":"4","2":"9","3":"A+","4":"6","5":"Female","_rn_":"4"},{"1":"5","2":"6","3":"O+","4":"9","5":"Female","_rn_":"5"},{"1":"6","2":"2","3":"AB+","4":"11","5":"Male","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Scatter Plot]
+
+.pull-left60[
+
+
+```r
+ggplot(data = blood) +
+* geom_point(mapping = aes(x = Location, y = Demand))
+```
+
+
+]
+
+.pull-right40[
+
+![](figures/blood_scatterex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Line Plot]
+
+.pull-left60[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(mapping = aes(x = Location, y = Demand)) +
+* geom_line(mapping = aes(x = Location, y = Demand))
+```
+
+
+]
+
+.pull-right40[
+
+![](figures/blood_lineex-1.png)
+
+]
+]
+
+
+
+.panel[.panel-name[Global Aesthetics]
+
+.pull-left60[
+
+
+```r
+ggplot(data = blood) +
+* geom_point(mapping = aes(x = Location, y = Demand)) +
+  geom_line(mapping = aes(x = Location, y = Demand)) 
+```
+
+Here, we can globally set mapping aesthetics in ggplot() 
+
+
+```r
+ggplot(
+  data = blood,
+* mapping = aes(x = Location, y = Demand)
+) +
+  geom_point() +
+  geom_line() 
+```
+
+
+]
+
+.pull-right40[
+
+![](figures/blood_regressionex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Additional changes]
+
+.pull-left[
+
+
+```r
+ggplot(
+  data = blood,
+  mapping = aes(x = Location, y = Demand)
+) +
+  geom_point(color = "red") + # makes the points red
+  geom_line(color = 'green')  #changes the line color
+```
+
+
+]
+
+.pull-right[
+
+![](figures/own_geomsex-1.png)
+
+]
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Geom Properties
+
+
+.panelset[
+.panel[.panel-name[Data]
+
+
+- blood:
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Location"],"name":[1],"type":["int"],"align":["right"]},{"label":["Demand"],"name":[2],"type":["int"],"align":["right"]},{"label":["Types"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Serial_num"],"name":[4],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"10","3":"A+","4":"4","5":"Male"},{"1":"2","2":"8","3":"A+","4":"13","5":"Female"},{"1":"3","2":"1","3":"AB+","4":"8","5":"Male"},{"1":"4","2":"9","3":"A+","4":"6","5":"Female"},{"1":"5","2":"6","3":"O+","4":"9","5":"Female"},{"1":"6","2":"2","3":"AB+","4":"11","5":"Male"},{"1":"7","2":"7","3":"O+","4":"5","5":"Male"},{"1":"8","2":"5","3":"AB+","4":"1","5":"Female"},{"1":"9","2":"3","3":"AB+","4":"3","5":"Female"},{"1":"10","2":"4","3":"O+","4":"12","5":"Female"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+
+]
+
+.panel[.panel-name[Shape]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood, 
+       mapping = aes(x = Location, y = Demand)) +
+  geom_point(shape=3)+
+  geom_line(shape = 22)
+```
+
+Here, 
+
+Plotting a line plot: It has it's own mapping. 
+There is no shape of a point in line. Hence it ignores the parameter 'shape' with a warning.
+
+]
+
+.pull-right[
+
+![](figures/mpg_shape_22ex-1.png)
+
+
+]
+
+]
+
+
+.panel[.panel-name[Linetype]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood, 
+       mapping = aes(x = Location, y = Demand)) +
+  geom_line(
+    linetype = "dashed"
+  )
+```
+
+Here, 
+
+- However, you can use aesthetic mappings of geom_line to make changes in the type of line.
+- Linetype='dashed' gives a dashed line instead of a solid line.
+
+]
+
+.pull-right[
+
+![](figures/mpg_line_dashedex-1.png)
+
+
+]
+
+]
+
+
+
+
+
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 02
+
+<div class="countdown" id="timer_6130ad1e" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+---
+class: top, left
+
+## Statistical Transformation
+
+.panelset[
+.panel[.panel-name[About]
+
+- The algorithm used to calculate new values for a graph is called a stat, short for statistical transformation.
+
+- In other graphs such as scatter plot, line plot, smooth-line, new values are not computed.
+
+- In graphs like bar plot, box plots, histograms etc, new values are computed such as counts, proportions, summary etc.
+
+
+]
+
+
+.panel[.panel-name[Diamonds]
+
+
+```r
+head(diamonds)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["carat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cut"],"name":[2],"type":["ord"],"align":["right"]},{"label":["color"],"name":[3],"type":["ord"],"align":["right"]},{"label":["clarity"],"name":[4],"type":["ord"],"align":["right"]},{"label":["depth"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["table"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["price"],"name":[7],"type":["int"],"align":["right"]},{"label":["x"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.23","2":"Ideal","3":"E","4":"SI2","5":"61.5","6":"55","7":"326","8":"3.95","9":"3.98","10":"2.43"},{"1":"0.21","2":"Premium","3":"E","4":"SI1","5":"59.8","6":"61","7":"326","8":"3.89","9":"3.84","10":"2.31"},{"1":"0.23","2":"Good","3":"E","4":"VS1","5":"56.9","6":"65","7":"327","8":"4.05","9":"4.07","10":"2.31"},{"1":"0.29","2":"Premium","3":"I","4":"VS2","5":"62.4","6":"58","7":"334","8":"4.20","9":"4.23","10":"2.63"},{"1":"0.31","2":"Good","3":"J","4":"SI2","5":"63.3","6":"58","7":"335","8":"4.34","9":"4.35","10":"2.75"},{"1":"0.24","2":"Very Good","3":"J","4":"VVS2","5":"62.8","6":"57","7":"336","8":"3.94","9":"3.96","10":"2.48"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+
+]
+
+.panel[.panel-name[Process]
+
+&lt;img src="imgs/bar1.png" width="100%"&gt;
+
+]
+
+.panel[.panel-name[BarPlot1]
+
+.pull-left[
+
+
+
+```r
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(x=cut))
+```
+
+```r
+# similar code
+
+# ggplot(data = diamonds)+
+#   geom_bar(mapping = aes(x=cut),
+#            stat="count")
+```
+
+Here, 
+
+- 'count' variable is computed and mapped to Y-axis.
+- **stat**= 'count' by default
+]
+
+.pull-right[
+
+![](figures/diamonds_cut_xaxisex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[BarPlot2]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds)+
+  geom_bar(mapping = aes(y=cut))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_cut_yaxisex-1.png)
+
+]
+
+]
+
+
+]
+---
+
+class: top, left
+
+## Statistical Transformation
+
+.panelset[
+
+.panel[.panel-name[Dataset]
+
+
+```r
+head(diamonds)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["carat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cut"],"name":[2],"type":["ord"],"align":["right"]},{"label":["color"],"name":[3],"type":["ord"],"align":["right"]},{"label":["clarity"],"name":[4],"type":["ord"],"align":["right"]},{"label":["depth"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["table"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["price"],"name":[7],"type":["int"],"align":["right"]},{"label":["x"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.23","2":"Ideal","3":"E","4":"SI2","5":"61.5","6":"55","7":"326","8":"3.95","9":"3.98","10":"2.43"},{"1":"0.21","2":"Premium","3":"E","4":"SI1","5":"59.8","6":"61","7":"326","8":"3.89","9":"3.84","10":"2.31"},{"1":"0.23","2":"Good","3":"E","4":"VS1","5":"56.9","6":"65","7":"327","8":"4.05","9":"4.07","10":"2.31"},{"1":"0.29","2":"Premium","3":"I","4":"VS2","5":"62.4","6":"58","7":"334","8":"4.20","9":"4.23","10":"2.63"},{"1":"0.31","2":"Good","3":"J","4":"SI2","5":"63.3","6":"58","7":"335","8":"4.34","9":"4.35","10":"2.75"},{"1":"0.24","2":"Very Good","3":"J","4":"VVS2","5":"62.8","6":"57","7":"336","8":"3.94","9":"3.96","10":"2.48"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+.panel[.panel-name[Barplot-Proportion]
+
+.pull-left[
+
+
+
+```r
+ggplot(data = diamonds) +
+  geom_bar(
+    mapping = aes(
+*     x = cut, y = ..prop..,
+      group = 1
+    )
+  )
+```
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_propex1-1.png)
+
+]
+
+]
+
+
+
+
+]
+
+---
+class: top, left
+
+## Attributes in Bar plot
+
+.panelset[
+.panel[.panel-name[Data]
+
+
+```r
+head(diamonds)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["carat"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cut"],"name":[2],"type":["ord"],"align":["right"]},{"label":["color"],"name":[3],"type":["ord"],"align":["right"]},{"label":["clarity"],"name":[4],"type":["ord"],"align":["right"]},{"label":["depth"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["table"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["price"],"name":[7],"type":["int"],"align":["right"]},{"label":["x"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["z"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.23","2":"Ideal","3":"E","4":"SI2","5":"61.5","6":"55","7":"326","8":"3.95","9":"3.98","10":"2.43"},{"1":"0.21","2":"Premium","3":"E","4":"SI1","5":"59.8","6":"61","7":"326","8":"3.89","9":"3.84","10":"2.31"},{"1":"0.23","2":"Good","3":"E","4":"VS1","5":"56.9","6":"65","7":"327","8":"4.05","9":"4.07","10":"2.31"},{"1":"0.29","2":"Premium","3":"I","4":"VS2","5":"62.4","6":"58","7":"334","8":"4.20","9":"4.23","10":"2.63"},{"1":"0.31","2":"Good","3":"J","4":"SI2","5":"63.3","6":"58","7":"335","8":"4.34","9":"4.35","10":"2.75"},{"1":"0.24","2":"Very Good","3":"J","4":"VVS2","5":"62.8","6":"57","7":"336","8":"3.94","9":"3.96","10":"2.48"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+.panel[.panel-name[Color]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(
+    x = cut,
+*   color = cut
+  ))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_cut_colorex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Fill]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(
+    x = cut,
+*   fill = cut
+  ))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_cut_fillex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Position]
+
+- There are few position adjustments in bar graphs:
+
+| Position | Description |
+|---|---|
+|stack   | The objects are stacked one on top of the other.  |
+|dodge   | The objects are placed adjacent to each other.  |
+
+]
+
+
+
+.panel[.panel-name[Data]
+- fruits:
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Apple"},{"1":"1","2":"Apple"},{"1":"1","2":"Apricot"},{"1":"1","2":"Avocado"},{"1":"2","2":"Apple"},{"1":"2","2":"Apple"},{"1":"2","2":"Apple"},{"1":"2","2":"Apricot"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+
+.panel[.panel-name[Stack]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits)+
+  geom_bar(mapping = aes(x=id, fill=name),
+*          position = "stack")
+```
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_stackex-1.png)
+
+]
+]
+
+.panel[.panel-name[Dodge]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits)+
+  geom_bar(mapping = aes(x=id, fill=name),
+*          position = "dodge")
+```
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_dodgeex-1.png)
+
+]
+
+]
+
+
+]
+---
+class: top, left
+
+## Coordinate System
+
+.panelset[
+.panel[.panel-name[Data]
+
+
+```r
+head(fruits)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["name"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Apple","_rn_":"1"},{"1":"1","2":"Apple","_rn_":"2"},{"1":"1","2":"Apricot","_rn_":"3"},{"1":"1","2":"Avocado","_rn_":"4"},{"1":"2","2":"Apple","_rn_":"5"},{"1":"2","2":"Apple","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+.panel[.panel-name[Coord_flip]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = name, fill = name)
+  ) +
+* coord_flip()
+```
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_coord_flipex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Coord_polar]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = name, fill = name)
+  ) +
+* coord_polar()
+```
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_coord_polarex-1.png)
+
+]
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 03 
+
+<div class="countdown" id="timer_6130abde" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+
+---
+class: top, left
+
+## Labeling
+
+
+.panelset[
+.panel[.panel-name[Labels]
+
+We use labs() function to add or modify the labels in ggplot2.
+
+|Types | 
+|---|
+|TITLE |
+|SUBTITLE |
+|CAPTION |
+|TAGS |
+|X-AXIS |
+|Y-AXIS |
+|LEGEND | 
+
+
+]
+
+
+.panel[.panel-name[Title]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+* labs(title = "List of Fruits")
+```
+
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_titleex-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Subtitle]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+  labs(title = "List of Fruits", 
+*      subtitle = "Fruits Subtitle")
+```
+
+
+
+]
+
+.pull-right[
+
+![](figures/fruits_subtitleex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Caption]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+  labs(title = "List of Fruits", 
+       subtitle = "Fruits Subtitle", 
+*      caption = "Fruits Caption")
+```
+
+]
+
+.pull-right[
+
+![](figures/fruits_captionex-1.png)
+
+]
+
+]
+
+
+
+.panel[.panel-name[Tag]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+  labs(title = "List of Fruits", 
+       subtitle = "Fruits Subtitle", 
+       caption = "Fruits Caption",
+*      tag = "Fig: I"
+       )
+```
+
+]
+
+.pull-right[
+
+![](figures/fruits_tagex-1.png)
+
+]
+
+]
+
+
+
+.panel[.panel-name[Axis]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+  labs(
+    title = "List of Fruits",
+    subtitle = "Fruits Subtitle",
+    caption = "Fruits Caption",
+    tag = "Fig: I",
+*   x = "Label for X-axis",
+*   y = "Lable for Y-axis"
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/fruits_axisex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Legend]
+
+.pull-left[
+
+
+```r
+ggplot(data = fruits) +
+  geom_bar(
+    mapping = aes(x = id, fill = name)
+  ) +
+  labs(
+    title = "List of Fruits",
+    subtitle = "Fruits Subtitle",
+    caption = "Fruits Caption",
+    tag = "Fig: I",
+    x = "Label for X-axis", 
+    y = "Lable for Y-axis", 
+*   fill= "Legend title"
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/fruits_legendex-1.png)
+
+]
+
+]
+
+
+]
+
+
+---
+class: top, left
+
+## Your Turn - 04
+
+<div class="countdown" id="timer_6130ad79" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+class: top, left
+
+## Other Geoms
+
+
+.panelset[
+.panel[.panel-name[Data]
+
+| Types |
+|---|
+| Bar chart |  Visualize the distribution of a categorical variable.
+| Histogram | Visualize the distribution of a continuous variable.
+| Box plot | Visualize the distribution of continuous variable with box and whisker plot. 
+
+]
+
+.panel[.panel-name[Histogram]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds) +
+  geom_histogram(mapping = aes(x = depth),
+                binwidth = 0.5)
+```
+
+Here, 
+
+- x is the continuous variable.
+- binwidth is size of the bin (intervals).
+
+]
+
+.pull-right[
+
+![](figures/diamonds_histogramex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Boxplot - I]
+
+.pull-left[
+
+- Box plot containing continuous variable only.
+
+
+```r
+ggplot(data = diamonds) +
+geom_boxplot(mapping = aes(y = depth))
+```
+
+
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_boxplotex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Boxplot - II]
+
+- Box plot with categorical and continuous variables
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds) +
+ geom_boxplot(mapping = 
+                aes(x = cut, y = depth))
+```
+
+Here, 
+
+- Categorical variables can be used to visualize different lines.
+
+
+]
+
+.pull-right[
+
+![](figures/diamonds_boxplot_2ex-1.png)
+
+]
+
+]
+
+
+]
+
+---
+
+## Facets
+
+.panelset[
+.panel[.panel-name[About]
+
+- Facets are used to create subplots from the whole plot using categorical variables.
+- It is used to create subplots from a single categorical variable.
+- It is used to create subplots on the combination of two categorical variables.
+
+
+| Types | Description |
+|---|
+| Facet wrap | Divide the plot into subplot based on 1 categorical variable.
+| Facets grid | Divide the plot into subplot based on 2 categorical variables.
+
+
+]
+
+.panel[.panel-name[Data]
+
+
+```r
+head(blood)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Location"],"name":[1],"type":["int"],"align":["right"]},{"label":["Demand"],"name":[2],"type":["int"],"align":["right"]},{"label":["Types"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Serial_num"],"name":[4],"type":["int"],"align":["right"]},{"label":["Gender"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"10","3":"A+","4":"4","5":"Male","_rn_":"1"},{"1":"2","2":"8","3":"A+","4":"13","5":"Female","_rn_":"2"},{"1":"3","2":"1","3":"AB+","4":"8","5":"Male","_rn_":"3"},{"1":"4","2":"9","3":"A+","4":"6","5":"Female","_rn_":"4"},{"1":"5","2":"6","3":"O+","4":"9","5":"Female","_rn_":"5"},{"1":"6","2":"2","3":"AB+","4":"11","5":"Male","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+
+.panel[.panel-name[Whole Plot]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping = aes(
+      x = Demand, y = Location,
+      color = Types
+    ),
+    size = 4
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/blood_whole_plotex-1.png)
+
+]
+
+]
+
+
+
+.panel[.panel-name[Facet Wrap I]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping = aes(
+      x = Demand, y = Location,
+      color = Types
+    ),
+    size = 4
+  ) +
+* facet_wrap(~Types, nrow = 2)
+```
+
+
+Here, 
+
+- facet_wrap(~subplot_variable, nrow or ncol)
+- nrow or ncol denotes the number of rows or columns used for the display of subplots.
+
+]
+
+.pull-right[
+
+![](figures/blood_facet_wrapex-1.png)
+
+
+]
+
+]
+
+.panel[.panel-name[Facet Wrap - II]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping = aes(
+      x = Demand, y = Location,
+      color = Types
+    ),
+    size = 2
+  ) +
+*   facet_wrap(~Types, ncol=1 )
+```
+
+
+]
+
+.pull-right[
+
+![](figures/blood_facet_wrap_2ex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Facet Grid - I]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping = aes(
+      x = Demand, y = Location,
+      color = Types
+    ),
+    size = 2
+  ) +
+* facet_grid(Types ~ Gender)
+```
+
+- facet_grid(Yaxis_variable~Xaxis_variable)
+
+]
+
+.pull-right[
+
+![](figures/blood_facet_gridex-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Facet Grid - II]
+
+.pull-left[
+
+
+```r
+ggplot(data = blood) +
+  geom_point(
+    mapping = aes(
+      x = Demand, y = Location,
+      color = Types
+    ),
+    size = 2
+  ) +
+* facet_grid(Gender ~ Types)
+```
+
+- facet_grid(Yaxis_variable~Xaxis_variable)
+
+]
+
+.pull-right[
+
+![](figures/blood_facet_grid_2ex-1.png)
+
+]
+
+]
+
+
+
+]
+
+---
+##Themes:
+
+|Themes |Description:|
+|--- |
+|theme_classic() |A classic-looking theme, with x and y axis lines and no gridlines. |
+|theme_minimal() |A minimalistic theme with no background annotations|
+|theme_grey() | Theme with a light grey background and white gridlines|
+|theme_bw()  | A variation on theme_grey() that uses a white background and thin grey grid lines.|
+|theme_void()|A completely empty theme.|
+|theme_linedraw()| A theme with only black lines of various widths on white backgrounds, reminiscent of a line drawing.|
+|theme_light()|similar to theme_linedraw() but with light grey lines and axes, to direct more attention towards the data.|
+|theme_dark()| the dark cousin of theme_light(), with similar line sizes but a dark background. Useful to make thin coloured lines pop out.|
+
+---
+
+##Themes
+
+
+.panelset[
+
+.panel[.panel-name[theme_classic]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds,
+       mapping= aes(x=cut, fill=cut))+
+  geom_bar() + 
+* theme_classic()
+```
+
+
+
+
+]
+
+.pull-right[
+
+![](figures/theme_classicex-1.png)
+
+]
+
+
+
+]
+
+
+
+
+.panel[.panel-name[theme_void]
+
+.pull-left[
+
+
+```r
+ggplot(data = diamonds, 
+       mapping= aes(x=cut, fill=cut))+
+  geom_bar() +
+* theme_void()
+```
+
+
+
+
+]
+
+.pull-right[
+
+![](figures/theme_voidex-1.png)
+
+]
+
+
+
+]
+
+.panel[.panel-name[theme_dark]
+
+.pull-left[
+
+
+```r
+ggplot(data = cars, 
+       mapping= aes(x=speed, y=dist, color=speed),
+       )+
+  geom_line() +
+* theme_dark()
+```
+
+
+
+
+]
+
+.pull-right[
+
+![](figures/theme_darkex-1.png)
+
+]
+
+
+
+]
+
+
+]
+
+
+
+
+---
+class: center, middle
+
+#END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
