@@ -18,7 +18,7 @@ ui<-dashboardPagePlus(
   dashboardBody(tabsetPanel(
           
           tabPanel("Criteria", div(
-            style = "height: 700px;overflow-y: scroll", fluidRow(column(4,uiOutput("dnd_crit_enter")), column(3,uiOutput("submit_btn"))), uiOutput("dnd_ui"), uiOutput("find")
+            style = "height: 700px;overflow-y: scroll", fluidRow(column(4,uiOutput("dnd_crit_enter")), column(3,uiOutput("submit_btn"))), uiOutput("dnd_ui"), fluidRow(column(3,uiOutput("find")), column(2, ""), column(4, uiOutput("rem_all")))
                    ,br(), br(),fluidRow(column(4,uiOutput("sliders")), column(4, downloadButton("save_final", "Save!"))), br()
                    ,
                    tabsetPanel(

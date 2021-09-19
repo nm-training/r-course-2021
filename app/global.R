@@ -12,3 +12,9 @@ library(wordcloud2)
 library(sortable)
 library(stringi)
 library(stringr)
+
+
+
+#cv benchmark
+#keyword save
+#rating after performance

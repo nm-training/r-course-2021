@@ -67,10 +67,23 @@ shinyServer(
                      
                    })
                    
+                   output$rem_all<- renderUI({
+                     
+                     
+                     actionButton("rem_all", "Remove all criteria!")
+                     
+                   })
+                   
                    }
                    )
       
-      observeEvent(input$ec_input, reactive_df$df1_sanjay <- reactive_df$df1_sanjay %>% add_row("filter_criteria" = tolower(input$texts), .after = nrow(reactive_df$df1_sanjay)))
+      
+      #remove_all_crit
+      
+      observeEvent(input$rem_all, reactive_df$df1_sanjay<-data.frame(filter_criteria = character()))
+      
+      ##############
+      observeEvent(input$ec_input, reactive_df$df1_sanjay <- reactive_df$df1_sanjay %>% add_row("filter_criteria" = tolower(str_squish(input$texts)), .after = nrow(reactive_df$df1_sanjay)))
       
       
       
@@ -109,7 +122,7 @@ shinyServer(
           
           
           text1<- c(extract_text((files_sanjayo1())[items,"datapath"]))
-          text2<- strsplit(str_squish(gsub("[^[:alnum:] .@\r\n]", "", text1)), "\r\n")
+          text2<- strsplit(str_squish(gsub("[^[:alnum:] #.@\r\n]", "", text1)), "\r\n")
           text3<- tolower(gsub("\\. ", " ", text2))
           cv<- data.frame(name=1, text= text3)
           srch<- reactive_df$find_val
@@ -147,9 +160,25 @@ shinyServer(
           
           match_percent<- (count/length(srch))*100
           
-          
+          #
           
           hamal$hml <- hamal$hml %>% add_row("match_percent" = match_percent, "name"=(files_sanjayo1())[items,"name"],"keywords" = kwds,  .after = nrow(hamal$hml))
+          ##
+          count=NULL
+          kwds=NULL
+          cv = NULL
+          #exists(deparse(substitute(x)))
+          for(i in seq(length(srch_num_uniq))){
+            
+            assign(paste0("df", as.character(srch_num_uniq[i])),
+                   
+                   NULL
+                   
+            )
+            
+            
+          }
+          
           
         }
         
