@@ -1,0 +1,124 @@
+---
+title: "Reticulate"
+author: "SanjayHamal"
+date: "6/3/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+
+```{r}
+#R code
+
+library(reticulate)
+conda_python()
+
+```
+
+
+```{python}
+
+# python code :
+#Here, A csv file is imported with pandas and a new column is added.
+
+
+import pandas as pd
+import numpy as np
+
+car_python = pd.read_csv("C:/projects_shiny/r machine learning/teach/2021/data/cars_data.csv")
+
+
+car_python
+car_python["Speed_category"]= ""
+
+
+
+
+for i in range(len(car_python)):
+  if car_python.loc[i, "speed"]>0 and car_python.loc[i,"speed"]<=10:
+    car_python.loc[i, "Speed_category"]= "Low speed"
+  elif car_python.loc[i, "speed"]>10 and car_python.loc[i, "speed"]<20:
+    car_python.loc[i, "Speed_category"]= "Medium speed"  
+  else:
+    car_python.loc[i, "Speed_category"]= "High speed"
+
+
+car_python
+
+
+
+```
+
+
+```{r}
+
+R_cars<- py$car_python 
+
+head(R_cars, n=4)
+```
+
+```{r}
+
+source_python("time.py")
+
+for(i in seq(nrow(R_cars))){
+  
+  R_cars[i, "Time"]= 
+    time(R_cars[i, "dist"], R_cars[i, "speed"])
+  
+}
+R_cars
+
+```
+
+
+```{python}
+
+python_cars2 = r.R_cars   
+
+python_cars2.head()
+
+```
+
+
+```{r, fig.retina=5, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+
+my_plt<- ggplot(data = py$python_cars2, aes(speed, dist))+
+  geom_point(aes( color= Speed_category, shape= Speed_category)) +
+  geom_line(color= 'orange', alpha=0.5, linetype='dashed')+
+  geom_smooth(se= F, color='red')
+
+
+my_plt
+```
+
+```{r}
+#Interactive plot:
+library(plotly)
+my_plt2<- my_plt %>% ggplotly()
+my_plt2
+
+
+```
+
+
+
+```{r}
+#3d graph by plotly using python dataframe
+
+my_plot3<-plot_ly(data = py$python_cars2,
+                  x=~speed,
+                  y=~dist,
+                  z=~Time) %>% 
+  add_markers(color= ~Speed_category)
+
+my_plot3
+```
+

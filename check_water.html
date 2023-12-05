@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Case study(Water sample analysis)</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-06-02" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Case study(Water sample analysis)
+### Numeric Mind
+### 2021-06-02
+
+---
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+
+### Water quality varies from place to place, depending on the condition of the source water from which it is drawn and the treatment it receives, but it must meet certain standards before it is concluded safe for drinking purposes.
+### There are many possible sources of contamination, including:
+
+- ####Sewage releases
+- ####Naturally occurring chemicals and minerals (for example, arsenic, radon, uranium)
+- ####Local land use practices (for example, fertilizers, pesticides, livestock, concentrated feeding operations).
+- ####Manufacturing processes (for example, heavy metals, cyanide)
+- ####Malfunctioning on-site wastewater treatment systems (for example, septic systems)
+- ####In addition, drinking water that is not properly treated or that travels through an improperly maintained distribution system (pipes) may also create conditions that increase risk of contamination.
+
+---
+##Importance of water quality testing:
+- ####Water analysis measures the physical, chemical, biological, and microbiological characteristics of water.
+
+- #### Water quality sampling and testing allows managers and owners to establish baseline values, ultimately increasing the knowledge and understanding surrounding the specific issues of a waterbody.
+- #### To prevent health hazards.
+- #### Water-quality monitoring is used to alert us to current, ongoing, and emerging problems.
+- #### Assessments based on monitoring data help law makers and water managers measure effectiveness of water policies, determine if water quality is getting better or worse, and formulate new policies to better protect human health and the environment.
+
+---
+&lt;img src="imgs/water_std.png" width="200%"&gt;
+
+---
+
+## Here, we are going to calculate few water quality parameters:
+
+- #### Total hardness, calcium and magnesium
+- #### Ammonia
+- #### Nitrate
+- #### Fluoride
+- #### Chloride
+- #### Fecal Coliform count and Total coliform count(MPN level)
+
+---
+
+## Hardness of water:
+
+#### The main cause of water hardness is dissolved salts of calcium and magnesium. Moreover the other ions like Strontium, Iron, Barium and Manganese also contribute to hardness of water.
+
+#### The EDTA(Ethylene Diamine Tetraacetic acid) titration method gives good results for control and routine applications.
+
+#### Total hardness(mg/L) and calcium concentration(mg/L) are calculated which then gives the magnesium concentration(mg/L).
+
+---
+## Total hardness
+
+#### Apparatus required:
+- ##### Conical flask
+- ##### Pipette
+- ##### Burette
+- ##### Stand
+- ##### Measuring cylinder
+
+#### Chemicals required:
+- ##### Buffer solution(NH4OH)
+- ##### Indicator: Eriochrome black T
+- ##### Standard EDTA solution
+- ##### Dilute NaOH
+
+---
+#Total hardness
+
+#### Procedure:
+
+- ##### Take certain volume(50ml or 25ml) of test sample of water.
+- ##### Add 2-3 ml 1:1 HCl, boil and neutralize with dilute NaOH after cooling.
+- ##### Add 1-5 ml of NH4OH buffer solution.
+- ##### Add 2-3 drops of Eriochrome black T indicator which turns the sample to wine red color.
+- ##### Note the initial reading in the burette filled with 0.01M EDTA solution and titrate near the end point( Color changes from wine red to blue).
+- ##### Note the final reading of the burette. 
+
+---
+class: center, middle
+&lt;img src="imgs/th_p1.png" width="70%"&gt;
+
+---
+class: center, middle
+
+&lt;img src="imgs/th_p2.png" width="70%"&gt;
+
+---
+class:center, middle
+
+##### Note the volume of 0.01M EDTA consumed(Initial and the final reading).
+&lt;img src="imgs/burette.png" width="8%"&gt;
+---
+
+## Documentation of burette reading(0.01M EDTA) for total hardness:
+
+
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TH_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["TH_initial"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.65","4":"0.00"},{"1":"KTM2","2":"50","3":"0.60","4":"0.00"},{"1":"KTM3","2":"50","3":"1.20","4":"0.65"},{"1":"KTM4","2":"50","3":"3.60","4":"2.90"},{"1":"KTM5","2":"50","3":"4.20","4":"3.60"},{"1":"KTM6","2":"50","3":"4.90","4":"4.20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+## Total hardness
+##### Total hardness of water can be calculated using the formula:
+
+##### Total hardness(mg/L)= 
+
+
+```r
+*A x B x 1000/ sample volume(ml)
+```
+
+
+
+##### where,
+
+#####A= volume of 0.01M EDTA consumed
+
+#####       B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at                 the calcium indicator end point
+#####           [1ml EDTA Disodium(0.01M) is equivalent to 1mg                  Caco3]
+
+---
+class: center, middle
+
+## Perform task 1-3
+
+---
+
+### Task 1:
+
+##### Load 'water_analysis.csv' dataset from your 'data' folder and save it under the variable name: water and observe the dataset.
+
+
+```r
+library(readr)
+water&lt;- read_csv("C:/projects_shiny/r machine learning/teach/2021/data/water_analysis_samples.csv")
+head(water)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TH_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["TH_initial"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Ca_final"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Ca_initial"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Abs_420_nm"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Abs_220_nm"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Abs_275_nm"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Cl_final"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Cl_initial"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["Abs_fluoride"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["fc_10"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["fc_1"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["fc_0.1"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tc_10"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["tc_1"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["tc_0.1"],"name":[18],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.65","4":"0.00","5":"0.30","6":"0.00","7":"0.014","8":"0.160","9":"0.004","10":"3.70","11":"3.40","12":"0.1675","13":"3","14":"0","15":"0","16":"3","17":"2","18":"3"},{"1":"KTM2","2":"50","3":"0.60","4":"0.00","5":"0.90","6":"0.30","7":"0.015","8":"0.138","9":"0.002","10":"0.65","11":"0.45","12":"0.1673","13":"2","14":"0","15":"0","16":"2","17":"0","18":"0"},{"1":"KTM3","2":"50","3":"1.20","4":"0.65","5":"0.60","6":"0.90","7":"0.003","8":"0.140","9":"0.002","10":"4.00","11":"3.70","12":"0.1725","13":"0","14":"0","15":"0","16":"0","17":"0","18":"0"},{"1":"KTM4","2":"50","3":"3.60","4":"2.90","5":"5.35","6":"0.60","7":"0.000","8":"0.060","9":"0.020","10":"1.20","11":"1.00","12":"0.1734","13":"3","14":"3","15":"0","16":"3","17":"3","18":"2"},{"1":"KTM5","2":"50","3":"4.20","4":"3.60","5":"5.70","6":"5.35","7":"0.010","8":"0.054","9":"0.018","10":"1.35","11":"1.20","12":"0.1843","13":"0","14":"0","15":"0","16":"0","17":"1","18":"0"},{"1":"KTM6","2":"50","3":"4.90","4":"4.20","5":"6.00","6":"5.70","7":"0.002","8":"0.045","9":"0.018","10":"1.50","11":"1.35","12":"0.1645","13":"1","14":"1","15":"0","16":"2","17":"1","18":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+### Task 2:
+
+##### Load the tidyverse package and remove unnecessary columns for now: Keep Samples, Volume_sample, TH_final and TH_initial for calculating total hardness.
+
+
+```r
+library(tidyverse)
+total_hardness&lt;- water %&gt;% select(Samples,Volume_sample, TH_final, TH_initial)
+```
+
+---
+
+### Task 3:
+
+- ##### Observe dataset from task 2: the 'Samples' represent the different arbitrary water samples.'Volume_sample' represents the volume of sample(in ml) taken for test.
+
+
+- ##### 'TH_initial' represents the initial record of the volume of the burette containing 0.01M EDTA before titration and "TH_final" represents the final record of the volume of the burette after reaching the end point. The volume of EDTA consumed is the difference between TH_final and TH_initial.
+
+- #####Calculate the total hardness of the water samples given :
+
+#####   - mg CaCO3 equivalent to 1.00 mL EDTA(0.01M) titrant at the calcium indicator end point is 1
+
+
+```r
+Hint: formula for total hardness:
+
+*  A x B x 1000/ sample volume(ml)
+
+
+where,
+
+ A= volume of 0.01M EDTA consumed
+
+ B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+```
+---
+
+
+```r
+total_hardness&lt;- total_hardness %&gt;%
+* mutate(EDTA_consumed = TH_final-TH_initial)
+
+total_hardness&lt;- total_hardness %&gt;%
+* mutate(Total_Hardness= (EDTA_consumed*1*1000)/Volume_sample)
+
+head(total_hardness)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["TH_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["TH_initial"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["EDTA_consumed"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Total_Hardness"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.65","4":"0.00","5":"0.65","6":"13"},{"1":"KTM2","2":"50","3":"0.60","4":"0.00","5":"0.60","6":"12"},{"1":"KTM3","2":"50","3":"1.20","4":"0.65","5":"0.55","6":"11"},{"1":"KTM4","2":"50","3":"3.60","4":"2.90","5":"0.70","6":"14"},{"1":"KTM5","2":"50","3":"4.20","4":"3.60","5":"0.60","6":"12"},{"1":"KTM6","2":"50","3":"4.90","4":"4.20","5":"0.70","6":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+---
+## Calcium:
+
+#### Apparatus required:
+- ##### Conical flask
+- ##### Pipette
+- ##### Burette
+- ##### Stand
+- ##### Measuring cylinder
+
+#### Chemicals required:
+- ##### Indicator: Mureoxide powder/solution
+- ##### Standard EDTA solution
+- ##### Dilute NaOH
+
+---
+## Calcium
+
+#### Procedure:
+
+- ##### Take certain volume(50ml or 25ml) of test sample of water.
+- ##### Add NaOH to increase the pH to 12-13.
+- ##### Add a pinch of mureoxide indicator which turns the sample to red color.
+- ##### Note the initial reading in the burette filled with 0.01M EDTA solution and titrate near the end point( Color changes from red to violet).
+- ##### Note the final reading of the burette. 
+
+---
+class:center, middle
+
+##### Note the volume of 0.01M EDTA consumed(Initial and the final reading).
+&lt;img src="imgs/burette.png" width="8%"&gt;
+---
+
+## Documentation of burette reading(0.01M EDTA) for calcium:
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Ca_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Ca_initial"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.30","4":"0.00"},{"1":"KTM2","2":"50","3":"0.90","4":"0.30"},{"1":"KTM3","2":"50","3":"0.60","4":"0.90"},{"1":"KTM4","2":"50","3":"5.35","4":"0.60"},{"1":"KTM5","2":"50","3":"5.70","4":"5.35"},{"1":"KTM6","2":"50","3":"6.00","4":"5.70"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+---
+
+## Calcium
+##### Calcium content can be calculated using the formula:
+
+##### Calcium(mg/L)= 
+
+
+```r
+A X B X (400.8μg/1000) X 1000/sample volume(ml)
+
+*A x B x 400.8(mg)/ sample volume(ml)
+
+
+[Standard EDTA titrant, 0.0100M, is equivalent to 400.8 μg Ca/1.00 mL]
+```
+
+
+
+##### where,
+
+#####A= volume of 0.01M EDTA consumed
+
+#####       B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+#####           [1ml EDTA Disodium(0.01M) is equivalent to 1mg Caco3]
+
+---
+class: center, middle
+
+## Perform task 4-6
+
+---
+
+## Task 4:
+
+- ##### Observe the water dataset and only keep necessary columns: Samples, VOlume_sample, Ca_final, Ca_initial
+
+
+```r
+calcium&lt;- water %&gt;% select(Samples, Volume_sample, Ca_final, Ca_initial)
+head(calcium)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Ca_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Ca_initial"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.30","4":"0.00"},{"1":"KTM2","2":"50","3":"0.90","4":"0.30"},{"1":"KTM3","2":"50","3":"0.60","4":"0.90"},{"1":"KTM4","2":"50","3":"5.35","4":"0.60"},{"1":"KTM5","2":"50","3":"5.70","4":"5.35"},{"1":"KTM6","2":"50","3":"6.00","4":"5.70"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+## Task5:
+
+- ##### Calculate the EDTA_consumed for calcium: Ca_final- Ca_initial
+
+
+```r
+calcium&lt;- calcium %&gt;% mutate(EDTA_consumed= Ca_final-Ca_initial)
+head(calcium)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Ca_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Ca_initial"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["EDTA_consumed"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.30","4":"0.00","5":"0.30"},{"1":"KTM2","2":"50","3":"0.90","4":"0.30","5":"0.60"},{"1":"KTM3","2":"50","3":"0.60","4":"0.90","5":"-0.30"},{"1":"KTM4","2":"50","3":"5.35","4":"0.60","5":"4.75"},{"1":"KTM5","2":"50","3":"5.70","4":"5.35","5":"0.35"},{"1":"KTM6","2":"50","3":"6.00","4":"5.70","5":"0.30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+ 
+## Task 6:
+
+
+- ##### Calculate the calcium content of the water samples given :
+
+##### - mg CaCO3 equivalent to 1.00 mL EDTA(0.01M) titrant at the            calcium indicator end point is 1
+
+
+- ##### Hint: formula for calcium:
+
+   
+
+
+```r
+*A x B x 400.8/ sample volume(ml)
+```
+
+##### where,
+
+##### A= volume of 0.01M EDTA consumed
+
+##### B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+
+---
+
+## Task 6:
+
+
+```r
+calcium&lt;- calcium %&gt;% mutate(Calcium= (EDTA_consumed*1*400.8)/Volume_sample)
+
+head(calcium)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["Samples"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Volume_sample"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Ca_final"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Ca_initial"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["EDTA_consumed"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Calcium"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"KTM1","2":"50","3":"0.30","4":"0.00","5":"0.30","6":"2.4048"},{"1":"KTM2","2":"50","3":"0.90","4":"0.30","5":"0.60","6":"4.8096"},{"1":"KTM3","2":"50","3":"0.60","4":"0.90","5":"-0.30","6":"-2.4048"},{"1":"KTM4","2":"50","3":"5.35","4":"0.60","5":"4.75","6":"38.0760"},{"1":"KTM5","2":"50","3":"5.70","4":"5.35","5":"0.35","6":"2.8056"},{"1":"KTM6","2":"50","3":"6.00","4":"5.70","5":"0.30","6":"2.4048"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+## Nitrate
+
+- ##### Nitrate concentrations will be determined using the ultraviolet spectrophotometric screening method.
+- ##### The abosorbance will be measured in UV range at wavelengths of 220 nm and 275nm.
+
+- #####Measurements at both wavelengths are used to correct for possible interference by dissolved organic matter.  
+- ##### Dissolved organic matter may be absorbed at 220nm and 275nm while NO3 is only absorbed at 220nm. 
+- ##### The nitrate concentration is calculated by subtracting the absorbance at 275nm from twice the absorbance at 220nm.
+
+---
+## Nitrate
+
+##### Apparatus required
+
+- ##### Volumetric flasks
+- ##### Spectrophotometer
+- ##### Cuvettes
+
+##### Chemicals required:
+
+- ##### 1N HCl
+- ##### Potassium nitrate
+- ##### 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

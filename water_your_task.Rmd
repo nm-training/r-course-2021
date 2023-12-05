@@ -1,0 +1,110 @@
+---
+title: "Water sample analysis"
+author: "SanjayHamal"
+date: "5/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Task 1
+
+```{r}
+# Load 'water_analysis.csv' dataset from your 'data' folder and save it under the variable name: water and observe the dataset. 
+
+#Hint: You can load the package readr to apply read_csv function. Give the path location to water_analysis.csv
+
+library(readr)
+water<- read_csv("C:/projects_shiny/r machine learning/teach/2021/data/water_analysis.csv")
+head(water)
+```
+
+#Task2
+
+```{r}
+#Load the tidyverse package and remove unnecessary columns for now: Keep Samples, Volume_sample, TH_final and TH_initial for calculating total hardness.
+library(tidyverse)
+total_hardness<- water %>% select(Samples,Volume_sample, TH_final, TH_initial)
+head(total_hardness)
+```
+
+
+#Task3
+
+```{r}
+#In task 2, the 'Samples' represent the different arbitrary water samples.
+
+
+# 'Volume_sample' represents the volume of sample(in ml) taken for test .'TH_initial' represents the initial record of the volume of the burette containing 0.01M EDTA before titration and "TH_final" represents the final record of the volume of the burette after reaching the end point. The volume of EDTA consumed is the difference between TH_final and TH_initial.
+
+#Calculate the total hardness of the water samples given :
+
+#-    mg CaCO3 equivalent to 1.00 mL EDTA(0.01M) titrant at the calcium indicator end point is 1
+
+
+#Hint: formula for total hardness:
+
+#     A x B x 1000/ sample volume(ml)
+
+
+# where,
+
+# A= volume of 0.01M EDTA consumed
+
+# B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+
+
+total_hardness<- total_hardness %>% mutate(EDTA_consumed = TH_final-TH_initial)
+
+total_hardness<- total_hardness %>% mutate(Total_Hardness= (EDTA_consumed*1*1000)/Volume_sample)
+
+total_hardness
+```
+
+#Task 4
+
+```{r}
+#Observe the water dataset and only keep necessary columns: Samples, VOlume_sample, Ca_final, Ca_initial
+
+calcium<- water %>% select(Samples, Volume_sample, Ca_final, Ca_initial)
+head(calcium)
+```
+
+#Task 5
+
+```{r}
+# Calculate the EDTA_consumed for calcium: Ca_final- Ca_initial
+calcium<- calcium %>% mutate(EDTA_consumed= Ca_final-Ca_initial)
+head(calcium)
+```
+
+#Task6
+
+```{r}
+
+
+#Calculate the calcium content of the water samples given :
+
+#-    mg CaCO3 equivalent to 1.00 mL EDTA(0.01M) titrant at the calcium indicator end point is 1
+
+
+#Hint: formula for calcium:
+
+#     A x B x 400.8/ sample volume(ml)
+
+
+# where,
+
+# A= volume of 0.01M EDTA consumed
+
+# B=  mg CaCO3 equivalent to 1.00 mL EDTA titrant at the calcium indicator end point
+
+
+calcium<- calcium %>% mutate(Calcium= (EDTA_consumed*1*400.8)/Volume_sample)
+
+head(calcium)
+```
+
+

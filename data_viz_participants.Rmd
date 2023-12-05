@@ -1,0 +1,167 @@
+---
+title: "Data visualization"
+author: "SanjayHamal"
+date: "5/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+#Task1:
+```{r, warning=FALSE, message=FALSE}
+#Run this code to observe the dataset
+
+movies = readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-23/movie_profit.csv')
+head(movies)
+
+```
+#Task2
+```{r}
+#Load the tidyverse package here:
+
+
+```
+
+#Task3
+```{r}
+#Insert [movies] dataset in ggplot2 syntax:
+
+ggplot(data =   )
+
+```
+
+#Task4:
+```{r}
+#Map domestic_gross to x-axis, worldwide_gross to y-axis
+#Set the color of point to blue
+#Set the shape of point to any points(1 or 2 or...24)[Your choice]
+#Set the size of points to 5
+ggplot(data = movies)+
+  geom_point(mapping = aes(x=        , y=        ),
+             color="",
+             shape= ,
+              size= )
+```
+
+#Task5:
+```{r}
+#Set the color aesthetics to genre and see what happens:
+ggplot(data = movies)+
+ geom_point(mapping = aes(x=domestic_gross,
+                         y=worldwide_gross,
+                         color=           )
+            )
+             
+              
+```
+
+#Task6:
+
+```{r}
+#Apply the aesthetics globally such that:  production_budget is mapped to x-axis and domestic_gross is mapped to y-axis for all the plots.
+
+# Also, correct the positions of "+" sign:
+
+#hint: ******ggplot(data=----, mapping = aes(x=----, y=-----))******
+
+ggplot(data = movies,       )
+  +geom_point()
+  +geom_smooth()
+
+
+
+```
+#Task7
+```{r}
+#####Change the color of points in geom_point to 'orange'
+#####Change the linetype in geom_smooth to 'dashed'.
+
+#####hint: linetype= "type_of_line" changes the linetype and color= "desired_color" changes the color.
+
+ggplot(data = movies,mapping=aes(x=production_budget,y=domestic_gross))+
+  geom_point()+
+  geom_smooth()
+
+```
+
+#Task8
+```{r}
+#####Create a bar plot to visualize the counts of genre and also, fill the bar plot according to mpaa_rating:
+
+ggplot(data = )+
+  geom_bar(aes(x=      , fill=     ))
+```
+
+#Task9:
+```{r}
+#Task 8 creates a bar_chart with default: position='stack'.
+#Copy the ggplot code from task8 and modify the position to      'dodge' to create a dodged bar graph.
+#Hint: the dodge position should be mentioned outside aes()
+
+
+
+
+```
+#Task10
+```{r}
+##### Label the graph from task9 with with labs(   )
+##### Give the title: Movie genre with mpaa rating
+##### Give the subtitle: (1946-2016)
+##### Give the caption: Source[tidytuesday]
+##### Label x-axis as: Different movie genre
+##### Label y-axis as: Total number of movies released
+##### Label the legend as: Movie ratings
+
+```
+
+#Task 11
+
+```{r}
+#Create a box plot for worldwide_gross.
+ 
+
+
+ggplot(data = movies   ) +
+ geom_boxplot(mapping = 
+                aes(y = worldwide_gross))
+```
+#Task 12
+
+```{r}
+#Create a box plot of worldwide_gross for each genre.
+
+ggplot(data =         ) +
+ geom_boxplot(mapping = 
+                aes(x=         , y = worldwide_gross))
+```
+
+#Task 13
+
+```{r}
+gross<- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#Here gross is the scatter plot between production budget and domestic gross.
+
+
+#Create a subplot with 2 columns based on genre:
+gross+ facet_wrap(facets = ~  , ncol =   )
+
+```
+#Task 14
+
+```{r}
+gross<- ggplot(data = movies, aes(x= production_budget, y=domestic_gross))+
+  geom_point()
+
+#gross is the scatter plot between production budget and domestic gross.
+
+#Create a subplot based on genre and mpaa_rating.
+
+
+gross+facet_grid(genre~        )
+```
+

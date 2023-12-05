@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data manipulation tasks(Your turn)</title>
+    <meta charset="utf-8" />
+    <meta name="date" content="2021-05-19" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data manipulation tasks(Your turn)
+### Numeric Mind
+### 2021-05-19
+
+---
+
+
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+
+##Your turn 01(Q)
+
+- Import a csv file, **gapminder**, from data folder. 
+
+---
+
+##Your turn 01(Ans)
+
+
+```r
+gapminder &lt;- read_csv("./data/gapminder.csv")
+
+head(gapminder, 4)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["continent"],"name":[2],"type":["chr"],"align":["left"]},{"label":["year"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["lifeExp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["pop"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gdpPercap"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"Asia","3":"1952","4":"28.801","5":"8425333","6":"779.4453"},{"1":"Afghanistan","2":"Asia","3":"1957","4":"30.332","5":"9240934","6":"820.8530"},{"1":"Afghanistan","2":"Asia","3":"1962","4":"31.997","5":"10267083","6":"853.1007"},{"1":"Afghanistan","2":"Asia","3":"1967","4":"34.020","5":"11537966","6":"836.1971"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+##Your turn 02(Q)
+
+- Display country-wise, annual life expectancy of Europe.
+
+---
+
+## Your turn 02(Ans)
+
+
+```r
+gapminder %&gt;% 
+  filter(continent == "Europe") %&gt;% 
+  select(year, country, lifeExp)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["lifeExp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Albania","3":"55.230"},{"1":"1957","2":"Albania","3":"59.280"},{"1":"1962","2":"Albania","3":"64.820"},{"1":"1967","2":"Albania","3":"66.220"},{"1":"1972","2":"Albania","3":"67.690"},{"1":"1977","2":"Albania","3":"68.930"},{"1":"1982","2":"Albania","3":"70.420"},{"1":"1987","2":"Albania","3":"72.000"},{"1":"1992","2":"Albania","3":"71.581"},{"1":"1997","2":"Albania","3":"72.950"},{"1":"2002","2":"Albania","3":"75.651"},{"1":"2007","2":"Albania","3":"76.423"},{"1":"1952","2":"Austria","3":"66.800"},{"1":"1957","2":"Austria","3":"67.480"},{"1":"1962","2":"Austria","3":"69.540"},{"1":"1967","2":"Austria","3":"70.140"},{"1":"1972","2":"Austria","3":"70.630"},{"1":"1977","2":"Austria","3":"72.170"},{"1":"1982","2":"Austria","3":"73.180"},{"1":"1987","2":"Austria","3":"74.940"},{"1":"1992","2":"Austria","3":"76.040"},{"1":"1997","2":"Austria","3":"77.510"},{"1":"2002","2":"Austria","3":"78.980"},{"1":"2007","2":"Austria","3":"79.829"},{"1":"1952","2":"Belgium","3":"68.000"},{"1":"1957","2":"Belgium","3":"69.240"},{"1":"1962","2":"Belgium","3":"70.250"},{"1":"1967","2":"Belgium","3":"70.940"},{"1":"1972","2":"Belgium","3":"71.440"},{"1":"1977","2":"Belgium","3":"72.800"},{"1":"1982","2":"Belgium","3":"73.930"},{"1":"1987","2":"Belgium","3":"75.350"},{"1":"1992","2":"Belgium","3":"76.460"},{"1":"1997","2":"Belgium","3":"77.530"},{"1":"2002","2":"Belgium","3":"78.320"},{"1":"2007","2":"Belgium","3":"79.441"},{"1":"1952","2":"Bosnia and Herzegovina","3":"53.820"},{"1":"1957","2":"Bosnia and Herzegovina","3":"58.450"},{"1":"1962","2":"Bosnia and Herzegovina","3":"61.930"},{"1":"1967","2":"Bosnia and Herzegovina","3":"64.790"},{"1":"1972","2":"Bosnia and Herzegovina","3":"67.450"},{"1":"1977","2":"Bosnia and Herzegovina","3":"69.860"},{"1":"1982","2":"Bosnia and Herzegovina","3":"70.690"},{"1":"1987","2":"Bosnia and Herzegovina","3":"71.140"},{"1":"1992","2":"Bosnia and Herzegovina","3":"72.178"},{"1":"1997","2":"Bosnia and Herzegovina","3":"73.244"},{"1":"2002","2":"Bosnia and Herzegovina","3":"74.090"},{"1":"2007","2":"Bosnia and Herzegovina","3":"74.852"},{"1":"1952","2":"Bulgaria","3":"59.600"},{"1":"1957","2":"Bulgaria","3":"66.610"},{"1":"1962","2":"Bulgaria","3":"69.510"},{"1":"1967","2":"Bulgaria","3":"70.420"},{"1":"1972","2":"Bulgaria","3":"70.900"},{"1":"1977","2":"Bulgaria","3":"70.810"},{"1":"1982","2":"Bulgaria","3":"71.080"},{"1":"1987","2":"Bulgaria","3":"71.340"},{"1":"1992","2":"Bulgaria","3":"71.190"},{"1":"1997","2":"Bulgaria","3":"70.320"},{"1":"2002","2":"Bulgaria","3":"72.140"},{"1":"2007","2":"Bulgaria","3":"73.005"},{"1":"1952","2":"Croatia","3":"61.210"},{"1":"1957","2":"Croatia","3":"64.770"},{"1":"1962","2":"Croatia","3":"67.130"},{"1":"1967","2":"Croatia","3":"68.500"},{"1":"1972","2":"Croatia","3":"69.610"},{"1":"1977","2":"Croatia","3":"70.640"},{"1":"1982","2":"Croatia","3":"70.460"},{"1":"1987","2":"Croatia","3":"71.520"},{"1":"1992","2":"Croatia","3":"72.527"},{"1":"1997","2":"Croatia","3":"73.680"},{"1":"2002","2":"Croatia","3":"74.876"},{"1":"2007","2":"Croatia","3":"75.748"},{"1":"1952","2":"Czech Republic","3":"66.870"},{"1":"1957","2":"Czech Republic","3":"69.030"},{"1":"1962","2":"Czech Republic","3":"69.900"},{"1":"1967","2":"Czech Republic","3":"70.380"},{"1":"1972","2":"Czech Republic","3":"70.290"},{"1":"1977","2":"Czech Republic","3":"70.710"},{"1":"1982","2":"Czech Republic","3":"70.960"},{"1":"1987","2":"Czech Republic","3":"71.580"},{"1":"1992","2":"Czech Republic","3":"72.400"},{"1":"1997","2":"Czech Republic","3":"74.010"},{"1":"2002","2":"Czech Republic","3":"75.510"},{"1":"2007","2":"Czech Republic","3":"76.486"},{"1":"1952","2":"Denmark","3":"70.780"},{"1":"1957","2":"Denmark","3":"71.810"},{"1":"1962","2":"Denmark","3":"72.350"},{"1":"1967","2":"Denmark","3":"72.960"},{"1":"1972","2":"Denmark","3":"73.470"},{"1":"1977","2":"Denmark","3":"74.690"},{"1":"1982","2":"Denmark","3":"74.630"},{"1":"1987","2":"Denmark","3":"74.800"},{"1":"1992","2":"Denmark","3":"75.330"},{"1":"1997","2":"Denmark","3":"76.110"},{"1":"2002","2":"Denmark","3":"77.180"},{"1":"2007","2":"Denmark","3":"78.332"},{"1":"1952","2":"Finland","3":"66.550"},{"1":"1957","2":"Finland","3":"67.490"},{"1":"1962","2":"Finland","3":"68.750"},{"1":"1967","2":"Finland","3":"69.830"},{"1":"1972","2":"Finland","3":"70.870"},{"1":"1977","2":"Finland","3":"72.520"},{"1":"1982","2":"Finland","3":"74.550"},{"1":"1987","2":"Finland","3":"74.830"},{"1":"1992","2":"Finland","3":"75.700"},{"1":"1997","2":"Finland","3":"77.130"},{"1":"2002","2":"Finland","3":"78.370"},{"1":"2007","2":"Finland","3":"79.313"},{"1":"1952","2":"France","3":"67.410"},{"1":"1957","2":"France","3":"68.930"},{"1":"1962","2":"France","3":"70.510"},{"1":"1967","2":"France","3":"71.550"},{"1":"1972","2":"France","3":"72.380"},{"1":"1977","2":"France","3":"73.830"},{"1":"1982","2":"France","3":"74.890"},{"1":"1987","2":"France","3":"76.340"},{"1":"1992","2":"France","3":"77.460"},{"1":"1997","2":"France","3":"78.640"},{"1":"2002","2":"France","3":"79.590"},{"1":"2007","2":"France","3":"80.657"},{"1":"1952","2":"Germany","3":"67.500"},{"1":"1957","2":"Germany","3":"69.100"},{"1":"1962","2":"Germany","3":"70.300"},{"1":"1967","2":"Germany","3":"70.800"},{"1":"1972","2":"Germany","3":"71.000"},{"1":"1977","2":"Germany","3":"72.500"},{"1":"1982","2":"Germany","3":"73.800"},{"1":"1987","2":"Germany","3":"74.847"},{"1":"1992","2":"Germany","3":"76.070"},{"1":"1997","2":"Germany","3":"77.340"},{"1":"2002","2":"Germany","3":"78.670"},{"1":"2007","2":"Germany","3":"79.406"},{"1":"1952","2":"Greece","3":"65.860"},{"1":"1957","2":"Greece","3":"67.860"},{"1":"1962","2":"Greece","3":"69.510"},{"1":"1967","2":"Greece","3":"71.000"},{"1":"1972","2":"Greece","3":"72.340"},{"1":"1977","2":"Greece","3":"73.680"},{"1":"1982","2":"Greece","3":"75.240"},{"1":"1987","2":"Greece","3":"76.670"},{"1":"1992","2":"Greece","3":"77.030"},{"1":"1997","2":"Greece","3":"77.869"},{"1":"2002","2":"Greece","3":"78.256"},{"1":"2007","2":"Greece","3":"79.483"},{"1":"1952","2":"Hungary","3":"64.030"},{"1":"1957","2":"Hungary","3":"66.410"},{"1":"1962","2":"Hungary","3":"67.960"},{"1":"1967","2":"Hungary","3":"69.500"},{"1":"1972","2":"Hungary","3":"69.760"},{"1":"1977","2":"Hungary","3":"69.950"},{"1":"1982","2":"Hungary","3":"69.390"},{"1":"1987","2":"Hungary","3":"69.580"},{"1":"1992","2":"Hungary","3":"69.170"},{"1":"1997","2":"Hungary","3":"71.040"},{"1":"2002","2":"Hungary","3":"72.590"},{"1":"2007","2":"Hungary","3":"73.338"},{"1":"1952","2":"Iceland","3":"72.490"},{"1":"1957","2":"Iceland","3":"73.470"},{"1":"1962","2":"Iceland","3":"73.680"},{"1":"1967","2":"Iceland","3":"73.730"},{"1":"1972","2":"Iceland","3":"74.460"},{"1":"1977","2":"Iceland","3":"76.110"},{"1":"1982","2":"Iceland","3":"76.990"},{"1":"1987","2":"Iceland","3":"77.230"},{"1":"1992","2":"Iceland","3":"78.770"},{"1":"1997","2":"Iceland","3":"78.950"},{"1":"2002","2":"Iceland","3":"80.500"},{"1":"2007","2":"Iceland","3":"81.757"},{"1":"1952","2":"Ireland","3":"66.910"},{"1":"1957","2":"Ireland","3":"68.900"},{"1":"1962","2":"Ireland","3":"70.290"},{"1":"1967","2":"Ireland","3":"71.080"},{"1":"1972","2":"Ireland","3":"71.280"},{"1":"1977","2":"Ireland","3":"72.030"},{"1":"1982","2":"Ireland","3":"73.100"},{"1":"1987","2":"Ireland","3":"74.360"},{"1":"1992","2":"Ireland","3":"75.467"},{"1":"1997","2":"Ireland","3":"76.122"},{"1":"2002","2":"Ireland","3":"77.783"},{"1":"2007","2":"Ireland","3":"78.885"},{"1":"1952","2":"Italy","3":"65.940"},{"1":"1957","2":"Italy","3":"67.810"},{"1":"1962","2":"Italy","3":"69.240"},{"1":"1967","2":"Italy","3":"71.060"},{"1":"1972","2":"Italy","3":"72.190"},{"1":"1977","2":"Italy","3":"73.480"},{"1":"1982","2":"Italy","3":"74.980"},{"1":"1987","2":"Italy","3":"76.420"},{"1":"1992","2":"Italy","3":"77.440"},{"1":"1997","2":"Italy","3":"78.820"},{"1":"2002","2":"Italy","3":"80.240"},{"1":"2007","2":"Italy","3":"80.546"},{"1":"1952","2":"Montenegro","3":"59.164"},{"1":"1957","2":"Montenegro","3":"61.448"},{"1":"1962","2":"Montenegro","3":"63.728"},{"1":"1967","2":"Montenegro","3":"67.178"},{"1":"1972","2":"Montenegro","3":"70.636"},{"1":"1977","2":"Montenegro","3":"73.066"},{"1":"1982","2":"Montenegro","3":"74.101"},{"1":"1987","2":"Montenegro","3":"74.865"},{"1":"1992","2":"Montenegro","3":"75.435"},{"1":"1997","2":"Montenegro","3":"75.445"},{"1":"2002","2":"Montenegro","3":"73.981"},{"1":"2007","2":"Montenegro","3":"74.543"},{"1":"1952","2":"Netherlands","3":"72.130"},{"1":"1957","2":"Netherlands","3":"72.990"},{"1":"1962","2":"Netherlands","3":"73.230"},{"1":"1967","2":"Netherlands","3":"73.820"},{"1":"1972","2":"Netherlands","3":"73.750"},{"1":"1977","2":"Netherlands","3":"75.240"},{"1":"1982","2":"Netherlands","3":"76.050"},{"1":"1987","2":"Netherlands","3":"76.830"},{"1":"1992","2":"Netherlands","3":"77.420"},{"1":"1997","2":"Netherlands","3":"78.030"},{"1":"2002","2":"Netherlands","3":"78.530"},{"1":"2007","2":"Netherlands","3":"79.762"},{"1":"1952","2":"Norway","3":"72.670"},{"1":"1957","2":"Norway","3":"73.440"},{"1":"1962","2":"Norway","3":"73.470"},{"1":"1967","2":"Norway","3":"74.080"},{"1":"1972","2":"Norway","3":"74.340"},{"1":"1977","2":"Norway","3":"75.370"},{"1":"1982","2":"Norway","3":"75.970"},{"1":"1987","2":"Norway","3":"75.890"},{"1":"1992","2":"Norway","3":"77.320"},{"1":"1997","2":"Norway","3":"78.320"},{"1":"2002","2":"Norway","3":"79.050"},{"1":"2007","2":"Norway","3":"80.196"},{"1":"1952","2":"Poland","3":"61.310"},{"1":"1957","2":"Poland","3":"65.770"},{"1":"1962","2":"Poland","3":"67.640"},{"1":"1967","2":"Poland","3":"69.610"},{"1":"1972","2":"Poland","3":"70.850"},{"1":"1977","2":"Poland","3":"70.670"},{"1":"1982","2":"Poland","3":"71.320"},{"1":"1987","2":"Poland","3":"70.980"},{"1":"1992","2":"Poland","3":"70.990"},{"1":"1997","2":"Poland","3":"72.750"},{"1":"2002","2":"Poland","3":"74.670"},{"1":"2007","2":"Poland","3":"75.563"},{"1":"1952","2":"Portugal","3":"59.820"},{"1":"1957","2":"Portugal","3":"61.510"},{"1":"1962","2":"Portugal","3":"64.390"},{"1":"1967","2":"Portugal","3":"66.600"},{"1":"1972","2":"Portugal","3":"69.260"},{"1":"1977","2":"Portugal","3":"70.410"},{"1":"1982","2":"Portugal","3":"72.770"},{"1":"1987","2":"Portugal","3":"74.060"},{"1":"1992","2":"Portugal","3":"74.860"},{"1":"1997","2":"Portugal","3":"75.970"},{"1":"2002","2":"Portugal","3":"77.290"},{"1":"2007","2":"Portugal","3":"78.098"},{"1":"1952","2":"Romania","3":"61.050"},{"1":"1957","2":"Romania","3":"64.100"},{"1":"1962","2":"Romania","3":"66.800"},{"1":"1967","2":"Romania","3":"66.800"},{"1":"1972","2":"Romania","3":"69.210"},{"1":"1977","2":"Romania","3":"69.460"},{"1":"1982","2":"Romania","3":"69.660"},{"1":"1987","2":"Romania","3":"69.530"},{"1":"1992","2":"Romania","3":"69.360"},{"1":"1997","2":"Romania","3":"69.720"},{"1":"2002","2":"Romania","3":"71.322"},{"1":"2007","2":"Romania","3":"72.476"},{"1":"1952","2":"Serbia","3":"57.996"},{"1":"1957","2":"Serbia","3":"61.685"},{"1":"1962","2":"Serbia","3":"64.531"},{"1":"1967","2":"Serbia","3":"66.914"},{"1":"1972","2":"Serbia","3":"68.700"},{"1":"1977","2":"Serbia","3":"70.300"},{"1":"1982","2":"Serbia","3":"70.162"},{"1":"1987","2":"Serbia","3":"71.218"},{"1":"1992","2":"Serbia","3":"71.659"},{"1":"1997","2":"Serbia","3":"72.232"},{"1":"2002","2":"Serbia","3":"73.213"},{"1":"2007","2":"Serbia","3":"74.002"},{"1":"1952","2":"Slovak Republic","3":"64.360"},{"1":"1957","2":"Slovak Republic","3":"67.450"},{"1":"1962","2":"Slovak Republic","3":"70.330"},{"1":"1967","2":"Slovak Republic","3":"70.980"},{"1":"1972","2":"Slovak Republic","3":"70.350"},{"1":"1977","2":"Slovak Republic","3":"70.450"},{"1":"1982","2":"Slovak Republic","3":"70.800"},{"1":"1987","2":"Slovak Republic","3":"71.080"},{"1":"1992","2":"Slovak Republic","3":"71.380"},{"1":"1997","2":"Slovak Republic","3":"72.710"},{"1":"2002","2":"Slovak Republic","3":"73.800"},{"1":"2007","2":"Slovak Republic","3":"74.663"},{"1":"1952","2":"Slovenia","3":"65.570"},{"1":"1957","2":"Slovenia","3":"67.850"},{"1":"1962","2":"Slovenia","3":"69.150"},{"1":"1967","2":"Slovenia","3":"69.180"},{"1":"1972","2":"Slovenia","3":"69.820"},{"1":"1977","2":"Slovenia","3":"70.970"},{"1":"1982","2":"Slovenia","3":"71.063"},{"1":"1987","2":"Slovenia","3":"72.250"},{"1":"1992","2":"Slovenia","3":"73.640"},{"1":"1997","2":"Slovenia","3":"75.130"},{"1":"2002","2":"Slovenia","3":"76.660"},{"1":"2007","2":"Slovenia","3":"77.926"},{"1":"1952","2":"Spain","3":"64.940"},{"1":"1957","2":"Spain","3":"66.660"},{"1":"1962","2":"Spain","3":"69.690"},{"1":"1967","2":"Spain","3":"71.440"},{"1":"1972","2":"Spain","3":"73.060"},{"1":"1977","2":"Spain","3":"74.390"},{"1":"1982","2":"Spain","3":"76.300"},{"1":"1987","2":"Spain","3":"76.900"},{"1":"1992","2":"Spain","3":"77.570"},{"1":"1997","2":"Spain","3":"78.770"},{"1":"2002","2":"Spain","3":"79.780"},{"1":"2007","2":"Spain","3":"80.941"},{"1":"1952","2":"Sweden","3":"71.860"},{"1":"1957","2":"Sweden","3":"72.490"},{"1":"1962","2":"Sweden","3":"73.370"},{"1":"1967","2":"Sweden","3":"74.160"},{"1":"1972","2":"Sweden","3":"74.720"},{"1":"1977","2":"Sweden","3":"75.440"},{"1":"1982","2":"Sweden","3":"76.420"},{"1":"1987","2":"Sweden","3":"77.190"},{"1":"1992","2":"Sweden","3":"78.160"},{"1":"1997","2":"Sweden","3":"79.390"},{"1":"2002","2":"Sweden","3":"80.040"},{"1":"2007","2":"Sweden","3":"80.884"},{"1":"1952","2":"Switzerland","3":"69.620"},{"1":"1957","2":"Switzerland","3":"70.560"},{"1":"1962","2":"Switzerland","3":"71.320"},{"1":"1967","2":"Switzerland","3":"72.770"},{"1":"1972","2":"Switzerland","3":"73.780"},{"1":"1977","2":"Switzerland","3":"75.390"},{"1":"1982","2":"Switzerland","3":"76.210"},{"1":"1987","2":"Switzerland","3":"77.410"},{"1":"1992","2":"Switzerland","3":"78.030"},{"1":"1997","2":"Switzerland","3":"79.370"},{"1":"2002","2":"Switzerland","3":"80.620"},{"1":"2007","2":"Switzerland","3":"81.701"},{"1":"1952","2":"Turkey","3":"43.585"},{"1":"1957","2":"Turkey","3":"48.079"},{"1":"1962","2":"Turkey","3":"52.098"},{"1":"1967","2":"Turkey","3":"54.336"},{"1":"1972","2":"Turkey","3":"57.005"},{"1":"1977","2":"Turkey","3":"59.507"},{"1":"1982","2":"Turkey","3":"61.036"},{"1":"1987","2":"Turkey","3":"63.108"},{"1":"1992","2":"Turkey","3":"66.146"},{"1":"1997","2":"Turkey","3":"68.835"},{"1":"2002","2":"Turkey","3":"70.845"},{"1":"2007","2":"Turkey","3":"71.777"},{"1":"1952","2":"United Kingdom","3":"69.180"},{"1":"1957","2":"United Kingdom","3":"70.420"},{"1":"1962","2":"United Kingdom","3":"70.760"},{"1":"1967","2":"United Kingdom","3":"71.360"},{"1":"1972","2":"United Kingdom","3":"72.010"},{"1":"1977","2":"United Kingdom","3":"72.760"},{"1":"1982","2":"United Kingdom","3":"74.040"},{"1":"1987","2":"United Kingdom","3":"75.007"},{"1":"1992","2":"United Kingdom","3":"76.420"},{"1":"1997","2":"United Kingdom","3":"77.218"},{"1":"2002","2":"United Kingdom","3":"78.471"},{"1":"2007","2":"United Kingdom","3":"79.425"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+## Your turn 03(Q)
+
+- Rank all **Asian** countries by life expectancy in year **2007**.
+
+---
+
+## Your turn 03(Ans)
+
+
+```r
+gapminder %&gt;% 
+  filter(
+    continent == "Asia", 
+    year == 2007
+  ) %&gt;% 
+  select(country, lifeExp) %&gt;% 
+  mutate(rank = min_rank(lifeExp))
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["lifeExp"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"43.828","3":"1"},{"1":"Bahrain","2":"75.635","3":"25"},{"1":"Bangladesh","2":"64.062","3":"7"},{"1":"Cambodia","2":"59.723","3":"3"},{"1":"China","2":"72.961","3":"20"},{"1":"Hong Kong, China","2":"82.208","3":"32"},{"1":"India","2":"64.698","3":"8"},{"1":"Indonesia","2":"70.650","3":"13"},{"1":"Iran","2":"70.964","3":"14"},{"1":"Iraq","2":"59.545","3":"2"},{"1":"Israel","2":"80.745","3":"31"},{"1":"Japan","2":"82.603","3":"33"},{"1":"Jordan","2":"72.535","3":"18"},{"1":"Korea, Dem. Rep.","2":"67.297","3":"11"},{"1":"Korea, Rep.","2":"78.623","3":"29"},{"1":"Kuwait","2":"77.588","3":"27"},{"1":"Lebanon","2":"71.993","3":"16"},{"1":"Malaysia","2":"74.241","3":"23"},{"1":"Mongolia","2":"66.803","3":"10"},{"1":"Myanmar","2":"62.069","3":"4"},{"1":"Nepal","2":"63.785","3":"6"},{"1":"Oman","2":"75.640","3":"26"},{"1":"Pakistan","2":"65.483","3":"9"},{"1":"Philippines","2":"71.688","3":"15"},{"1":"Saudi Arabia","2":"72.777","3":"19"},{"1":"Singapore","2":"79.972","3":"30"},{"1":"Sri Lanka","2":"72.396","3":"17"},{"1":"Syria","2":"74.143","3":"22"},{"1":"Taiwan","2":"78.400","3":"28"},{"1":"Thailand","2":"70.616","3":"12"},{"1":"Vietnam","2":"74.249","3":"24"},{"1":"West Bank and Gaza","2":"73.422","3":"21"},{"1":"Yemen, Rep.","2":"62.698","3":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+## Your turn 04(Q)
+
+- Find countries in Asia with lowly ranked gdpPercap in 1992.
+
+---
+
+## Your turn 04(Ans)
+
+
+```r
+gapminder %&gt;% 
+  filter(
+    continent == "Asia", 
+    year == 1992
+  ) %&gt;% 
+  select(country, gdpPercap) %&gt;% 
+  mutate(
+    rank = min_rank(gdpPercap)
+  ) %&gt;% 
+  arrange(rank)
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["rank"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Myanmar","2":"347.0000","3":"1"},{"1":"Afghanistan","2":"649.3414","3":"2"},{"1":"Cambodia","2":"682.3032","3":"3"},{"1":"Bangladesh","2":"837.8102","3":"4"},{"1":"Nepal","2":"897.7404","3":"5"},{"1":"Vietnam","2":"989.0231","3":"6"},{"1":"India","2":"1164.4068","3":"7"},{"1":"China","2":"1655.7842","3":"8"},{"1":"Mongolia","2":"1785.4020","3":"9"},{"1":"Yemen, Rep.","2":"1879.4967","3":"10"},{"1":"Pakistan","2":"1971.8295","3":"11"},{"1":"Sri Lanka","2":"2153.7392","3":"12"},{"1":"Philippines","2":"2279.3240","3":"13"},{"1":"Indonesia","2":"2383.1409","3":"14"},{"1":"Syria","2":"3340.5428","3":"15"},{"1":"Jordan","2":"3431.5936","3":"16"},{"1":"Korea, Dem. Rep.","2":"3726.0635","3":"17"},{"1":"Iraq","2":"3745.6407","3":"18"},{"1":"Thailand","2":"4616.8965","3":"19"},{"1":"West Bank and Gaza","2":"6017.6548","3":"20"},{"1":"Lebanon","2":"6890.8069","3":"21"},{"1":"Iran","2":"7235.6532","3":"22"},{"1":"Malaysia","2":"7277.9128","3":"23"},{"1":"Korea, Rep.","2":"12104.2787","3":"24"},{"1":"Taiwan","2":"15215.6579","3":"25"},{"1":"Israel","2":"18051.5225","3":"26"},{"1":"Oman","2":"18616.7069","3":"27"},{"1":"Bahrain","2":"19035.5792","3":"28"},{"1":"Hong Kong, China","2":"24757.6030","3":"29"},{"1":"Singapore","2":"24769.8912","3":"30"},{"1":"Saudi Arabia","2":"24841.6178","3":"31"},{"1":"Japan","2":"26824.8951","3":"32"},{"1":"Kuwait","2":"34932.9196","3":"33"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+---
+
+## Your turn 05(Q)
+
+- Summarize mean (population and gdpPerCap) by continent in year 2007
+
+---
+
+## Your turn 05(Ans)
+
+
+```r
+gapminder %&gt;% 
+  filter(year == 2007) %&gt;% 
+  group_by(continent) %&gt;% 
+   summarize(mean_pop = mean(pop), 
+            mean_gdp = mean(gdpPercap) 
+            )
+```
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["continent"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mean_pop"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["mean_gdp"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Africa","2":"17875763","3":"3089.033"},{"1":"Americas","2":"35954847","3":"11003.032"},{"1":"Asia","2":"115513752","3":"12473.027"},{"1":"Europe","2":"19536618","3":"25054.482"},{"1":"Oceania","2":"12274974","3":"29810.188"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
