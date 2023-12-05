@@ -1,0 +1,332 @@
+---
+title: "advanced_data_viz_participants"
+author: "SanjayHamal"
+date: "9/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(tidyverse)
+food<- read_csv("./data/kalimati.csv")
+
+expensive_food_2021<- food %>% filter(Date>=as.Date("2021-01-01")) %>% group_by(Commodity, Unit) %>% summarise(Mean_price= mean(Average)) %>% arrange(desc(Mean_price)) %>% head(n=15)
+
+Lowest_priced_food<- food %>% mutate(Year=lubridate::year(Date), Unit=tolower(Unit)) %>%filter(Unit == "kg") %>%  group_by(Year) %>% filter(Average== min(Average)) %>%select(-Date, -SN) %>%  distinct()
+
+tomato_price<- food %>% mutate(Year=lubridate::year(Date)) %>% filter(Commodity=="Tomato Big(Nepali)") %>% group_by(Year, Commodity, Unit) %>%  summarise(Average_price= mean(Average))
+
+
+vegetable_price<-food %>% mutate(Year=lubridate::year(Date)) %>% filter(Commodity %in% c("Tomato Big(Nepali)", "Potato White", "Onion Dry (Indian)")) %>% group_by(Year, Commodity, Unit) %>%  summarise(Average_price= mean(Average))
+
+```
+
+# Task 1:
+# -Observe Kalimati bazar's food dataset:
+
+```{r}
+food
+```
+
+# Task 2
+# - From above dataset, we have summarised top 15 highest priced food items of 2021 for you.
+# - Observe the "expensive_food_2021" dataset.
+
+
+```{r}
+expensive_food_2021
+
+```
+
+# Task 3
+#- Observe the unsorted scatter graph : Commodity vs Mean_price
+
+```{r}
+
+ggplot(data = expensive_food_2021)+
+  geom_point(mapping = aes(x=Mean_price, y= Commodity))
+
+```
+
+
+#Task 4:
+# -Sort the Commodity from lowest Mean_price to Highest Mean_price in graph:
+
+
+```{r}
+# Hint: fct_reorder(value_to_reorder, reorder_by) helps to reorder values in graph. 
+
+ggplot(data = expensive_food_2021)+
+  geom_point(mapping = aes(x=Mean_price,
+                           y=  fct_reorder(Commodity,          ))) +        #fill the missing values in y.
+  
+  labs(x="Mean price(per KG)", y = "Commodity")
+```
+
+
+# Task5[Homework]
+# -Reorder the Commodity values such that "Gundruk" and "Chilli Dry" appear first at the bottom of y-axis in the graph: 
+
+
+```{r}
+#Hint: fct_relevel(column name, values)
+
+
+ggplot(data = expensive_food_2021)+
+  geom_point(mapping = aes(x=Mean_price,
+                           y=  fct_relevel(Commodity,c(    ,      )  ))) +        #fill the missing values in y.
+  
+  labs(x="Mean price(per KG)", y = "Commodity")
+
+```
+
+
+# Task 6:
+# - We have filterd out the lowest priced food items in each year from 2013-2021->"Lowest_priced_food"
+# - Sort the bar graph in descending order
+
+
+
+```{r}
+
+#Hint: column_name %>% fct_infreq() orders in descending order
+
+
+
+graph1<-ggplot(data = Lowest_priced_food)+
+  geom_bar(mapping= aes(x= Commodity %>%            , fill= Commodity))+
+  #fill the missing values in x
+  
+  labs(title = "Count of lowest priced food",
+       subtitle = "[2013-2021]",
+       x= "Commodity")
+  
+graph1  
+```
+
+
+#Task 7
+#  Fill the colors manually: c("Red", "Green", "Blue", "Yellow")
+
+```{r}
+#Hint: scale_fill_manual(values= c(____))
+
+graph1+scale_fill_manual(values =  c(                )   )
+
+```
+
+# Task 8
+# Here, we have a bar chart with proportion.
+# Convert the y-axis scales to percent.
+# Give breaks: 0, 0.25, 0.50
+
+```{r}
+#Hint: Use scale_y_continuous and scales::percent 
+
+ggplot(data = Lowest_priced_food)+
+  geom_bar(mapping= aes(x= Commodity, y=..prop.., group=1))+
+  
+  labs(title = "Percent of lowest priced food",
+       subtitle = "[2013-2021]",
+       x= "Commodity", y= "Percent")+
+  
+  scale_y_(labels = scales::      ,     #correct the function name and fill missing values in labels
+           
+           breaks = c(      ))    #fill missing values in breaks
+  
+
+```
+
+#Task9 [Homework]
+# Give breaks: 2013,2015, 2017, 2019, 2021 to x_axis:
+# Increase the lower limit of Y-axis to 5 and upper limit to 80
+# Put Rs as a prefix in Y axis.
+
+
+
+```{r}
+graph2<-ggplot(data = vegetable_price,mapping = aes(x=Year, y=Average_price, color= Commodity))+geom_line()+
+  labs(title = "Average price of Vegetables",
+       subtitle = "[Between 2013-2021]",
+       x="Year",
+       y= "Annual Average price",
+       caption="Source: Opendata Nepal")+
+  
+  scale_x_continuous(
+    breaks = c(        )     #fill missing values in breaks
+  )+
+  
+  scale_y_continuous(
+    limits = c(  ),          #fill missing values in limits
+    labels = function(x){paste0(" ", x)}   # put Rs inside the apostrophe,
+  )
+graph2
+```
+
+#Task 10
+#  In graph2,Reverse the order of legends
+#  Distribute legend values in 2 rows rather than one in each row.
+
+```{r}
+#Hint reverse= T will reverse the order
+#nrow will allocate the rows for legend
+graph2+
+  guides(color=guide_legend(reverse =    , nrow =    ,  byrow = T)) #Fill the missing values of reverse and nrow.
+
+```
+
+
+#Task 13
+# Shift the legend's position to the bottom for graph1 with a spacing of 0.5 cm.
+# Remove legend title with element_blank().
+#Remove legend title and adjust text size of legend to 12
+
+
+```{r}
+
+graph2+
+  theme(legend.position = "",           #fill the missing values inside apostrophe
+        legend.spacing.x = unit(   , "cm"),  #fill the missing values in unit
+        legend.title =    ,      #fill the missing values here.
+        legend.text = element_text(size =   ))  #fill the missing values in size.       
+
+```
+
+
+#Task14[Assignment]
+# Remove legends from graph1
+
+```{r}
+
+graph1+
+  theme(legend.position = "")  # "none" removes the legend.
+```
+
+# Task 15
+# Change the axis title's font to 'sans' and color to 'gray' for graph2
+
+```{r}
+
+graph2+
+  theme(axis.title = element_text(
+    
+    family = "",     #fill the missing values in family
+    colour = ""     #fill the missing values in color
+    
+  ))
+```
+
+
+# Task 16
+# For graph 2:
+# Change the x-axis label color to 'gray' and rotate it by   45 degree.
+# Change the y-axis label color to 'gray' and face to        "italic".
+
+```{r}
+graph2+
+  theme(
+    axis.text.x = element_text(colour = "", angle =        ), #fill the missing values in colour and angle
+    axis.text.y = element_text(color = "", face = "") #fill the missing values in color and face
+  
+  
+  
+  )
+```
+
+
+# Task 17
+# The axis ticks are pointhing outwards in graph2.
+# Change the axis ticks such that they are pointing inwards.
+# Also, change the color of the ticks to red.
+
+
+```{r}
+
+graph2+
+  theme(axis.ticks.length = unit(  , "mm"),   #Fill the missing values in unit
+        axis.ticks = element_line(color = '')) #Fill the missing values in color.
+```
+
+
+# Task 18
+# In graph2:
+# Change plot title's color to 'blue'.
+# Change the subplot's face as italic and color to blue.
+# Increase the caption's letter size and color to gray and face to bold. 
+
+
+```{r}
+graph2+
+  theme(
+    plot.title = element_text(colour = ""),  #fill the missing values in colour.
+    plot.subtitle = element_text(face = "", color="blue"),
+    plot.caption = element_(size = , color = "gray", face = "") #correct the function name and fill missing values in size and face.
+  )
+```
+
+
+# Task 19
+#In graph2:
+# Change the plot background to "light blue".
+# Remove grid lines.
+# Change the panel background to "light blue".
+# Change the legend background to "light blue".
+
+```{r}
+
+graph3<-graph2+
+  theme(plot.background = element_rect(fill = ""),  #fill the missing values in fill.
+        panel.grid =  ,  #Fill the missing values here.
+        panel.background = element_(fill = ""), #correct the function name and fill the missing values
+        legend.background = element_rect(    ) ) #fill the missing attribute and its value.
+
+graph3
+```
+
+#Task 20
+#Label the highest price point of Onion dry in graph3 as "Highest price"
+
+```{r}
+graph3+geom_seg+geom_label(mapping = aes(x=2014,
+                                         y=75,
+                                         label= ""))  #fill the missing values in label.
+```
+
+
+# Task 21
+
+# Create a bbc style graph for graph2:
+
+```{r , warning=FALSE, message=FALSE}
+#install.packages('devtools')
+#devtools::install_github('bbc/bbplot')
+
+
+#Hint: bbc_style()
+library(bbplot)
+
+graph4<-graph2+        #fill the missing function here.
+graph4
+```
+
+
+# Task 22
+# Save bbc_style graph using finalise_plot() function.
+# Give width as 500 and height as 500
+
+```{r}
+finalise_plot(
+  plot_name =  ,     #Fill the plot name here
+  save_filepath = "./data/graph4.png",
+  width_pixels =    ,  #Fill the missing values here
+  height_pixels =   ,  #Fill the missing values here
+  source_name = "Opendata Nepal"
+  
+)
+```
+

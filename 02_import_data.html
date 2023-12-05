@@ -4,7 +4,7 @@
     <title>Import Data in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Binod Jung Bogati" />
-    <meta name="date" content="2021-04-27" />
+    <meta name="date" content="2021-06-14" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -20,10 +20,11 @@
 
 
 
-
 layout: true
 &lt;div class="my-header"&gt;&lt;/div&gt;
 &lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+# Data Analysis Process
 
 ---
 layout: false
@@ -31,12 +32,97 @@ class: top, center
 background-image: url(imgs/data-analysis-cover.png)
 background-size: 75%
 
-# Data Analysis Process
 
 ---
 layout: true
 &lt;div class="my-header"&gt;&lt;/div&gt;
 &lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+---
+class: top, left
+
+## Today's Content
+
+- Project &amp; File Paths
+
+- Read (Load) Data
+
+- Write (Save) Data 
+
+---
+class: top, left
+
+## RStudio Project 
+
+.pull-left[
+
+Manage your project easily with:
+
+- separate working directory 
+
+- isolated source code &amp; history
+
+- switch between projects
+]
+
+--
+
+.pull-right[
+
+&lt;img src="imgs/r-projects-structure.png" width = "80%"&gt;
+
+
+]
+
+---
+class: top, left
+
+# File Paths
+
+.panelset[
+.panel[.panel-name[Full Paths]
+
+
+
+```r
+# Linux / Mac
+  
+*"/home/binod/documents/projects/data/file_name.csv"
+
+# Windows : 
+
+*"C:\Users\binod\Documents\project\data\file_name.csv"
+```
+
+
+- Tips: (File / Folders names) Always replace space with underscore.
+
+]
+
+.panel[.panel-name[Relative Path]
+
+
+
+```r
+*"./data/file_name.csv"
+```
+
+Here, 
+
+- . dot is a current directory (folder)
+
+- /data/ is a data folder
+
+- file_name.csv is a name of csv file
+
+]
+
+]
+
+---
+class: middle, center
+
+# Read / Write Data
 
 ---
 class: top, left
@@ -75,13 +161,14 @@ library("readxl")
 
 
 ```r
-### Read R Data
+# Read RDA Data
 load("./data/cars.rda")
  
-rds_data &lt;- readRDS("./data/cars.rds")
+# Read RDS Data
+rds_cars &lt;- readRDS("./data/cars.rds")
 
-### Read CSV File
-csv_data &lt;- read_csv("./data/cars.csv")
+# Read CSV Data
+csv_cars &lt;- read_csv("./data/cars.csv")
 ```
 
 ]
@@ -91,16 +178,16 @@ csv_data &lt;- read_csv("./data/cars.csv")
 
 ```r
 ### Read Excel Data
-excel_data &lt;- read_excel("./data/cars.xlsx")
+excel_cars &lt;- read_excel("./data/cars.xlsx")
 
 # Read SAS Data
-sas_data &lt;- read_sas("./data/cars.sas7bdat")
+sas_cars &lt;- read_sas("./data/cars.sas7bdat")
 
 ### Read SPSS Data 
-spss_data &lt;- read_sav("./data/cars.sav")
+spss_cars &lt;- read_sav("./data/cars.sav")
 
-### Read Stata Files
-stata_data &lt;- read_dta("./data/cars.dta")
+### Read Stata Data
+stata_cars &lt;- read_dta("./data/cars.dta")
 ```
 
 ]]
@@ -147,13 +234,13 @@ library(haven)
 
 ```r
 # write to RDA
-save(cars, file = "./data/cars_data.rda")
+save(cars, file = "./data/rda_cars.rda")
 
 # write to RDS
-saveRDS(cars, "./data/cars_data.rds")
+saveRDS(rds_cars, "./data/rds_cars.rds")
 
 # write to CSV
-write_csv(cars, "./data/cars_data.csv")
+write_csv(csv_cars, "./data/csv_cars.csv")
 ```
 
 ]
@@ -163,23 +250,22 @@ write_csv(cars, "./data/cars_data.csv")
 
 ```r
 # write to Excel 
-write_xlsx(cars, "./data/cars_data.xlsx")
+write_xlsx(excel_cars, "./data/excel_cars.xlsx")
 
 # write to SAS
-write_sas(cars, "./data/cars_data.sas7bdat")
+write_sas(sas_cars, "./data/sas_cars.sas7bdat")
 
 # write to SPSS
-write_sav(cars, "./data/cars_data.sav")
+write_sav(spss_cars, "./data/spss_cars.sav")
 
 # write to Stata
-write_dta(cars, "./data/cars_data.dta")
+write_dta(stata_cars, "./data/stata_cars.dta")
 ```
 
 ]]
 
 ---
 class: top, left
-
 
 ## Take Always
 
@@ -191,6 +277,23 @@ haven | SPSS, Stata, and SAS data files
 writexl | write excel files (.xls, .xlsx)
 
 These packages will help you import/export data efficiently.
+
+---
+class: middle, center
+
+## Bonus Content
+
+
+
+
+
+
+
+
+
+
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>

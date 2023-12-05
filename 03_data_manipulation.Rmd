@@ -249,8 +249,10 @@ class: top, left
 ```{r eval=FALSE}
 library(dplyr)
 
-data %>% #<<
-  function() #<<
+function(data, ...) #<<  
+
+# using pipe operator  
+data %>% function(...) #<<  
 
 ```
 
@@ -291,19 +293,8 @@ Let's pick variables from gapminder data:
 
 .pull-left[
 
-```{r}
-country_gdp_year <- gapminder %>%
-  select(year, country, gdpPercap) #<<
-```
-
-]
-
---
-
-.pull-right[
-
-```{r echo=TRUE}
-head(country_gdp_year)
+```{r eval=FALSE}
+select(gapminder, year, country, gdpPercap) #<<
 ```
 
 ]
@@ -311,16 +302,23 @@ head(country_gdp_year)
 --
 
 .pull-left[
-
 Here, 
 
 - **gapminder** is a data
-- **%>%** is a pipe operator
 - **select()** is a dplyr function
 - **year, country, gdpPercap** are variables
 
 ]
 
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+head(select(gapminder, year, country, gdpPercap))
+```
+
+]
 
 
 ---
@@ -336,10 +334,14 @@ Lets pick only **Asia** from **continent** variable.
 
 .pull-left[
 
-```{r}
-gapminder_asia <- gapminder %>% 
-  filter(continent == "Asia") #<<
+```{r eval = F}
+filter(gapminder, continent == "Asia") #<<
+
 ```
+
+]
+
+.pull-left[
 
 Here, 
 
@@ -353,8 +355,8 @@ Here,
 
 .pull-right[
 
-```{r echo=TRUE}
-head(gapminder_asia)
+```{r echo=F}
+head(filter(gapminder, continent == "Asia"))
 ```
 ]
 
@@ -371,6 +373,99 @@ Operator | Definition | Operator | Definition
 >= | greater than or equal to | x %in% y | test if x is in y
 == | exactly equal to | !(x %in% y) | test if x is not in y
 != | not equal to | !x | not x
+
+
+---
+class: top, left
+
+## Chaining Verbs
+
+Lets pick only **Nepal** from **country** with following variables:
+**year, country, gdpPercap**
+
+--
+
+.panelset[
+.panel[.panel-name[Method 1]
+
+.pull-left[
+```{r eval=F}
+# Method 1:
+select(
+  filter(gapminder, country == "Nepal"), 
+   year, country, gdpPercap
+  )
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter <- select(
+  filter(gapminder, country == "Nepal"), 
+   year, country, gdpPercap
+  ) %>% head
+
+select_filter
+```
+
+
+]
+
+
+]
+
+.panel[.panel-name[Method 2]
+
+.pull-left[
+
+```{r eval = F}
+## Method 2:
+asian_data <- filter(gapminder, 
+               country == "Nepal")
+
+select(asian_data, 
+       year, country, gdpPercap)
+
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter
+
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Method 3]
+
+.pull-left[
+```{r eval = F}
+# Method 3:
+gapminder %>% 
+  filter(country == "Asia") %>% 
+  select(year, country, gdpPercap)
+```
+]
+
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter
+
+```
+
+]
+
+]
+
+]
 
 ---
 class: top, left
@@ -397,7 +492,7 @@ Display country-wise, annual life expectancy of Europe.
 .pull-left[
 
 ```{r}
-lifeexp_year_europe <- gapminder %>% 
+lifeexp_europe <- gapminder %>% 
   filter(continent == "Europe") %>% 
   select(year, country, lifeExp)
 ```
@@ -411,7 +506,7 @@ Here,
 .pull-right[
 
 ```{r}
-head(lifeexp_year_europe)
+head(lifeexp_europe)
 ```
 
 ]]
@@ -431,7 +526,7 @@ Let's calculate **gdp** using variable **gdpPercap** and **pop**.
 .pull-left[
 
 ```{r}
-gapminder_total_gdp <- gapminder %>% 
+total_gdp <- gapminder %>% 
   mutate(gdp = gdpPercap * pop)
 ```
 
@@ -448,7 +543,7 @@ Here,
 .pull-right[
 
 ```{r}
-head(gapminder_total_gdp)
+head(total_gdp)
 ```
 
 ]
@@ -705,7 +800,7 @@ class: top, left
 .pull-left[
 
 ```{r}
-library(gapminder)
+
 
 gapminder_pg <- gapminder_group_by %>% 
   summarize(mean_pop = mean(pop), #<<

@@ -17,7 +17,6 @@ output:
       ratio: '16:9'
     seal: false
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
@@ -49,12 +48,40 @@ layout: true
 <div class="my-header"></div>
 <div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
 
+
 ---
 class: middle, center
 
 # Write Tidy Codes with
 
 <img src="imgs/magrittr.png" width="20%">
+
+---
+class: top, left
+
+## Pipes - %>% ... %>% 
+
+.pull-left[
+
+The pipe operator implemented first in **magrittr** package.
+
+```{r eval=FALSE}
+library(magrittr)
+```
+
+Makes code readable by:
+
+- structuring sequences of data operations
+- avoiding nested function calls
+- minimizing the need for local variables and function definitions
+
+]
+
+.pull-right[
+
+<img src="imgs/magrittr.png" id="center">
+
+]
 
 
 ---
@@ -156,33 +183,6 @@ Here,
 
 ]
 
----
-class: top, left
-
-## Pipes - %>% ... %>% 
-
-.pull-left[
-
-The pipe operator implemented first in **magrittr** package.
-
-```{r eval=FALSE}
-library(magrittr)
-```
-
-Makes code readable by:
-
-- structuring sequences of data operations
-- avoiding nested function calls
-- minimizing the need for local variables and function definitions
-
-]
-
-.pull-right[
-
-<img src="imgs/magrittr.png" id="center">
-
-]
-
 
 ---
 class: center, middle
@@ -237,6 +237,7 @@ Function | Image | Description
 5. summarise() | ![](imgs/summarize-function.png)  | Reduces multiples values down to a single summary
 6. arrange() | ![](imgs/arrange-function.png)  | Changes the ordering of the rows
 
+
 ---
 class: top, left
 
@@ -249,24 +250,30 @@ class: top, left
 ```{r eval=FALSE}
 library(dplyr)
 
-data %>% #<<
-  function() #<<
+function(data, ...) #<<  
+
+# using pipe operator  
+data %>% function(...) #<<  
 
 ```
+
 
 - First argument is always a data frame
 - Latter argument performs as per function
 - Always return a data frame
-- Don't modify in-place
+- Don't modify in place
+
 
 ]
 
 .panel[.panel-name[Load]
 
 ```{r}
-library(tidyverse)
+#load library
+library(dplyr)
+library(readr)
 
-gapminder <- read_csv("./data/gapminder.csv")
+gapminder <- read_csv("data/gapminder.csv")
 
 head(gapminder, 4)
 ```
@@ -290,9 +297,17 @@ Let's pick variables from gapminder data:
 .pull-left[
 
 ```{r}
-country_gdp_year <- gapminder %>%
+country_gdp <- gapminder %>% 
   select(year, country, gdpPercap) #<<
+
+#select(gapminder, year,country,gdpPercap)
 ```
+
+Here, 
+
+- **select()** is a dplyr function
+- **gapminder** is a data
+- **year, country, gdpPercap** are variables
 
 ]
 
@@ -300,24 +315,12 @@ country_gdp_year <- gapminder %>%
 
 .pull-right[
 
-```{r echo=TRUE}
-head(country_gdp_year)
+```{r}
+head(country_gdp)
 ```
 
 ]
 
---
-
-.pull-left[
-
-Here, 
-
-- **gapminder** is a data
-- **%>%** is a pipe operator
-- **select()** is a dplyr function
-- **year, country, gdpPercap** are variables
-
-]
 
 ---
 class: top, left
@@ -333,12 +336,13 @@ Lets pick only **Asia** from **continent** variable.
 .pull-left[
 
 ```{r}
-gapminder_asia <- gapminder %>% 
+asia <- gapminder %>% 
   filter(continent == "Asia") #<<
+  
+# filter(gapminder, continent == "Asia")
 ```
 
 Here, 
-
 - **filter()** is a dplyr function
 - **gapminder** is a data set
 - **continent** is a case with value **Asia**
@@ -349,10 +353,9 @@ Here,
 
 .pull-right[
 
-```{r echo=TRUE}
-head(gapminder_asia)
+```{r}
+head(asia)
 ```
-
 ]
 
 ---
@@ -368,6 +371,102 @@ Operator | Definition | Operator | Definition
 >= | greater than or equal to | x %in% y | test if x is in y
 == | exactly equal to | !(x %in% y) | test if x is not in y
 != | not equal to | !x | not x
+
+
+---
+class: top, left
+
+## Chaining Verbs
+
+Lets pick only **Nepal** from **country** with following variables:
+**year, country, gdpPercap**
+
+--
+
+.panelset[
+.panel[.panel-name[Method 1]
+
+.pull-left[
+```{r eval=F}
+# Method 1:
+select(
+  filter(gapminder, country == "Nepal"), 
+   year, country, gdpPercap
+  )
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter <- select(
+  filter(gapminder, country == "Nepal"), 
+   year, country, gdpPercap
+  ) %>% head
+
+select_filter
+```
+
+
+]
+
+
+]
+
+.panel[.panel-name[Method 2]
+
+.pull-left[
+
+```{r eval = F}
+## Method 2:
+asian_data <- filter(gapminder, 
+               country == "Nepal")
+
+select(asian_data, 
+       year, country, gdpPercap)
+
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter
+
+```
+
+
+]
+
+]
+
+.panel[.panel-name[Method 3]
+
+.pull-left[
+```{r eval = F}
+# Method 3:
+gapminder %>% 
+  filter(country == "Nepal") %>% 
+  select(year, country, gdpPercap)
+```
+]
+
+
+.pull-right[
+
+```{r echo=FALSE}
+select_filter
+
+
+
+
+```
+
+]
+
+]
+
+]
 
 ---
 class: top, left
@@ -394,7 +493,7 @@ Display country-wise, annual life expectancy of Europe.
 .pull-left[
 
 ```{r}
-lifeexp_year_europe <- gapminder %>% 
+lifeexp_europe <- gapminder %>% 
   filter(continent == "Europe") %>% 
   select(year, country, lifeExp)
 ```
@@ -408,7 +507,7 @@ Here,
 .pull-right[
 
 ```{r}
-head(lifeexp_year_europe)
+head(lifeexp_europe)
 ```
 
 ]]
@@ -428,8 +527,8 @@ Let's calculate **gdp** using variable **gdpPercap** and **pop**.
 .pull-left[
 
 ```{r}
-gapminder_total_gdp <- gapminder %>% 
-  mutate(gdp = gdpPercap * pop) #<<
+total_gdp <- gapminder %>% 
+  mutate(gdp = gdpPercap * pop)
 ```
 
 Here, 
@@ -445,11 +544,10 @@ Here,
 .pull-right[
 
 ```{r}
-head(gapminder_total_gdp)
+head(total_gdp)
 ```
 
 ]
-
 
 ---
 class: top, left
@@ -749,7 +847,7 @@ data %>% rename(new_name = old_name, ...) #you may read `=` as `with` #<<
 .pull-left[
 
 ```{r}
-country_gdp_year %>% 
+country_gdp %>% 
   head(4)
 ```
 
@@ -760,7 +858,7 @@ country_gdp_year %>%
 .pull-right[
 
 ```{r}
-country_gdp_year %>% 
+country_gdp %>% 
   rename(gdp_per_capita = gdpPercap) %>% #<<
   head(4)
 ```
@@ -883,7 +981,7 @@ country_income <- gapminder %>%
         gdpPercap < 1000 ~ "Low Income",                          #<<
         between(gdpPercap, 1000, 5000) ~ "Lower-Middle Income",   #<<
         between(gdpPercap, 5000, 20000) ~ "Upper-Middle Income",  #<<
-        # gdpPercap > 500 & gdpPercap < 2000 ~ "Upper-Middle Income",
+      # gdpPercap > 5000 & gdpPercap < 20000 ~ "Upper-Middle Income",
         gdpPercap > 20000 ~ "High Income"                         #<<
       )
   ) %>%

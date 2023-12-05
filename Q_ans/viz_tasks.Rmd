@@ -307,15 +307,7 @@ task9+ labs(
 ![](`r knitr::fig_chunk('t10', 'png')`)
 ]
 
-
-
 ]
-
-
-
-
-
-
 
 
 ]

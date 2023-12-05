@@ -1,0 +1,343 @@
+---
+title: "Getting Started with R"
+author: "Binod Jung Bogati"
+institute: "Numeric Mind"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:  
+      highlightStyle: github
+      highlightLines: true 
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE, 
+        htmltools.preserve.raw = FALSE)
+library(countdown)
+library(xaringanExtra)
+library(fontawesome)
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# These are the defaults
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+
+# xaringan::summon_remark()
+```
+
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div>
+---
+class: middle, center
+
+# Getting Started with
+
+<img src="imgs/r-logo.png" width="20%">
+
+---
+class: left, top
+
+## About Company (https://numericmind.com)
+
+<img src="imgs/about-numericmind.png">
+
+---
+class: center, top
+
+# Know Your Instructor
+
+<br>
+
+.pull-left[
+
+<div class="card">
+  <img src="https://numericmind.com/wp-content/uploads/2020/12/binod-jung-bogati.png" alt="Binod" style="width:35%; border-radius:120px;">
+  <h3>Binod Jung Bogati</h3>
+  <p class="title">Data Scientist, Numeric Mind</p>
+  <p>binod.bogati@numericmind.com</p>
+  <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("twitter", fill = "black")`</a>
+  <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("linkedin", fill = "black")`</a>
+  <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("facebook", fill = "black")`</a>
+</div>
+
+]
+
+.pull-right[
+
+
+<div class="card">
+  <img src="https://numericmind.com/wp-content/uploads/2020/12/sanjay-hamal.jpg" alt="Sanjay" style="width:35%; border-radius:120px;">
+  <h3>Sanjay Hamal</h3>
+  <p class="title">Data Analyst, Numeric Mind</p>
+  <p>sanjay.hamal@numericmind.com</p>
+ <a href="#" style="font-size: 30px; padding:0 10px;">`r fa("twitter", fill = "black")`</a>
+  <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("linkedin", fill = "black")`</a>
+  <a href="#" style="font-size: 30px;padding:0 10px;">`r fa("facebook", fill = "black")`</a>
+</div>
+
+]
+
+
+
+---
+class: top, center
+
+## Top Companies Supporting 
+
+<img src="imgs/supporting_companies.png" width = "90%">
+
+---
+class: top, left
+
+## R and RStudio
+
+<img src="imgs/r_engine.png" width="80%">
+
+---
+class: middle, center
+
+# Setup R + RStudio
+
+---
+class: top, left
+
+## Download / Install (learnr.numericmind.com/rsetup)
+
+<iframe src="https://learnr.numericmind.com/rsetup/" width="100%" height="500px">
+
+<!-- --- -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Install R (https://cran.r-project.org) -->
+
+
+<!-- <img src="imgs/install_R.png"> -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Windows (https://cran.r-project.org/bin/windows/Rtools/) -->
+
+
+<!-- <img src="imgs/rtools.png"> -->
+
+<!-- --- -->
+<!-- class: top, left -->
+
+<!-- ## Install RStudio (http://bit.ly/rstudio-nm) -->
+
+<!-- <img src="imgs/install_rstudio.png"> -->
+
+<!-- --- -->
+
+---
+class: middle, center
+
+# Let's look at RStudio
+
+
+---
+
+class: top, left
+
+# Writing Your First Code
+
+.panelset[
+
+.panel[.panel-name[Calculator]
+
+```{r}
+1 + 5  # Add
+
+10 - 5  # Subtract
+
+10 * 5 # Multiply
+
+10 / 2 # Divide
+```
+
+]
+
+.panel[.panel-name[Functions]
+
+.pull-left[
+
+```{r}
+1:10
+
+sum(1:1000) #<<
+
+mean(1:10)
+
+median(10:20)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+min(10:20)
+
+max(10:100)
+
+seq(2, 20, 2)
+```
+
+
+]
+
+
+]]
+
+
+---
+class: top, left
+
+# Creating Your First Plot
+
+.pull-left[
+
+```{r plot_cars}
+plot(cars)
+```
+
+Here, 
+
+- speed - miles per hour
+
+- dist - stopping distance (ft)
+
+]
+
+.pull-right[
+
+
+![](`r knitr::fig_chunk('plot_cars', 'png')`)
+
+
+]
+
+---
+class: middle, center
+
+# Setup R Packages
+
+---
+class: top, left
+
+# Setup R Packages
+
+.panelset[
+
+.panel[.panel-name[Eco-system]
+
+<img src="imgs/rcran.png" width="60%">
+
+]
+
+.panel[.panel-name[Load]
+
+.pull-left[
+
+```{r first_ggplot2, echo=T, include=T}
+library(ggplot2)
+
+ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point()
+
+```
+
+Here, 
+
+- speed - miles per hour
+- dist - stopping distance (ft)
+
+]
+
+
+.pull-right[
+
+![](`r knitr::fig_chunk('first_ggplot2', 'png')`)
+
+
+]
+
+
+]
+
+.panel[.panel-name[About]
+
+- R packages are a collection of functions, complied code & sample data
+- Comprehensive R Archive Network (CRAN) has now **17513** packages 
+
+<img src="imgs/packages.png" width="60%">
+
+]
+
+
+.panel[.panel-name[Install]
+
+To install and load package we use following:
+
+```{r eval = F}
+install.packages("devtools") #install
+
+library(devtools) #load
+
+devtools::install_github("nm-training/rsetup")
+
+```
+
+]
+
+.panel[.panel-name[Ask]
+
+
+- ask about the mean() function
+
+```{r eval=F}
+?mean
+```
+
+- ask about the mtcars data sets
+
+```{r eval=F}
+?cars
+```
+
+
+- ask about the dplyr package
+
+```{r eval=F}
+?devtools
+```
+
+]
+
+]

@@ -4,7 +4,7 @@
     <title>Data Manipulation in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Binod Jung Bogati" />
-    <meta name="date" content="2021-04-29" />
+    <meta name="date" content="2021-05-31" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
@@ -240,8 +240,10 @@ class: top, left
 ```r
 library(dplyr)
 
-*data %&gt;%
-* function()
+*function(data, ...)
+
+# using pipe operator  
+*data %&gt;% function(...)
 ```
 
 
@@ -290,20 +292,25 @@ Let's pick variables from gapminder data:
 
 
 ```r
-country_gdp_year &lt;- gapminder %&gt;%
-* select(year, country, gdpPercap)
+*select(gapminder, year, country, gdpPercap)
 ```
 
 ]
 
 --
 
+.pull-left[
+Here, 
+
+- **gapminder** is a data
+- **select()** is a dplyr function
+- **year, country, gdpPercap** are variables
+
+]
+
+--
+
 .pull-right[
-
-
-```r
-head(country_gdp_year)
-```
 
 &lt;div data-pagedtable="false"&gt;
   &lt;script data-pagedtable-source type="application/json"&gt;
@@ -312,20 +319,6 @@ head(country_gdp_year)
 &lt;/div&gt;
 
 ]
-
---
-
-.pull-left[
-
-Here, 
-
-- **gapminder** is a data
-- **%&gt;%** is a pipe operator
-- **select()** is a dplyr function
-- **year, country, gdpPercap** are variables
-
-]
-
 
 
 ---
@@ -343,9 +336,12 @@ Lets pick only **Asia** from **continent** variable.
 
 
 ```r
-gapminder_asia &lt;- gapminder %&gt;% 
-* filter(continent == "Asia")
+*filter(gapminder, continent == "Asia")
 ```
+
+]
+
+.pull-left[
 
 Here, 
 
@@ -358,11 +354,6 @@ Here,
 --
 
 .pull-right[
-
-
-```r
-head(gapminder_asia)
-```
 
 &lt;div data-pagedtable="false"&gt;
   &lt;script data-pagedtable-source type="application/json"&gt;
@@ -385,6 +376,100 @@ Operator | Definition | Operator | Definition
 == | exactly equal to | !(x %in% y) | test if x is not in y
 != | not equal to | !x | not x
 
+
+---
+class: top, left
+
+## Chaining Verbs
+
+Lets pick only **Nepal** from **country** with following variables:
+**year, country, gdpPercap**
+
+--
+
+.panelset[
+.panel[.panel-name[Method 1]
+
+.pull-left[
+
+```r
+# Method 1:
+select(
+  filter(gapminder, country == "Nepal"), 
+   year, country, gdpPercap
+  )
+```
+]
+
+.pull-right[
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Nepal","3":"545.8657"},{"1":"1957","2":"Nepal","3":"597.9364"},{"1":"1962","2":"Nepal","3":"652.3969"},{"1":"1967","2":"Nepal","3":"676.4422"},{"1":"1972","2":"Nepal","3":"674.7881"},{"1":"1977","2":"Nepal","3":"694.1124"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+
+]
+
+.panel[.panel-name[Method 2]
+
+.pull-left[
+
+
+```r
+## Method 2:
+asian_data &lt;- filter(gapminder, 
+               country == "Nepal")
+
+select(asian_data, 
+       year, country, gdpPercap)
+```
+]
+
+.pull-right[
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Nepal","3":"545.8657"},{"1":"1957","2":"Nepal","3":"597.9364"},{"1":"1962","2":"Nepal","3":"652.3969"},{"1":"1967","2":"Nepal","3":"676.4422"},{"1":"1972","2":"Nepal","3":"674.7881"},{"1":"1977","2":"Nepal","3":"694.1124"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+
+]
+
+]
+
+.panel[.panel-name[Method 3]
+
+.pull-left[
+
+```r
+# Method 3:
+gapminder %&gt;% 
+  filter(country == "Asia") %&gt;% 
+  select(year, country, gdpPercap)
+```
+]
+
+
+.pull-right[
+
+&lt;div data-pagedtable="false"&gt;
+  &lt;script data-pagedtable-source type="application/json"&gt;
+{"columns":[{"label":["year"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[2],"type":["chr"],"align":["left"]},{"label":["gdpPercap"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1952","2":"Nepal","3":"545.8657"},{"1":"1957","2":"Nepal","3":"597.9364"},{"1":"1962","2":"Nepal","3":"652.3969"},{"1":"1967","2":"Nepal","3":"676.4422"},{"1":"1972","2":"Nepal","3":"674.7881"},{"1":"1977","2":"Nepal","3":"694.1124"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  &lt;/script&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+]
+
 ---
 class: top, left
 
@@ -392,7 +477,7 @@ class: top, left
 
 Display country-wise, annual life expectancy of Europe.
 
-<div class="countdown" id="timer_608a7757" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60b4660e" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -413,7 +498,7 @@ Display country-wise, annual life expectancy of Europe.
 
 
 ```r
-lifeexp_year_europe &lt;- gapminder %&gt;% 
+lifeexp_europe &lt;- gapminder %&gt;% 
   filter(continent == "Europe") %&gt;% 
   select(year, country, lifeExp)
 ```
@@ -428,7 +513,7 @@ Here,
 
 
 ```r
-head(lifeexp_year_europe)
+head(lifeexp_europe)
 ```
 
 &lt;div data-pagedtable="false"&gt;
@@ -455,7 +540,7 @@ Let's calculate **gdp** using variable **gdpPercap** and **pop**.
 
 
 ```r
-gapminder_total_gdp &lt;- gapminder %&gt;% 
+total_gdp &lt;- gapminder %&gt;% 
   mutate(gdp = gdpPercap * pop)
 ```
 
@@ -473,7 +558,7 @@ Here,
 
 
 ```r
-head(gapminder_total_gdp)
+head(total_gdp)
 ```
 
 &lt;div data-pagedtable="false"&gt;
@@ -492,7 +577,7 @@ class: top, left
 
 Rank all **Asian** countries by life expectancy in year **2007**. 
 
-<div class="countdown" id="timer_608a75cb" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60b46665" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -626,7 +711,7 @@ class: top, left
 
 - Find countries in Asia with lowely ranked gdpPercap in 1992
 
-<div class="countdown" id="timer_608a747f" style="top:0;right:0;" data-warnwhen="10">
+<div class="countdown" id="timer_60b46792" style="top:0;right:0;" data-warnwhen="10">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -680,8 +765,6 @@ head(asia_gdpPercap_1992)
 ]]
 
 ]
-
-
 
 ---
 class: top, left
@@ -784,8 +867,8 @@ class: top, left
 
 - Summarize mean (population and gdpPerCap) by continent in year 2007
 
-<div class="countdown" id="timer_608a7696" style="top:0;right:0;" data-warnwhen="10">
-<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<div class="countdown" id="timer_60b46794" style="top:0;right:0;" data-warnwhen="10">
+<code class="countdown-time"><span class="countdown-digits minutes">02</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 --
@@ -794,8 +877,6 @@ class: top, left
 
 
 ```r
-library(gapminder)
-
 gapminder_pg &lt;- gapminder_group_by %&gt;% 
 * summarize(mean_pop = mean(pop),
 *           mean_gdp = mean(gdpPercap)

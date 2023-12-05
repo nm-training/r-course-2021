@@ -1,0 +1,1738 @@
+---
+title: "Advanced Visualization with ggplot2"
+subtitle: "(Graph Customization)"
+author: "Sanjay Hamal"
+institute: "Numeric Mind"
+date: " `r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    # beforeInit: "macros.js"
+    df_print: paged
+    lib_dir: libs
+    css: ["default", "default-fonts", "style.css"]
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: true
+---
+layout: true
+<div class="my-header"></div>
+<div class="my-footer"><img src="imgs/nm-logo.png"/></div> 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.height = 5,
+  fig.show = "hide",
+  fig.path = "figures/",
+  fig.retine = 5,
+  message = FALSE,
+  warning = FALSE,
+  cache = T,
+  cache.path = "cache/"
+)
+options(
+  htmltools.dir.version = FALSE, servr.daemon = TRUE,
+  htmltools.preserve.raw = FALSE
+)
+library(countdown)
+library(dplyr)
+library(kableExtra)
+
+xaringanExtra::use_panelset()
+xaringanExtra::html_dependency_webcam()
+
+# xaringan::summon_remark()
+```
+
+
+
+
+```{r include=FALSE}
+library(tidyverse)
+
+movies<- read_csv("./data/movies.csv") %>% select(-X1)%>% filter(!(mpaa_rating=="NA"))
+movies
+```
+
+---
+#### Use of factors
+.panelset[
+
+.panel[.panel-name[Unsorted graph]
+
+.pull-left[
+
+```{r, sg1}
+ggplot(head(movies, 15))+    #<<
+  
+  geom_point(aes(x=domestic_gross,y=movie)) #<<
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg1', 'png')`)
+
+]
+
+
+
+]
+
+.panel[.panel-name[Sorted graph]
+
+.pull-left[
+
+- **fct_reorder** function help to arrange the values of concern on the basis of order of some other values.
+- **fct_reorder(value to sort, sort by)**
+
+
+```{r sg2}
+ggplot(head(movies, 15))+    
+  
+  geom_point(
+    aes(x=domestic_gross,
+        y=fct_reorder(movie, domestic_gross)))+ #<<
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg2', 'png')`)
+
+]
+
+
+
+]
+
+
+
+.panel[.panel-name[Custom arranged graph]
+
+.pull-left[
+
+- **fct_relvel** function help to relevel only few custom values.
+- **fct_relevel(column name, values)**
+
+
+```{r sg3}
+ggplot(head(movies, 15))+    
+  
+  geom_point(
+    aes(x=domestic_gross,
+        y=fct_relevel(movie, "Waterworld")))+ #<<
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg3', 'png')`)
+
+]
+
+
+
+]
+
+
+
+.panel[.panel-name[Custom arranged graph]
+
+.pull-left[
+
+
+- **fct_relevel(column name, values)**
+
+
+```{r sg4}
+ggplot(head(movies, 15))+    
+  
+geom_point(
+  aes(x=domestic_gross,
+  y=fct_relevel(movie, 
+  c("Waterworld","Evan Almighty", "Van Helsing"))))+ #<<
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg4', 'png')`)
+
+]
+
+
+
+]
+
+
+]
+
+---
+
+#### Use of factors
+
+.panelset[
+
+
+.panel[.panel-name[Unsorted bar graph]
+
+
+.pull-left[
+```{r sg5}
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre)) #<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg5', 'png')`)
+
+]
+
+
+
+
+
+
+
+]
+
+
+.panel[.panel-name[Sorted bar graph]
+
+
+.pull-left[
+
+- **fct_infreq** helps to sort values by descending order
+- **fct_infreq(column name)** or 
+- **column_name %>% fct_infreq()**
+
+
+```{r sg6}
+ggplot(movies)+
+  geom_bar(aes(x=genre %>% fct_infreq(), #<<
+               fill=genre)) +
+  labs(x="genre")
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg6', 'png')`)
+
+]
+
+]
+
+.panel[.panel-name[Reverse arranged]
+
+
+.pull-left[
+
+- **fct_rev** reverses the order of arrangement.
+- **fct_rev(column name)** or 
+- **column name %>% fct_rev()**
+
+```{r sg7}
+ggplot(movies)+
+  geom_bar(
+  aes(x=genre %>% fct_infreq() %>% fct_rev(), #<<
+               fill=genre)
+  ) +
+  labs(x="genre")
+```
+
+
+
+]
+
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg7', 'png')`)
+
+]
+
+]
+]
+
+---
+
+#### Manual colors:
+
+.panelset[
+
+.panel[.panel-name[Automatic colors]
+
+.pull-left[
+```{r sg8}
+ggplot(movies)+
+  geom_bar(aes(genre, fill= genre)) #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg8', 'png')`)
+
+]
+
+
+]
+
+.panel[.panel-name[Manual color fill]
+
+.pull-left[
+
+- **scale_fill_manual(values= colors)**
+- The total number of color inputs should be sufficient.
+
+```{r sg9}
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+  scale_fill_manual(values=c('red',  #<<
+                             'blue', #<<  
+                             'green', #<<
+                             'orange', #<<
+                             'pink'))  #<<
+```
+
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg9', 'png')`)
+
+]
+
+
+]
+
+.panel[.panel-name[Color input for each element]
+
+
+.pull-left[
+- **scale_fill_manual(**
+- **values= c(element1= color1, element2=color2...))**
+- The total number of color inputs should be sufficient.
+
+```{r sg10}
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+  
+  scale_fill_manual(
+    values=c("Action"='red',   #<<
+             "Comedy"='blue',  #<<
+             "Drama"='green',  #<<
+             "Horror"='orange', #<<
+             "Adventure"='pink') #<<
+                   )
+```
+
+
+]
+
+.pull-right[
+
+
+![](`r knitr::fig_chunk('sg10', 'png')`)
+
+]
+
+]
+]
+
+---
+#### Manual colors
+
+.panelset[
+
+.panel[.panel-name[Uniform palette color]
+
+.pull-left[
+
+- **scale_fill_viridis**
+- Use the color scales in this package to make plots that are pretty, better represent your data, easier to read by those with colorblindness, and print well in gray scale.
+- scale_fill_viridis_c is for continuous values
+- scale_fill_viridis_d is for discrete values
+- options: plasma, inferno, magma, cividis, viridis
+```{r sg11a}
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+  scale_fill_viridis_d() #<<
+```
+
+
+]
+.pull-right[
+
+
+![](`r knitr::fig_chunk('sg11a', 'png')`)
+
+]
+
+]
+
+
+.panel[.panel-name[Uniform palette color]
+
+.pull-left[
+
+
+```{r sg12}
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+  scale_fill_viridis_d(option= "magma") #<<
+```
+
+
+]
+.pull-right[
+
+
+![](`r knitr::fig_chunk('sg12', 'png')`)
+
+]
+
+]
+
+
+
+
+
+
+
+]
+
+---
+#### Axis
+.panelset[
+.panel[.panel-name[Bar graph:Proportion]
+
+
+
+.pull-left[
+
+```{r sg13}
+
+ggplot(data = movies)+
+ geom_bar(aes(x=genre, y=..prop.., group=1)) #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg13', 'png')`)
+
+]
+
+
+
+]
+
+
+.panel[.panel-name[Scale:percent]
+
+
+
+.pull-left[
+
+```{r sg14}
+library(scales)
+ggplot(data = movies)+
+  
+ geom_bar(aes(x=genre, y=..prop.., group=1))+
+  
+ scale_y_continuous(labels = percent) #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg14', 'png')`)
+
+]
+
+
+
+]
+
+
+.panel[.panel-name[Scatter plot]
+
+
+.pull-left[
+
+```{r sg15}
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg15', 'png')`)
+
+]
+
+]
+
+
+.panel[.panel-name[Scale: comma]
+
+
+.pull-left[
+
+```{r sg16}
+library(scales)
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  scale_x_continuous(labels = comma)+  #<<
+  scale_y_continuous(labels = comma)   #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg16', 'png')`)
+
+]
+
+]
+
+
+.panel[.panel-name[Limits]
+- In scale_x_continuous and scale_y_continuous, you can use the **limit** parameter to control the size of **x** and **y** axis respectively.
+
+.pull-left[
+```{r sg17}
+
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    labels = comma,
+    limits = c(200000000, 300000000))+  #<<
+  scale_y_continuous(
+    labels = comma,
+    limits = c(0, 500000000))   #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg17', 'png')`)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Breaks]
+
+- In **scale_x_continuous** and **scale_y_continuous**, you can use **breaks** to display only the required values in your x and y axis respectively.
+
+.pull-left[
+```{r sg18}
+
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    labels = comma,
+    limits = c(200000000, 300000000),
+  breaks = c(200000000,250000000,300000000))+  #<<
+  scale_y_continuous(
+    labels = comma,
+    limits = c(0, 500000000),
+  breaks = c(100000000,300000000,500000000))   #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg18', 'png')`)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Labels]
+
+- In **scale_x_continuous** and **scale_y_continuous**, you can use **labels** parameter to label custom values in **x** and **y** axis respectively.
+- The length of **labels** must be equal to the length of **breaks** parameter.
+
+.pull-left[
+
+
+```{r sg19}
+
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    limits = c(200000000, 300000000),
+  breaks = c(200000000,250000000,300000000),
+  labels = c("200M", "250M", "300M"))+  #<<
+  scale_y_continuous(
+    limits = c(0, 500000000),
+  breaks = c(100000000,300000000,500000000),
+  labels = c("100M","300M", "500M"))   #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg19', 'png')`)
+
+]
+
+
+]
+
+]
+---
+#### Legends
+
+.panelset[
+
+
+
+.panel[.panel-name[Bar plot]
+
+.pull-left[
+
+```{r, sg20}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))
+```
+
+
+]
+.pull-right[
+
+![](`r knitr::fig_chunk('sg20', 'png')`)
+]
+
+
+]
+
+.panel[.panel-name[Remove guide]
+
+.pull-left[
+
+```{r sg22}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+guides(fill = "none")#<<
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg22', 'png')`)
+
+]
+]
+
+
+.panel[.panel-name[Reverse guide]
+
+.pull-left[
+
+```{r sg21}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+guides(fill = guide_legend(reverse = TRUE))#<<
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg21', 'png')`)
+
+]
+]
+
+.panel[.panel-name[Row allocation[1]]
+
+.pull-left[
+
+```{r sg23}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+guides(fill= guide_legend(nrow = 1, #<<
+                          byrow = T))#<<
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg23', 'png')`)
+
+]
+]
+
+
+.panel[.panel-name[Row allocation[2]]
+
+.pull-left[
+
+```{r sg24}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+guides(fill= guide_legend(nrow = 2, #<<
+                          byrow = T))#<<
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg24', 'png')`)
+
+]
+]
+
+
+
+]
+
+---
+
+#### Themes
+.panelset[
+
+.panel[.panel-name[Theme]
+- Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends. 
+- Themes can be used to give plots a consistent customized look
+]
+
+.panel[.panel-name[Elements of theme]
+In conjunction with the theme system, the element_ functions specify the display of how non-data components of the plot are drawn.
+
+- **element_blank()**: Draws nothing, and assigns no space.
+
+- **element_rect()** : To change borders and backgrounds.
+
+- **element_line()**:  To modify lines.
+
+- **element_text()**:  To modify texts.
+
+]
+
+.panel[.panel-name[element_blank]
+
+.pull-left[
+
+
+```{r thm2}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.title  = element_blank()) #<<
+
+```
+
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('thm2', 'png')`)
+
+]
+
+]
+
+.panel[.panel-name[element_rect]
+
+.pull-left[
+```{r thm1}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(panel.background = 
+          element_rect(fill= 'black')) #<<
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('thm1', 'png')`)
+
+]
+]
+
+
+.panel[.panel-name[element_line]
+
+.pull-left[
+```{r thm3}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.ticks = 
+          element_line(color = "red", #<<
+                       size = 3)) #<<
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('thm3', 'png')`)
+
+]
+]
+
+.panel[.panel-name[element_text]
+
+.pull-left[
+```{r thm4}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.title = 
+          element_text(family = "Courier", #<<
+          size = 20,      #<<
+          face = "italic")) #<<
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('thm4', 'png')`)
+
+]
+]
+
+]
+---
+#### Theme[Guides/Legends]
+.panelset[
+
+
+.panel[.panel-name[Remove Legends]
+
+.pull-left[
+```{r sg25}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.position = "none") #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg25', 'png')`)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend position]
+
+.pull-left[
+
+- Legend position can be assigned as "top", "left", "right" and "bottom".
+
+```{r sg26}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.position = "top") #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg26', 'png')`)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend position[coordinates]]
+
+.pull-left[
+
+- Legend position can be assigned with coordinates.
+-  **c(0,0)** -> left, bottom
+-  **c(1,1)** -> right, top
+
+```{r sg26a}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.position = c(0.33,0.67)) #<<
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg26a', 'png')`)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Legend direction]
+
+.pull-left[
+
+- Legend direction can be horizontal or vertical.
+
+```{r sg27}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.direction = "horizontal") #<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg27', 'png')`)
+
+]
+
+
+]
+
+]
+
+---
+#### Theme[Guides/Legends]
+
+.panelset[
+.panel[.panel-name[Legend spacing]
+
+
+.pull-left[
+
+- To adjust spacing between elements when legends are in horizontal display, **legend.spacing.x** is used.
+- To adjust spacing between elements when legends are in vertical display, **legend.spacing.y** is used.
+
+```{r sg28}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.position = "top",
+        legend.spacing.x = unit(0.5, 'cm'))#<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg28', 'png')`)
+
+]
+
+
+]
+
+.panel[.panel-name[Legend spacing]
+
+
+.pull-left[
+
+- To adjust spacing between elements when legends are in horizontal display, **legend.spacing.x** is used.
+- To adjust spacing between elements when legends are in vertical display, **legend.spacing.y** is used.
+
+
+
+```{r sg28a}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  guides(fill= guide_legend(nrow = 2,
+                          byrow = T))+
+  theme(legend.spacing.y = unit(1, 'cm'))#<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg28a', 'png')`)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend text]
+
+
+.pull-left[
+
+- To modify texts, we can use **element_text** function
+
+
+
+```{r sg29}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.text = 
+          element_text(size = 12, #<<
+                       family = "Courier",#<< 
+                       colour = "grey", #<<
+                       angle = 45))#<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg29', 'png')`)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Legend title]
+
+
+.pull-left[
+
+
+
+```{r sg29b}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.title = 
+          element_text(size = 15,
+                       angle = 90))#<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg29b', 'png')`)
+
+]
+
+
+]
+
+.panel[.panel-name[Key size]
+
+
+.pull-left[
+
+
+
+```{r sg30}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.key.size = unit(3, "mm"))#<<
+
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg30', 'png')`)
+
+]
+
+
+]
+
+]
+
+---
+
+#### Theme[Axis]
+
+.panelset[
+.panel[.panel-name[Axis title]
+
+- **axis.title** is used to modify both x and y axis labels at the same time using **element_text**.
+- For modifying individual axis titles, **axis.title.x** and **axis.title.y** is used.
+
+.pull-left[
+
+
+
+```{r sg31}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.title =  #<< 
+          element_text(
+            family = "Courier",
+            size=20,
+            color='light blue'  
+          )
+        )
+
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg31', 'png')`)
+
+
+]
+]
+
+
+
+.panel[.panel-name[Axis text]
+
+- ###### **"axis.text"** is used to modify both x and y axis texts at the same time using **"element_text"**.
+- ###### For modifying individual axis texts, **"axis.text.x"** and **"axis.text.y"** is used.
+
+
+.pull-left[
+
+```{r sg32}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(
+    axis.text.x =     #<<
+    element_text(size=20,    #<<        
+                 color='light blue',
+                 angle = 45,
+                 hjust = 1
+           ),
+    axis.text.y = #<<
+    element_text(size=20,   #<<         
+                 color='light blue'
+           )
+    )
+
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg32', 'png')`)
+]
+]
+
+
+
+.panel[.panel-name[Axis ticks]
+
+- ###### **"axis.ticks"** is used to modify both x and y axis ticks at the same time using **"element_line"**.
+- ###### For modifying individual axis texts, **"axis.ticks.x"** and **"axis.ticks.y"** is used.
+
+
+.pull-left[
+
+```{r sg33}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(
+    axis.ticks = element_line(  #<<
+      color = 'black',
+      size=0.2,
+      linetype = 1 ,#(0-8)
+      lineend = "round", #butt, square,
+      arrow = arrow(length = unit(2, "mm"))
+      
+    ),
+    axis.ticks.length = unit(0.4,'cm')  #<<
+    )
+
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg33', 'png')`)
+]
+]
+
+
+
+
+]
+
+
+---
+
+#### Theme[Plot]
+
+
+.panelset[
+
+.panel[.panel-name[Plot title]
+
+.pull-left[
+
+```{r sg34}
+title_var= ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(plot.title = element_text(    #<<
+    
+    size = 20,                         #<<
+    colour = "Light blue"         #<<
+    
+    
+  ))
+
+title_var
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg34', 'png')`)
+]
+
+
+]
+
+
+.panel[.panel-name[Plot subtitle and caption]
+
+.pull-left[
+
+```{r sg35}
+title_var+
+  
+  theme(
+  
+  plot.subtitle = element_text(   #<<
+    
+    face = "italic",
+    colour = "Light blue"
+  ),
+  plot.caption = element_text(   #<<
+    face = "bold.italic",
+    colour = "Light blue"
+    
+  )
+  )
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg35', 'png')`)
+]
+
+
+]
+
+.panel[.panel-name[Modify all text properties]
+
+.pull-left[
+
+```{r sg36}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(text = element_text(#<<
+    color = "Light blue"    #<<
+  ))
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg36', 'png')`)
+]
+
+
+]
+
+
+.panel[.panel-name[Plot background]
+
+.pull-left[
+
+```{r sg37}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(
+        plot.background = element_rect( #<<
+          fill = "gray"    #<<
+          
+        )
+      )
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg37', 'png')`)
+]
+
+
+]
+
+.panel[.panel-name[Plot margin]
+
+.pull-left[
+
+```{r sg38}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(
+        plot.background = element_rect( #<<
+          fill = "gray"
+          
+        ),
+        plot.margin = 
+          margin(t=2, r=2, b=2,     #<<
+                 l=0, unit = "cm")  #<<
+      )
+  
+ 
+```
+
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg38', 'png')`)
+]
+
+
+]
+
+
+
+]
+
+
+---
+
+#### Theme[Panel]
+
+.panelset[
+
+.panel[.panel-name[Panel background]
+
+.pull-left[
+```{r sg39}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+    panel.background = element_blank()  #<<
+  )
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg39', 'png')`)
+]
+
+]
+
+
+
+.panel[.panel-name[Panel background]
+
+.pull-left[
+```{r sg40}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+    panel.background = element_rect(  #<<
+      
+      fill = "light blue",
+      color = "black", 
+      linetype = 3,
+      size = 0.5
+      
+    )
+  )
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg40', 'png')`)
+]
+
+]
+
+
+.panel[.panel-name[Panel grid]
+
+.pull-left[
+```{r sg41}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+    panel.grid = element_blank() #<<
+  )
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg41', 'png')`)
+]
+
+]
+
+
+
+.panel[.panel-name[Panel grid]
+
+.pull-left[
+```{r sg42}
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+    panel.grid = element_line( #<<
+      
+      color = "light gray"
+    )
+    
+  )
+```
+
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg42', 'png')`)
+]
+
+]
+
+
+]
+
+---
+#### Text and labels
+
+.panelset[
+
+.panel[.panel-name[geom_text]
+
+.pull-left[
+```{r sg43ex1}
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+  geom_text(  #<<
+    aes(x=100000000,  #<<
+        y=1000000000,#<<
+        label= "You can type anything"), #<<
+    color='red', #<<
+    size= 5, #<<
+    hjust=0, #<<
+    vjust=0, #<<
+    family= "Sans") #<<
+  
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg43ex1', 'png')`)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[geom_label]
+
+.pull-left[
+```{r sg43ex2}
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+  geom_label(  #<<
+    aes(x=100000000,  #<<
+        y=1000000000,#<<
+        label= "You can label anything"), #<<
+    color='red', #<<
+    family=  "Sans", #<<
+    size= 5, #<<
+    hjust=0, #<<
+    vjust=0) #<<
+  
+```
+]
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg43ex2', 'png')`)
+
+]
+
+
+]
+
+.panel[.panel-name[Text in bar graph]
+.pull-left[
+```{r sg43ex3}
+ggplot(head(movies))+
+  geom_col(aes(x=movie,
+               y=domestic_gross,
+               fill=movie))+
+  geom_text(
+    aes(x=movie,         #<<
+        y=domestic_gross, #<<
+        label=genre), #<<
+    size=4, #<<
+    vjust=1,  #<<
+    angle=270 #<<
+  )+ 
+  coord_flip()
+
+?theme  
+```
+]
+
+
+.pull-right[
+
+![](`r knitr::fig_chunk('sg43ex3', 'png')`)
+
+]
+
+
+
+]
+
+]
+
+
+
+---
+#### BBC Visual and Data Journalism
+.panelset[
+
+
+
+.panel[.panel-name[bbplot]
+
+.pull-left[
+-  The BBC Data and Visualisation Journalism team used ggplot to analyse complex data and create publication-ready visualisations.
+
+-  They soon found out that every time they wanted to create a chart they had to retype every individual element and argument to convert the default ggplot style to in-house BBC style. 
+
+- Thus, they developed their own package to meet the needs of the team and keep the workflow simple.
+  ]
+  
+.pull-right[
+  
+<img src="imgs/bbplt.png">
+
+]  
+
+]
+
+.panel[.panel-name[Installation and functions ]
+
+To install bbplot, use the codes:
+
+- **install.packages('devtools');devtools::install_github('bbc/bbplot')**
+
+There are two functions in bbplot:
+
+- **bbc_syle()**:  It makes text size, font and colour, axis lines, axis text, margins and many other standard chart components into BBC style, which has been formulated based on recommendations and feedback from the design team.
+
+- **finalise_plot()**: It will left-align the title, subtitle and add the footer with a source and an image in the bottom right corner of your plot. It will also save it to your specified location. 
+
+]
+
+.panel[.panel-name[bbc_style()]
+
+
+.pull-left[
+```{r sg43}
+library(bbplot) #<<
+ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+  bbc_style() #<<
+
+```
+
+]
+.pull-right[
+![](`r knitr::fig_chunk('sg43', 'png')`)
+
+]
+
+]
+
+.panel[.panel-name[Additional modifications]
+
+.pull-left[
+```{r sg44}
+
+my_bbplot<-ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+  bbc_style() +#<<
+  
+  geom_hline(yintercept = 0,  #<<
+             size=1,
+             colour="black")+
+  theme(legend.justification = "left") #<<
+ 
+my_bbplot 
+
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk('sg44', 'png')`)
+
+]
+]
+
+
+.panel[.panel-name[finalise_plot()]
+
+.pull-left[
+```{r, eval=FALSE}
+finalise_plot(
+  plot_name = my_bbplot,  #<<
+              
+  source = "Source:tidytuesday", #<<
+              
+  save_filepath = "C:/Users/Sanjay/Desktop/plt.png", #<<
+              
+  width_pixels=500, #<<
+              
+  height_pixels= 500) #<<
+
+```
+]
+
+.pull-right[
+
+<img src="imgs/plt.png">
+
+]
+
+]
+
+]
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Advanced Visualization with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Sanjay Hamal" />
+    <meta name="date" content="2021-09-14" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Advanced Visualization with ggplot2
+## (Graph Customization)
+### Sanjay Hamal
+### Numeric Mind
+### 2021-09-14
+
+---
+
+layout: true
+&lt;div class="my-header"&gt;&lt;/div&gt;
+&lt;div class="my-footer"&gt;&lt;img src="imgs/nm-logo.png"/&gt;&lt;/div&gt; 
+
+
+
+
+
+
+
+
+
+---
+#### Use of factors
+.panelset[
+
+.panel[.panel-name[Unsorted graph]
+
+.pull-left[
+
+
+```r
+*ggplot(head(movies, 15))+
+  
+* geom_point(aes(x=domestic_gross,y=movie))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg1-1.png)
+
+]
+
+
+
+]
+
+.panel[.panel-name[Sorted graph]
+
+.pull-left[
+
+- **fct_reorder** function help to arrange the values of concern on the basis of order of some other values.
+- **fct_reorder(value to sort, sort by)**
+
+
+
+```r
+ggplot(head(movies, 15))+    
+  
+  geom_point(
+    aes(x=domestic_gross,
+*       y=fct_reorder(movie, domestic_gross)))+
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](figures/sg2-1.png)
+
+]
+
+
+
+]
+
+
+
+.panel[.panel-name[Custom arranged graph]
+
+.pull-left[
+
+- **fct_relvel** function help to relevel only few custom values.
+- **fct_relevel(column name, values)**
+
+
+
+```r
+ggplot(head(movies, 15))+    
+  
+  geom_point(
+    aes(x=domestic_gross,
+*       y=fct_relevel(movie, "Waterworld")))+
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](figures/sg3-1.png)
+
+]
+
+
+
+]
+
+
+
+.panel[.panel-name[Custom arranged graph]
+
+.pull-left[
+
+
+- **fct_relevel(column name, values)**
+
+
+
+```r
+ggplot(head(movies, 15))+    
+  
+geom_point(
+  aes(x=domestic_gross,
+  y=fct_relevel(movie, 
+* c("Waterworld","Evan Almighty", "Van Helsing"))))+
+  
+  labs(y= "Movies")
+```
+
+]
+
+.pull-right[
+
+![](figures/sg4-1.png)
+
+]
+
+
+
+]
+
+
+]
+
+---
+
+#### Use of factors
+
+.panelset[
+
+
+.panel[.panel-name[Unsorted bar graph]
+
+
+.pull-left[
+
+```r
+ggplot(movies)+
+* geom_bar(aes(x=genre, fill=genre))
+```
+]
+
+.pull-right[
+
+![](figures/sg5-1.png)
+
+]
+
+
+
+
+
+
+
+]
+
+
+.panel[.panel-name[Sorted bar graph]
+
+
+.pull-left[
+
+- **fct_infreq** helps to sort values by descending order
+- **fct_infreq(column name)** or 
+- **column_name %&gt;% fct_infreq()**
+
+
+
+```r
+ggplot(movies)+
+* geom_bar(aes(x=genre %&gt;% fct_infreq(),
+               fill=genre)) +
+  labs(x="genre")
+```
+
+]
+
+.pull-right[
+
+![](figures/sg6-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Reverse arranged]
+
+
+.pull-left[
+
+- **fct_rev** reverses the order of arrangement.
+- **fct_rev(column name)** or 
+- **column name %&gt;% fct_rev()**
+
+
+```r
+ggplot(movies)+
+  geom_bar(
+* aes(x=genre %&gt;% fct_infreq() %&gt;% fct_rev(),
+               fill=genre)
+  ) +
+  labs(x="genre")
+```
+
+
+
+]
+
+
+.pull-right[
+
+![](figures/sg7-1.png)
+
+]
+
+]
+]
+
+---
+
+#### Manual colors:
+
+.panelset[
+
+.panel[.panel-name[Automatic colors]
+
+.pull-left[
+
+```r
+ggplot(movies)+
+* geom_bar(aes(genre, fill= genre))
+```
+]
+
+.pull-right[
+
+![](figures/sg8-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Manual color fill]
+
+.pull-left[
+
+- **scale_fill_manual(values= colors)**
+- The total number of color inputs should be sufficient.
+
+
+```r
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+* scale_fill_manual(values=c('red',
+*                            'blue',
+*                            'green',
+*                            'orange',
+*                            'pink'))
+```
+
+
+
+]
+
+.pull-right[
+
+![](figures/sg9-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Color input for each element]
+
+
+.pull-left[
+- **scale_fill_manual(**
+- **values= c(element1= color1, element2=color2...))**
+- The total number of color inputs should be sufficient.
+
+
+```r
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+  
+  scale_fill_manual(
+*   values=c("Action"='red',
+*            "Comedy"='blue',
+*            "Drama"='green',
+*            "Horror"='orange',
+*            "Adventure"='pink')
+                   )
+```
+
+
+]
+
+.pull-right[
+
+
+![](figures/sg10-1.png)
+
+]
+
+]
+]
+
+---
+#### Manual colors
+
+.panelset[
+
+.panel[.panel-name[Uniform palette color]
+
+.pull-left[
+
+- **scale_fill_viridis**
+- Use the color scales in this package to make plots that are pretty, better represent your data, easier to read by those with colorblindness, and print well in gray scale.
+- scale_fill_viridis_c is for continuous values
+- scale_fill_viridis_d is for discrete values
+- options: plasma, inferno, magma, cividis, viridis
+
+```r
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+* scale_fill_viridis_d()
+```
+
+
+]
+.pull-right[
+
+
+![](figures/sg11a-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Uniform palette color]
+
+.pull-left[
+
+
+
+```r
+ggplot(movies)+
+  geom_bar(aes(x=genre, fill=genre))+
+* scale_fill_viridis_d(option= "magma")
+```
+
+
+]
+.pull-right[
+
+
+![](figures/sg12-1.png)
+
+]
+
+]
+
+
+
+
+
+
+
+]
+
+---
+#### Axis
+.panelset[
+.panel[.panel-name[Bar graph:Proportion]
+
+
+
+.pull-left[
+
+
+```r
+ggplot(data = movies)+
+*geom_bar(aes(x=genre, y=..prop.., group=1))
+```
+]
+
+.pull-right[
+
+![](figures/sg13-1.png)
+
+]
+
+
+
+]
+
+
+.panel[.panel-name[Scale:percent]
+
+
+
+.pull-left[
+
+
+```r
+library(scales)
+ggplot(data = movies)+
+  
+ geom_bar(aes(x=genre, y=..prop.., group=1))+
+  
+*scale_y_continuous(labels = percent)
+```
+]
+
+.pull-right[
+
+![](figures/sg14-1.png)
+
+]
+
+
+
+]
+
+
+.panel[.panel-name[Scatter plot]
+
+
+.pull-left[
+
+
+```r
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg15-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Scale: comma]
+
+
+.pull-left[
+
+
+```r
+library(scales)
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+* scale_x_continuous(labels = comma)+
+* scale_y_continuous(labels = comma)
+```
+]
+
+.pull-right[
+
+![](figures/sg16-1.png)
+
+]
+
+]
+
+
+.panel[.panel-name[Limits]
+- In scale_x_continuous and scale_y_continuous, you can use the **limit** parameter to control the size of **x** and **y** axis respectively.
+
+.pull-left[
+
+```r
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    labels = comma,
+*   limits = c(200000000, 300000000))+
+  scale_y_continuous(
+    labels = comma,
+*   limits = c(0, 500000000))
+```
+]
+
+.pull-right[
+
+![](figures/sg17-1.png)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Breaks]
+
+- In **scale_x_continuous** and **scale_y_continuous**, you can use **breaks** to display only the required values in your x and y axis respectively.
+
+.pull-left[
+
+```r
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    labels = comma,
+    limits = c(200000000, 300000000),
+* breaks = c(200000000,250000000,300000000))+
+  scale_y_continuous(
+    labels = comma,
+    limits = c(0, 500000000),
+* breaks = c(100000000,300000000,500000000))
+```
+]
+
+.pull-right[
+
+![](figures/sg18-1.png)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Labels]
+
+- In **scale_x_continuous** and **scale_y_continuous**, you can use **labels** parameter to label custom values in **x** and **y** axis respectively.
+- The length of **labels** must be equal to the length of **breaks** parameter.
+
+.pull-left[
+
+
+
+```r
+ggplot(movies)+
+  geom_point(aes(domestic_gross,
+                 worldwide_gross))+
+  
+  
+  scale_x_continuous(
+    limits = c(200000000, 300000000),
+  breaks = c(200000000,250000000,300000000),
+* labels = c("200M", "250M", "300M"))+
+  scale_y_continuous(
+    limits = c(0, 500000000),
+  breaks = c(100000000,300000000,500000000),
+* labels = c("100M","300M", "500M"))
+```
+]
+
+.pull-right[
+
+![](figures/sg19-1.png)
+
+]
+
+
+]
+
+]
+---
+#### Legends
+
+.panelset[
+
+
+
+.panel[.panel-name[Bar plot]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))
+```
+
+
+]
+.pull-right[
+
+![](figures/sg20-1.png)
+]
+
+
+]
+
+.panel[.panel-name[Remove guide]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+*guides(fill = "none")
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg22-1.png)
+
+]
+]
+
+
+.panel[.panel-name[Reverse guide]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+*guides(fill = guide_legend(reverse = TRUE))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg21-1.png)
+
+]
+]
+
+.panel[.panel-name[Row allocation[1]]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+*guides(fill= guide_legend(nrow = 1,
+*                         byrow = T))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg23-1.png)
+
+]
+]
+
+
+.panel[.panel-name[Row allocation[2]]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=mpaa_rating))+
+*guides(fill= guide_legend(nrow = 2,
+*                         byrow = T))
+```
+
+
+]
+
+.pull-right[
+
+![](figures/sg24-1.png)
+
+]
+]
+
+
+
+]
+
+---
+
+#### Themes
+.panelset[
+
+.panel[.panel-name[Theme]
+- Themes are a powerful way to customize the non-data components of your plots: i.e. titles, labels, fonts, background, gridlines, and legends. 
+- Themes can be used to give plots a consistent customized look
+]
+
+.panel[.panel-name[Elements of theme]
+In conjunction with the theme system, the element_ functions specify the display of how non-data components of the plot are drawn.
+
+- **element_blank()**: Draws nothing, and assigns no space.
+
+- **element_rect()** : To change borders and backgrounds.
+
+- **element_line()**:  To modify lines.
+
+- **element_text()**:  To modify texts.
+
+]
+
+.panel[.panel-name[element_blank]
+
+.pull-left[
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(axis.title  = element_blank())
+```
+
+
+]
+
+.pull-right[
+
+![](figures/thm2-1.png)
+
+]
+
+]
+
+.panel[.panel-name[element_rect]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(panel.background = 
+*         element_rect(fill= 'black'))
+```
+
+]
+
+.pull-right[
+
+![](figures/thm1-1.png)
+
+]
+]
+
+
+.panel[.panel-name[element_line]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.ticks = 
+*         element_line(color = "red",
+*                      size = 3))
+```
+
+]
+
+.pull-right[
+
+![](figures/thm3-1.png)
+
+]
+]
+
+.panel[.panel-name[element_text]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(axis.title = 
+*         element_text(family = "Courier",
+*         size = 20,
+*         face = "italic"))
+```
+
+]
+
+.pull-right[
+
+![](figures/thm4-1.png)
+
+]
+]
+
+]
+---
+#### Theme[Guides/Legends]
+.panelset[
+
+
+.panel[.panel-name[Remove Legends]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(legend.position = "none")
+```
+]
+
+.pull-right[
+
+![](figures/sg25-1.png)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend position]
+
+.pull-left[
+
+- Legend position can be assigned as "top", "left", "right" and "bottom".
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(legend.position = "top")
+```
+]
+
+.pull-right[
+
+![](figures/sg26-1.png)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend position[coordinates]]
+
+.pull-left[
+
+- Legend position can be assigned with coordinates.
+-  **c(0,0)** -&gt; left, bottom
+-  **c(1,1)** -&gt; right, top
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(legend.position = c(0.33,0.67))
+```
+]
+
+.pull-right[
+
+![](figures/sg26a-1.png)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Legend direction]
+
+.pull-left[
+
+- Legend direction can be horizontal or vertical.
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(legend.direction = "horizontal")
+```
+]
+
+.pull-right[
+
+![](figures/sg27-1.png)
+
+]
+
+
+]
+
+]
+
+---
+#### Theme[Guides/Legends]
+
+.panelset[
+.panel[.panel-name[Legend spacing]
+
+
+.pull-left[
+
+- To adjust spacing between elements when legends are in horizontal display, **legend.spacing.x** is used.
+- To adjust spacing between elements when legends are in vertical display, **legend.spacing.y** is used.
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.position = "top",
+*       legend.spacing.x = unit(0.5, 'cm'))
+```
+]
+
+.pull-right[
+
+![](figures/sg28-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Legend spacing]
+
+
+.pull-left[
+
+- To adjust spacing between elements when legends are in horizontal display, **legend.spacing.x** is used.
+- To adjust spacing between elements when legends are in vertical display, **legend.spacing.y** is used.
+
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  guides(fill= guide_legend(nrow = 2,
+                          byrow = T))+
+* theme(legend.spacing.y = unit(1, 'cm'))
+```
+]
+
+.pull-right[
+
+![](figures/sg28a-1.png)
+
+]
+
+
+]
+
+
+.panel[.panel-name[Legend text]
+
+
+.pull-left[
+
+- To modify texts, we can use **element_text** function
+
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.text = 
+*         element_text(size = 12,
+*                      family = "Courier",
+*                      colour = "grey",
+*                      angle = 45))
+```
+]
+
+.pull-right[
+
+![](figures/sg29-1.png)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[Legend title]
+
+
+.pull-left[
+
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(legend.title = 
+          element_text(size = 15,
+*                      angle = 90))
+```
+]
+
+.pull-right[
+
+![](figures/sg29b-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Key size]
+
+
+.pull-left[
+
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(legend.key.size = unit(3, "mm"))
+```
+]
+
+.pull-right[
+
+![](figures/sg30-1.png)
+
+]
+
+
+]
+
+]
+
+---
+
+#### Theme[Axis]
+
+.panelset[
+.panel[.panel-name[Axis title]
+
+- **axis.title** is used to modify both x and y axis labels at the same time using **element_text**.
+- For modifying individual axis titles, **axis.title.x** and **axis.title.y** is used.
+
+.pull-left[
+
+
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+* theme(axis.title =
+          element_text(
+            family = "Courier",
+            size=20,
+            color='light blue'  
+          )
+        )
+```
+
+]
+
+.pull-right[
+![](figures/sg31-1.png)
+
+
+]
+]
+
+
+
+.panel[.panel-name[Axis text]
+
+- ###### **"axis.text"** is used to modify both x and y axis texts at the same time using **"element_text"**.
+- ###### For modifying individual axis texts, **"axis.text.x"** and **"axis.text.y"** is used.
+
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(
+*   axis.text.x =
+*   element_text(size=20,
+                 color='light blue',
+                 angle = 45,
+                 hjust = 1
+           ),
+*   axis.text.y =
+*   element_text(size=20,
+                 color='light blue'
+           )
+    )
+```
+
+]
+
+.pull-right[
+![](figures/sg32-1.png)
+]
+]
+
+
+
+.panel[.panel-name[Axis ticks]
+
+- ###### **"axis.ticks"** is used to modify both x and y axis ticks at the same time using **"element_line"**.
+- ###### For modifying individual axis texts, **"axis.ticks.x"** and **"axis.ticks.y"** is used.
+
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  theme(
+*   axis.ticks = element_line(
+      color = 'black',
+      size=0.2,
+      linetype = 1 ,#(0-8)
+      lineend = "round", #butt, square,
+      arrow = arrow(length = unit(2, "mm"))
+      
+    ),
+*   axis.ticks.length = unit(0.4,'cm')
+    )
+```
+
+]
+
+.pull-right[
+![](figures/sg33-1.png)
+]
+]
+
+
+
+
+]
+
+
+---
+
+#### Theme[Plot]
+
+
+.panelset[
+
+.panel[.panel-name[Plot title]
+
+.pull-left[
+
+
+```r
+title_var= ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+* theme(plot.title = element_text(
+    
+*   size = 20,
+*   colour = "Light blue"
+    
+    
+  ))
+
+title_var
+```
+
+]
+
+.pull-right[
+![](figures/sg34-1.png)
+]
+
+
+]
+
+
+.panel[.panel-name[Plot subtitle and caption]
+
+.pull-left[
+
+
+```r
+title_var+
+  
+  theme(
+  
+* plot.subtitle = element_text(
+    
+    face = "italic",
+    colour = "Light blue"
+  ),
+* plot.caption = element_text(
+    face = "bold.italic",
+    colour = "Light blue"
+    
+  )
+  )
+```
+
+]
+
+.pull-right[
+![](figures/sg35-1.png)
+]
+
+
+]
+
+.panel[.panel-name[Modify all text properties]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+* theme(text = element_text(
+*   color = "Light blue"
+  ))
+```
+
+]
+
+.pull-right[
+![](figures/sg36-1.png)
+]
+
+
+]
+
+
+.panel[.panel-name[Plot background]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(
+*       plot.background = element_rect(
+*         fill = "gray"
+          
+        )
+      )
+```
+
+]
+
+.pull-right[
+![](figures/sg37-1.png)
+]
+
+
+]
+
+.panel[.panel-name[Plot margin]
+
+.pull-left[
+
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  labs(title = "Popular movie genre",
+       subtitle = "[Counts]",
+       caption = "Source:Tidytuesday")+
+  
+  theme(
+*       plot.background = element_rect(
+          fill = "gray"
+          
+        ),
+        plot.margin = 
+*         margin(t=2, r=2, b=2,
+*                l=0, unit = "cm")
+      )
+```
+
+]
+
+.pull-right[
+![](figures/sg38-1.png)
+]
+
+
+]
+
+
+
+]
+
+
+---
+
+#### Theme[Panel]
+
+.panelset[
+
+.panel[.panel-name[Panel background]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+*   panel.background = element_blank()
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/sg39-1.png)
+]
+
+]
+
+
+
+.panel[.panel-name[Panel background]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+*   panel.background = element_rect(
+      
+      fill = "light blue",
+      color = "black", 
+      linetype = 3,
+      size = 0.5
+      
+    )
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/sg40-1.png)
+]
+
+]
+
+
+.panel[.panel-name[Panel grid]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+*   panel.grid = element_blank()
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/sg41-1.png)
+]
+
+]
+
+
+
+.panel[.panel-name[Panel grid]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_bar(aes(x=genre,
+               fill=genre))+
+  
+  theme(
+*   panel.grid = element_line(
+      
+      color = "light gray"
+    )
+    
+  )
+```
+
+]
+
+.pull-right[
+
+![](figures/sg42-1.png)
+]
+
+]
+
+
+]
+
+---
+#### Text and labels
+
+.panelset[
+
+.panel[.panel-name[geom_text]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+* geom_text(
+*   aes(x=100000000,
+*       y=1000000000,
+*       label= "You can type anything"),
+*   color='red',
+*   size= 5,
+*   hjust=0,
+*   vjust=0,
+*   family= "Sans")
+```
+]
+
+.pull-right[
+
+![](figures/sg43ex1-1.png)
+
+]
+
+
+]
+
+
+
+.panel[.panel-name[geom_label]
+
+.pull-left[
+
+```r
+ggplot(movies )+
+  geom_point(
+    aes(x=domestic_gross,
+        y=worldwide_gross,
+        color=genre))+ 
+  
+* geom_label(
+*   aes(x=100000000,
+*       y=1000000000,
+*       label= "You can label anything"),
+*   color='red',
+*   family=  "Sans",
+*   size= 5,
+*   hjust=0,
+*   vjust=0)
+```
+]
+
+.pull-right[
+
+![](figures/sg43ex2-1.png)
+
+]
+
+
+]
+
+.panel[.panel-name[Text in bar graph]
+.pull-left[
+
+```r
+ggplot(head(movies))+
+  geom_col(aes(x=movie,
+               y=domestic_gross,
+               fill=movie))+
+  geom_text(
+*   aes(x=movie,
+*       y=domestic_gross,
+*       label=genre),
+*   size=4,
+*   vjust=1,
+*   angle=270
+  )+ 
+  coord_flip()
+```
+]
+
+
+.pull-right[
+
+![](figures/sg43ex3-1.png)
+
+]
+
+
+
+]
+
+]
+
+
+
+---
+#### BBC Visual and Data Journalism
+.panelset[
+
+
+
+.panel[.panel-name[bbplot]
+
+.pull-left[
+-  The BBC Data and Visualisation Journalism team used ggplot to analyse complex data and create publication-ready visualisations.
+
+-  They soon found out that every time they wanted to create a chart they had to retype every individual element and argument to convert the default ggplot style to in-house BBC style. 
+
+- Thus, they developed their own package to meet the needs of the team and keep the workflow simple.
+  ]
+  
+.pull-right[
+  
+&lt;img src="imgs/bbplt.png"&gt;
+
+]  
+
+]
+
+.panel[.panel-name[Installation and functions ]
+
+To install bbplot, use the codes:
+
+- **install.packages('devtools');devtools::install_github('bbc/bbplot')**
+
+There are two functions in bbplot:
+
+- **bbc_syle()**:  It makes text size, font and colour, axis lines, axis text, margins and many other standard chart components into BBC style, which has been formulated based on recommendations and feedback from the design team.
+
+- **finalise_plot()**: It will left-align the title, subtitle and add the footer with a source and an image in the bottom right corner of your plot. It will also save it to your specified location. 
+
+]
+
+.panel[.panel-name[bbc_style()]
+
+
+.pull-left[
+
+```r
+*library(bbplot)
+ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+* bbc_style()
+```
+
+]
+.pull-right[
+![](figures/sg43-1.png)
+
+]
+
+]
+
+.panel[.panel-name[Additional modifications]
+
+.pull-left[
+
+```r
+my_bbplot&lt;-ggplot(data = movies)+ 
+  geom_bar(aes(x=genre, fill=mpaa_rating))+
+  labs(title = "Total Movie genre with rating",
+       subtitle = "[1946-2016]")+
+  
+* bbc_style() +
+  
+* geom_hline(yintercept = 0,
+             size=1,
+             colour="black")+
+* theme(legend.justification = "left")
+ 
+my_bbplot 
+```
+]
+
+.pull-right[
+![](figures/sg44-1.png)
+
+]
+]
+
+
+.panel[.panel-name[finalise_plot()]
+
+.pull-left[
+
+```r
+finalise_plot(
+* plot_name = my_bbplot,
+              
+* source = "Source:tidytuesday",
+              
+* save_filepath = "C:/Users/Sanjay/Desktop/plt.png",
+              
+* width_pixels=500,
+              
+* height_pixels= 500)
+```
+]
+
+.pull-right[
+
+&lt;img src="imgs/plt.png"&gt;
+
+]
+
+]
+
+]
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

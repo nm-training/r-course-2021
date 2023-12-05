@@ -1,0 +1,144 @@
+---
+title: "Case study"
+author: "SanjayHamal"
+date: "9/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(dplyr)
+
+
+
+#covid_deaths<- covid_deaths %>% select(location, date, total_deaths_per_million) %>% group_by(location) %>% filter(date== max(date)) %>% arrange(desc(total_deaths_per_million)) %>% head(15)
+#readr::write_csv(covid_deaths, "./data/world_deaths.csv")
+
+covid_deaths<- readr::read_csv("./data/world_deaths.csv")
+covid_deaths
+
+
+```
+
+```{r}
+library(ggplot2)
+bar_plot1<- ggplot(data = covid_deaths )+ 
+  geom_col(mapping = aes(x=location, y= total_deaths_per_million))+
+  coord_flip()
+
+bar_plot1
+```
+```{r}
+
+bar_plot2<-  ggplot(data = covid_deaths )+ 
+  geom_col(mapping = aes(x=reorder(location, total_deaths_per_million), y= total_deaths_per_million), fill ="#1280a1")+
+  coord_flip()
+bar_plot2
+```
+
+```{r}
+
+bar_plot2<-bar_plot2+geom_hline(yintercept = 0, size=1)
+bar_plot2
+```
+```{r}
+bar_plot2<-bar_plot2+ scale_y_continuous(limits = c(0, 8000))
+bar_plot2
+```
+```{r}
+
+bar_plot2<-bar_plot2+geom_label(
+  
+  mapping =aes(x= location, y=total_deaths_per_million, label= total_deaths_per_million),
+  hjust =-0.08, 
+  color = "#1280a1",
+  fill= "white",
+  label.size = NA,
+  size=5
+  
+  
+)
+bar_plot2
+```
+
+```{r}
+
+bar_plot2<- bar_plot2 +geom_curve(mapping = aes(x=6, xend=9, y=7000, yend=5500),
+                      curvature = 0.3,
+                      size=0.05,
+                       arrow = arrow(length = unit(0.03, "npc")
+                                     ),
+                      color= "black"
+                      
+                      )
+bar_plot2
+```
+
+```{r}
+
+bar_plot2<-bar_plot2+geom_label(
+  mapping = aes(x=5, y=7000, label= "Number of deaths \nof positive individuals"),
+  colour = "black",
+  fill = "white", 
+  label.size = NA, 
+  size = 4,
+  )
+
+
+bar_plot2
+```
+
+```{r}
+bar_plot2<- bar_plot2 +theme(
+  axis.title = element_blank(),
+  axis.text = element_text(
+    
+    color = "black",
+    size=11
+  ),
+  axis.ticks.length = unit(0, "cm")
+ 
+  
+)
+bar_plot2
+```
+
+```{r}
+
+bar_plot2<-bar_plot2+theme(
+  panel.background = element_rect(
+    
+    fill = "white"
+  ),
+  panel.grid.major.x = element_line(
+    colour = "gray"
+  )
+  
+)
+
+bar_plot2
+
+```
+
+```{r}
+
+bar_plot2<-bar_plot2+ labs(title = "Covid-19 deaths in million")+
+  theme(plot.title = element_text(
+    size = 20,
+    face = "bold"
+  
+    
+    ),
+    plot.title.position = "plot"
+  
+  )
+
+bar_plot2
+covid_deaths
+```
+
