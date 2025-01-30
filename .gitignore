@@ -4,3 +4,5 @@
 *.Ruserdata
 *.Rproj
 .Rproj.user
+
+/00_participants
